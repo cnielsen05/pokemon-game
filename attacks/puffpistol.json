@@ -1,0 +1,8 @@
+{
+    "name": "Puff Pistol",
+    "baseDmg": 35,
+    "type": "FLYING",
+    "isPhysical": false,
+    "maxPP": 20,
+    "accuracy": 95
+}

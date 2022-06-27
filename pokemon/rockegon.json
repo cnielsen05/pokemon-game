@@ -1,0 +1,15 @@
+{
+    "name": "Rockegon",
+    "attackStat": 40,
+    "defenseStat": 45,
+    "spAttackStat": 5,
+    "spDefenseStat": 10,
+    "speedStat": 20,
+    "HPStat": 30,
+    "battleType1": "DRAGON",
+    "battleType2": "FIRE",
+    "battleAttacks": [
+        "Ember",
+        "DragonicBlast"
+    ]
+}

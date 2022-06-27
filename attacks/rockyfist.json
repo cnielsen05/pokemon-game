@@ -1,0 +1,8 @@
+{
+    "name": "Rocky Fist",
+    "baseDmg": 60,
+    "type": "ROCK",
+    "isPhysical": true,
+    "maxPP": 15,
+    "accuracy": 80
+}

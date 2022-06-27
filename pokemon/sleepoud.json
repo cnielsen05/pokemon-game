@@ -1,0 +1,15 @@
+{
+    "name": "Sleepoud",
+    "attackStat": 13,
+    "defenseStat": 15,
+    "spAttackStat": 37,
+    "spDefenseStat": 35,
+    "speedStat": 23,
+    "HPStat": 27,
+    "battleType1": "FLYING",
+    "battleType2": "WATER",
+    "battleAttacks": [
+        "Bubble",
+        "Puffpistol"
+    ]
+}

@@ -1,0 +1,15 @@
+{
+    "name": "Nardent",
+    "attackStat": 28,
+    "defenseStat": 34,
+    "spAttackStat": 16,
+    "spDefenseStat": 22,
+    "speedStat": 18,
+    "HPStat": 32,
+    "battleType1": "WATER",
+    "battleType2": "NONE",
+    "battleAttacks": [
+        "Tackle",
+        "Watergun"
+    ]
+}

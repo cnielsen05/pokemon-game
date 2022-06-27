@@ -1,0 +1,8 @@
+{
+    "name": "Low Kick",
+    "baseDmg": 30,
+    "type": "FIGHTING",
+    "isPhysical": true,
+    "maxPP": 25,
+    "accuracy": 90
+}

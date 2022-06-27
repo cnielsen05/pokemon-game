@@ -1,0 +1,15 @@
+{
+    "name": "Jarean Pidgey",
+    "attackStat": 30,
+    "defenseStat": 20,
+    "spAttackStat": 5,
+    "spDefenseStat": 10,
+    "speedStat": 40,
+    "HPStat": 45,
+    "battleType1": "FLYING",
+    "battleType2": "ICE",
+    "battleAttacks": [
+        "FrostPeck",
+        "Peck"
+    ]
+}

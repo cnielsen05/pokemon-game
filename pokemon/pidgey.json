@@ -1,0 +1,15 @@
+{
+    "name": "Pidgey",
+    "attackStat": 20,
+    "defenseStat": 28,
+    "spAttackStat": 19,
+    "spDefenseStat": 28,
+    "speedStat": 31,
+    "HPStat": 24,
+    "battleType1": "FLYING",
+    "battleType2": "NORMAL",
+    "battleAttacks": [
+        "Tackle",
+        "Peck"
+    ]
+}

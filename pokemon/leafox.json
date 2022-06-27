@@ -1,0 +1,15 @@
+{
+    "name": "Leafox",
+    "attackStat": 10,
+    "defenseStat": 24,
+    "spAttackStat": 25,
+    "spDefenseStat": 26,
+    "speedStat": 35,
+    "HPStat": 30,
+    "battleType1": "GRASS",
+    "battleType2": "NONE",
+    "battleAttacks": [
+        "Tackle",
+        "VineWhip"
+    ]
+}

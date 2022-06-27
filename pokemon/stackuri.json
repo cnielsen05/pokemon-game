@@ -1,0 +1,15 @@
+{
+    "name": "Stackuri",
+    "attackStat": 40,
+    "defenseStat": 35,
+    "spAttackStat": 10,
+    "spDefenseStat": 15,
+    "speedStat": 20,
+    "HPStat": 30,
+    "battleType1": "FIGHTING",
+    "battleType2": "NORMAL",
+    "battleAttacks": [
+        "Lowkick",
+        "Tackle"
+    ]
+}

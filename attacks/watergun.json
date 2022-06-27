@@ -1,0 +1,8 @@
+{
+    "name": "Water Gun",
+    "baseDmg": 40,
+    "type": "WATER",
+    "isPhysical": true,
+    "maxPP": 25,
+    "accuracy": 95
+}

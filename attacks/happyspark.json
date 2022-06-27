@@ -1,0 +1,8 @@
+{
+    "name": "Happy Spark",
+    "baseDmg": 35,
+    "type": "FAIRY",
+    "isPhysical": false,
+    "maxPP": 30,
+    "accuracy": 100
+}

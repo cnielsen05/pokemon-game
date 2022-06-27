@@ -1,0 +1,8 @@
+{
+    "name": "Telekinesis",
+    "baseDmg": 55,
+    "type": "PSYCHIC",
+    "isPhysical": true,
+    "maxPP": 15,
+    "accuracy": 90
+}

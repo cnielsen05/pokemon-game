@@ -1,0 +1,8 @@
+{
+    "name": "Tackle",
+    "baseDmg": 20,
+    "type": "NORMAL",
+    "isPhysical": true,
+    "maxPP": 30,
+    "accuracy": 95
+}

@@ -1,0 +1,15 @@
+{
+    "name": "Flokefish",
+    "attackStat": 30,
+    "defenseStat": 31,
+    "spAttackStat": 20,
+    "spDefenseStat": 19,
+    "speedStat": 23,
+    "HPStat": 27,
+    "battleType1": "GRASS",
+    "battleType2": "WATER",
+    "battleAttacks": [
+        "Tackle",
+        "Vinewhip"
+    ]
+}

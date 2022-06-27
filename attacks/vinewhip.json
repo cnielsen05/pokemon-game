@@ -1,0 +1,8 @@
+{
+    "name": "Vine Whip",
+    "baseDmg": 40,
+    "type": "GRASS",
+    "isPhysical": true,
+    "maxPP": 20,
+    "accuracy": 90
+}

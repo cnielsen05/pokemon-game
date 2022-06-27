@@ -1,0 +1,15 @@
+{
+    "name": "Scorpoint",
+    "attackStat": 34,
+    "defenseStat": 13,
+    "spAttackStat": 16,
+    "spDefenseStat": 26,
+    "speedStat": 15,
+    "HPStat": 46,
+    "battleType1": "FIRE",
+    "battleType2": "PSYCHIC",
+    "battleAttacks": [
+        "Ember",
+        "Telekinesis"
+    ]
+}

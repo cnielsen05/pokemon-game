@@ -1,0 +1,8 @@
+{
+    "name": "Dragonic Blast",
+    "baseDmg": 60,
+    "type": "DRAGON",
+    "isPhysical": true,
+    "maxPP": 10,
+    "accuracy": 90
+}

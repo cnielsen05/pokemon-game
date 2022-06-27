@@ -1,0 +1,15 @@
+{
+    "name": "Implien",
+    "attackStat": 35,
+    "defenseStat": 15,
+    "spAttackStat": 10,
+    "spDefenseStat": 40,
+    "speedStat": 30,
+    "HPStat": 20,
+    "battleType1": "FIRE",
+    "battleType2": "PSCHIC",
+    "battleAttacks": [
+        "Telekinesis",
+        "Ember"
+    ]
+}

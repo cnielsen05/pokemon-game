@@ -1,0 +1,15 @@
+{
+    "name": "Hebike",
+    "attackStat": 24,
+    "defenseStat": 26,
+    "spAttackStat": 23,
+    "spDefenseStat": 27,
+    "speedStat": 20,
+    "HPStat": 30,
+    "battleType1": "NORMAL",
+    "battleType2": "GRASS",
+    "battleAttacks": [
+        "Tackle",
+        "VineWhip"
+    ]
+}

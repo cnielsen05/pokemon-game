@@ -1,0 +1,8 @@
+{
+    "name": "Bubble",
+    "baseDmg": 35,
+    "type": "WATER",
+    "isPhysical": false,
+    "maxPP": 20,
+    "accuracy": 95
+}

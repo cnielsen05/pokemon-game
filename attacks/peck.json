@@ -1,0 +1,8 @@
+{
+    "name": "Peck",
+    "baseDmg": 25,
+    "type": "FLYING",
+    "isPhysical": true,
+    "maxPP": 20,
+    "accuracy": 95
+}

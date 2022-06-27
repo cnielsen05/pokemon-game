@@ -1,0 +1,16 @@
+{
+    "name": "Clovney",
+    "attackStat": 24,
+    "defenseStat": 26,
+    "spAttackStat": 35,
+    "spDefenseStat": 35,
+    "speedStat": 5,
+    "HPStat": 25,
+    "battleType1": "FAIRY",
+    "battleType2": "NONE",
+    "battleAttacks": [
+        "Happyspark",
+        "Scratch",
+        "Cutenessblast"
+    ]
+}

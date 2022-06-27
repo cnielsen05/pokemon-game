@@ -1,0 +1,8 @@
+{
+    "name": "Frost Peck",
+    "baseDmg": 30,
+    "type": "ICE",
+    "isPhysical": true,
+    "maxPP": 15,
+    "accuracy": 93
+}

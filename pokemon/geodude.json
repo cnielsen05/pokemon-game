@@ -1,0 +1,15 @@
+{
+    "name": "Jarean Geodude",
+    "attackStat": 30,
+    "defenseStat": 35,
+    "spAttackStat": 20,
+    "spDefenseStat": 15,
+    "speedStat": 5,
+    "HPStat": 45,
+    "battleType1": "ROCK",
+    "battleType2": "GHOST",
+    "battleAttacks": [
+        "Tackle",
+        "RockyFist"
+    ]
+}

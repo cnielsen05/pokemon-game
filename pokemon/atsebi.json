@@ -1,0 +1,15 @@
+{
+    "name": "Atsebi",
+    "attackStat": 23,
+    "defenseStat": 20,
+    "spAttackStat": 27,
+    "spDefenseStat": 25,
+    "speedStat": 31,
+    "HPStat": 24,
+    "battleType1": "FIRE",
+    "battleType2": "NONE",
+    "battleAttacks": [
+        "Tackle",
+        "Ember"
+    ]
+}
