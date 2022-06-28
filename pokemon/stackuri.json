@@ -10,7 +10,7 @@
     "battleType2": "NORMAL",
     "catchFactor": 0.25,
     "battleAttacks": [
-        "Lowkick",
-        "Tackle"
+        {"Move": "Tackle", "UnlockLevel": 1},
+        {"Move": "Lowkick", "UnlockLevel": 2}
     ]
 }

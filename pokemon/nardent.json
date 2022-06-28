@@ -10,7 +10,7 @@
     "battleType2": "NONE",
     "catchFactor": 0.01,
     "battleAttacks": [
-        "Tackle",
-        "Watergun"
+        {"Move": "Tackle", "UnlockLevel": 1},
+        {"Move": "Watergun", "UnlockLevel": 2}
     ]
 }

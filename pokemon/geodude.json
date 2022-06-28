@@ -10,7 +10,7 @@
     "battleType2": "GHOST",
     "catchFactor": 0.25,
     "battleAttacks": [
-        "Tackle",
-        "RockyFist"
+        {"Move": "Tackle", "UnlockLevel": 1},
+        {"Move": "Rockyfist", "UnlockLevel": 2}
     ]
 }

@@ -10,7 +10,7 @@
     "battleType2": "GRASS",
     "catchFactor": 0.25,
     "battleAttacks": [
-        "Tackle",
-        "VineWhip"
+        {"Move": "Tackle", "UnlockLevel": 1},
+        {"Move": "Vinewhip", "UnlockLevel": 2}
     ]
 }

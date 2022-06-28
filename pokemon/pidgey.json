@@ -10,7 +10,7 @@
     "battleType2": "NORMAL",
     "catchFactor": 0.25,
     "battleAttacks": [
-        "Tackle",
-        "Peck"
+        {"Move": "Tackle", "UnlockLevel": 1},
+        {"Move": "Peck", "UnlockLevel": 2}
     ]
 }

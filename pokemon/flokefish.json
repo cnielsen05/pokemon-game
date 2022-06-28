@@ -10,7 +10,7 @@
     "battleType2": "WATER",
     "catchFactor": 0.25,
     "battleAttacks": [
-        "Tackle",
-        "Vinewhip"
+        {"Move": "Tackle", "UnlockLevel": 1},
+        {"Move": "Vinewhip", "UnlockLevel": 2}
     ]
 }

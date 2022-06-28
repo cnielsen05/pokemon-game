@@ -1,0 +1,8 @@
+{
+    "name": "Razor Leaf",
+    "baseDmg": 40,
+    "type": "GRASS",
+    "isPhysical": false,
+    "maxPP": 20,
+    "accuracy": 90
+}

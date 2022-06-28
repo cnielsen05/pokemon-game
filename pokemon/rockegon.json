@@ -10,7 +10,7 @@
     "battleType2": "FIRE",
     "catchFactor": 0.25,
     "battleAttacks": [
-        "Ember",
-        "DragonicBlast"
+        {"Move": "Ember", "UnlockLevel": 1},
+        {"Move": "Dragonicblast", "UnlockLevel": 2}
     ]
 }

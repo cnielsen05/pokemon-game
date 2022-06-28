@@ -10,7 +10,7 @@
     "battleType2": "PSYCHIC",
     "catchFactor": 0.25,
     "battleAttacks": [
-        "Ember",
-        "Telekinesis"
+        {"Move": "Ember", "UnlockLevel": 1},
+        {"Move": "Telekinesis", "UnlockLevel": 2}
     ]
 }

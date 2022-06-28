@@ -270,7 +270,7 @@ class Game:
                     case 'CAMP':
                         print("Camping!")
                         for pokemon in self.player_pokemon:
-                            for move in pokemon.battleAttacks:
+                            for move in pokemon.GetBattleAttacks():
                                 move.currentPP = move.maxPP
 
                         print("All of your pokemon have had their PP restored!")

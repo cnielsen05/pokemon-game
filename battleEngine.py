@@ -56,9 +56,9 @@ class BattleEngine:
             elif (userAction == "A"):
                 Formatting.clearScreen()
                 print("Choose attack:")
-                for i in range(0, len(player_pokemon[0].battleAttacks)):
+                for i in range(0, len(player_pokemon[0].GetBattleAttacks())):
                     letterChoice = chr(ord("A") + i)
-                    attack = player_pokemon[0].battleAttacks[i]
+                    attack = player_pokemon[0].GetBattleAttacks()[i]
                     print("%s) %s (%s/%s)" % (letterChoice, attack.name, attack.currentPP, attack.maxPP))
 
                 player_input = input()
@@ -67,7 +67,7 @@ class BattleEngine:
                     input("Input %s unrecognized. Press ENTER to try again." % (player_input))
                     continue
 
-                attackChoice = player_pokemon[0].battleAttacks[attackIndex]
+                attackChoice = player_pokemon[0].GetBattleAttacks()[attackIndex]
 
                 if (attackChoice.currentPP <= 0):
                     input("No more PP available for that attack, choose something else. Press ENTER to try again.")

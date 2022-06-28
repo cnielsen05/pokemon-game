@@ -10,7 +10,7 @@
     "battleType2": "WATER",
     "catchFactor": 0.25,
     "battleAttacks": [
-        "Bubble",
-        "Puffpistol"
+        {"Move": "Bubble", "UnlockLevel": 1},
+        {"Move": "Puffpistol", "UnlockLevel": 2}
     ]
 }

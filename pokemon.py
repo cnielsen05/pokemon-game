@@ -1,3 +1,4 @@
+from typing import List
 from battleAttack import BattleAttack
 from enums import BattleType, Status, PokemonStat
 import json
@@ -17,7 +18,7 @@ class Pokemon:
         self.battleType1 = BattleType.FLYING
         self.battleType2 = BattleType.NORMAL
 
-        self.battleAttacks = [BattleAttack("peck"), BattleAttack("tackle")]
+        self.battleAttacks = [BattleAttack("peck", 2), BattleAttack("tackle", 1)]
 
         if pokemon:
             pokemonFileName = "pokemon/%s.json" % (pokemon)
@@ -36,7 +37,7 @@ class Pokemon:
                 self.catchFactor = data["catchFactor"]
                 self.battleAttacks.clear()
                 for atk in data["battleAttacks"]:
-                    self.battleAttacks.append(BattleAttack(atk))
+                    self.battleAttacks.append(BattleAttack(atk["Move"], atk["UnlockLevel"]))
 
         self.level = 1
         self.XP = 0
@@ -59,9 +60,18 @@ class Pokemon:
             "battleAttacks": []
         }
         for attack in self.battleAttacks:
-            data["battleAttacks"].append(attack.name.lower())
+            data["battleAttacks"].append({"Move": attack.name.lower(), "UnlockLevel": attack.unlockLevel})
 
         return json.dumps(data)
+
+
+    def GetBattleAttacks(self) -> List[BattleAttack]:
+        unlockedAttacks = []
+        for attack in self.battleAttacks:
+            if attack.unlockLevel <= self.level:
+                unlockedAttacks.append(attack)
+
+        return unlockedAttacks
 
 
     def GetStatValue(self, stat: PokemonStat) -> int:
@@ -104,6 +114,8 @@ class Pokemon:
             "Speed": self.GetStatValue(PokemonStat.SPEED),
         }
 
+        oldMoves = self.GetBattleAttacks()
+
         self.level += 1
 
         newStats = {
@@ -114,11 +126,18 @@ class Pokemon:
             "Special_Defense": self.GetStatValue(PokemonStat.SPECIAL_DEFENSE),
             "Speed": self.GetStatValue(PokemonStat.SPEED),
         }
+
+        newMoves = self.GetBattleAttacks()
+
         print("%s has grown to level %s!" % (self.name, self.level))
         self.FullHealHP()
         for key in oldStats:
             if newStats[key] > oldStats[key]:
                 print("%s has gained %s %s!" % (self.name, newStats[key] - oldStats[key], key))
+
+        if len(newMoves) > len(oldMoves):
+            for i in range(len(oldMoves), len(newMoves) - 1):
+                print("%s has learned %s!" % (self.name, newMoves[i].name))
         input("*Press ENTER to continue*")
 
 
@@ -128,8 +147,9 @@ class Pokemon:
 
     def RandomAttack(self, defender: any):
         # Defender is a Pokemon object
-        randomNumber = random.randint(0, len(self.battleAttacks) - 1)
-        randomAttack = self.battleAttacks[randomNumber]
+        attackList = self.GetBattleAttacks()
+        randomNumber = random.randint(0, len(attackList) - 1)
+        randomAttack = attackList[randomNumber]
 
         if (randomAttack.currentPP <= 0):
             print("%s struggles to choose an attack!")
@@ -139,7 +159,7 @@ class Pokemon:
 
 
     def DoAttack(self, attackIndex: int, defender: any):
-        attack = self.battleAttacks[attackIndex]
+        attack = self.GetBattleAttacks()[attackIndex]
 
         attack.currentPP -= 1
         miss = random.randint(1, 100) > attack.accuracy

@@ -10,8 +10,8 @@
     "battleType2": "NONE",
     "catchFactor": 0.25,
     "battleAttacks": [
-        "Happyspark",
-        "Scratch",
-        "Cutenessblast"
+        {"Move": "Happyspark", "UnlockLevel": 1},
+        {"Move": "Scratch", "UnlockLevel": 1},
+        {"Move": "Cutenessblast", "UnlockLevel": 2}
     ]
 }

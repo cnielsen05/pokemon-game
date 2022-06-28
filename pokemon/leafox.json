@@ -10,7 +10,7 @@
     "battleType2": "NONE",
     "catchFactor": 0.01,
     "battleAttacks": [
-        "Tackle",
-        "VineWhip"
+        {"Move": "Tackle", "UnlockLevel": 1},
+        {"Move": "Razorleaf", "UnlockLevel": 2}
     ]
 }

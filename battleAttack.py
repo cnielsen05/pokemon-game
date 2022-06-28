@@ -2,16 +2,18 @@ from enums import BattleType
 import json
 
 class BattleAttack:
-    def __init__(self, attack = None):
+
+    def __init__(self, attackname = None, unlockLevel = None):
         self.name = "Tackle"
         self.baseDmg = 20
         self.type = BattleType.NORMAL
         self.isPhysical = True
         self.maxPP = 20
         self.accuracy = 90
+        self.unlockLevel = 1
         
-        if attack:
-            attackFileName = "attacks/%s.json" % (attack.lower())
+        if attackname:
+            attackFileName = "attacks/%s.json" % (attackname.lower())
 
             with open(attackFileName, 'r') as attackFile:
                 data = json.load(attackFile)
@@ -21,6 +23,8 @@ class BattleAttack:
                 self.isPhysical = data["isPhysical"]
                 self.maxPP = data["maxPP"]
                 self.accuracy = data["accuracy"]
+                if unlockLevel:
+                    self.unlockLevel = unlockLevel
 
         self.currentPP = self.maxPP
 
@@ -35,6 +39,12 @@ class BattleAttack:
             "accuracy": self.accuracy
         }
         return json.dumps(data)
+
+
+class MoveData():
+    def __init__(self):
+        self.Move = "Tackle"
+        self.UnlockLevel = 1
 
 
 if __name__ == "__main__":
