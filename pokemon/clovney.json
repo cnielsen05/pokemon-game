@@ -8,6 +8,7 @@
     "HPStat": 25,
     "battleType1": "FAIRY",
     "battleType2": "NONE",
+    "catchFactor": 0.25,
     "battleAttacks": [
         "Happyspark",
         "Scratch",

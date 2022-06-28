@@ -1,29 +1,30 @@
-import os
 import random
-from enums import Item, PokemonStat, Status
+from enums import ItemType, PokemonStat, Status
+from formatting import Formatting
+from item import Item
 from pokemon import Pokemon
 from typing import List
 
 class BattleEngine:
     # def __init__(self):
 
-    def DoWildBattle(trainerPokemon: List[Pokemon], wildPokemon: Pokemon, items: List[Item]):
+    def DoWildBattle(player_pokemon: List[Pokemon], wildPokemon: Pokemon, items: List[ItemType]):
         continueBattling = True
         while (continueBattling):
-            os.system("cls")
+            Formatting.clearScreen()
             if (wildPokemon.currentHP <= 0):
                 continueBattling = False
                 xpGain = wildPokemon.GetExperienceValue()
                 print("%s has fainted." % (wildPokemon.name))
                 print()
-                print("%s has gained %s XP!" % (trainerPokemon[0].name, xpGain))
-                trainerPokemon[0].GainExperience(xpGain)
+                print("%s has gained %s XP!" % (player_pokemon[0].name, xpGain))
+                player_pokemon[0].GainExperience(xpGain)
                 input("*Press ENTER to continue*")
-                os.system("cls")
+                Formatting.clearScreen()
                 continue
 
-            if (trainerPokemon[0].currentHP <= 0):
-                BattleEngine.SwapPokemon(trainerPokemon)
+            if (player_pokemon[0].currentHP <= 0):
+                BattleEngine.SwapPokemon(player_pokemon)
 
             wildPokemonHealthiness = "completely untouched"
             healthPercentage = wildPokemon.currentHP / wildPokemon.calculateMaxHp()
@@ -38,24 +39,24 @@ class BattleEngine:
             if (healthPercentage < 0.1):
                 wildPokemonHealthiness = "like it is about to faint"
             print("The wild %s looks %s." % (wildPokemon.name, wildPokemonHealthiness))
-            print("Your %s has %s/%s HP remaining." % (trainerPokemon[0].name, trainerPokemon[0].currentHP, trainerPokemon[0].calculateMaxHp()))
+            print("Your %s has %s/%s HP remaining." % (player_pokemon[0].name, player_pokemon[0].currentHP, player_pokemon[0].calculateMaxHp()))
 
             print()
             for action in ("A) ATTACK", "B) ITEM", "C) SWAP POKEMON", "D) RUN"):
                 print(action)
 
             userAction = input()
-            os.system("cls")
+            Formatting.clearScreen()
 
             if (userAction != "A" and userAction != "B" and userAction != "C" and userAction != "D"):
                 input("Input %s unrecognized. Press ENTER to try again." % (userAction))
                 continue
             elif (userAction == "A"):
-                os.system("cls")
+                Formatting.clearScreen()
                 print("Choose attack:")
-                for i in range(0, len(trainerPokemon[0].battleAttacks)):
+                for i in range(0, len(player_pokemon[0].battleAttacks)):
                     letterChoice = chr(ord("A") + i)
-                    attack = trainerPokemon[0].battleAttacks[i]
+                    attack = player_pokemon[0].battleAttacks[i]
                     print("%s) %s (%s/%s)" % (letterChoice, attack.name, attack.currentPP, attack.maxPP))
 
                 player_input = input()
@@ -64,24 +65,24 @@ class BattleEngine:
                     input("Input %s unrecognized. Press ENTER to try again." % (player_input))
                     continue
 
-                attackChoice = trainerPokemon[0].battleAttacks[attackIndex]
+                attackChoice = player_pokemon[0].battleAttacks[attackIndex]
 
                 if (attackChoice.currentPP <= 0):
                     input("No more PP available for that attack, choose something else. Press ENTER to try again.")
                     continue
 
-                os.system("cls")
-                print("You: %s, use %s!" % (trainerPokemon[0].name, attackChoice.name))
+                Formatting.clearScreen()
+                print("You: %s, use %s!" % (player_pokemon[0].name, attackChoice.name))
                 print()
-                if (wildPokemon.GetStatValue(PokemonStat.SPEED) > trainerPokemon[0].GetStatValue(PokemonStat.SPEED)):
+                if (wildPokemon.GetStatValue(PokemonStat.SPEED) > player_pokemon[0].GetStatValue(PokemonStat.SPEED)):
                     print("The wild %s is faster!" % (wildPokemon.name))
-                    wildPokemon.RandomAttack(trainerPokemon[0])
-                    if not BattleEngine.CheckForKnockout(trainerPokemon[0]):
-                        trainerPokemon[0].DoAttack(attackIndex, wildPokemon)
+                    wildPokemon.RandomAttack(player_pokemon[0])
+                    if not BattleEngine.CheckForKnockout(player_pokemon[0]):
+                        player_pokemon[0].DoAttack(attackIndex, wildPokemon)
                 else:
-                    trainerPokemon[0].DoAttack(attackIndex, wildPokemon)
+                    player_pokemon[0].DoAttack(attackIndex, wildPokemon)
                     if not BattleEngine.CheckForKnockout(wildPokemon):
-                        wildPokemon.RandomAttack(trainerPokemon[0])
+                        wildPokemon.RandomAttack(player_pokemon[0])
 
                 input("*Press ENTER to continue...*")
             elif (userAction == "B"):
@@ -90,7 +91,7 @@ class BattleEngine:
                     input("*Press ENTER to continue*")
                     continue
 
-                os.system("cls")
+                Formatting.clearScreen()
                 itemCounter = 0
                 for item in items:
                     optionIdentifier = chr(ord("A") + itemCounter)
@@ -104,31 +105,33 @@ class BattleEngine:
 
                 itemUse = items[index]
                 match itemUse:
-                    case Item.POTION:
-                        print("You use POTION on %s!" % (trainerPokemon[0].name))
-                        missingHP = trainerPokemon[0].calculateMaxHp() - trainerPokemon[0].currentHP
-                        if missingHP >= 30:
-                            trainerPokemon[0].currentHP += 30
-                            print("%s heals for 30 HP!" % (trainerPokemon[0].name))
+                    case ItemType.POTION:
+                        # The Item.UsePotion(int) function returns false if the player fails to select a target.
+                        # If that happens, we should skip the rest of execution and go back to getting player input.
+                        if not Item.UsePotion(30, player_pokemon):
+                            continue
                         else:
-                            trainerPokemon[0].currentHP += missingHP
-                            print("%s heals for %s HP!" % (trainerPokemon[0].name, missingHP))
+                            items.pop(index)
 
-                    case Item.POKEBALL:
-                        print("Not yet implemented, sorry!")
+                    case ItemType.POKEBALL:
+                        caught = Item.UsePokeball(wildPokemon, player_pokemon, ItemType.POKEBALL)
+                        items.pop(index)
+                        if caught:
+                            continueBattling = False
+                            continue
 
-                wildPokemon.RandomAttack(trainerPokemon[0])
+                wildPokemon.RandomAttack(player_pokemon[0])
                 input("*Press ENTER to continue...*")
 
 
             elif (userAction == "C"):
-                BattleEngine.SwapPokemon(trainerPokemon)
+                BattleEngine.SwapPokemon(player_pokemon)
             elif (userAction == "D"):
-                continueBattling = BattleEngine.TryToRun(trainerPokemon[0], wildPokemon)
+                continueBattling = BattleEngine.TryToRun(player_pokemon[0], wildPokemon)
 
                 # Get hit if they don't escape
                 if continueBattling:
-                    wildPokemon.RandomAttack(trainerPokemon[0])
+                    wildPokemon.RandomAttack(player_pokemon[0])
 
 
     def TryToRun(trainerPokemon: Pokemon, wildPokemon: Pokemon) -> bool:
@@ -168,7 +171,7 @@ class BattleEngine:
             input("*Press ENTER to quit*")
             quit()
 
-        os.system('cls')
+        Formatting.clearScreen()
         print("Choose which Pokemon to send out next:")
         optionCounter = 0
         for p in pokemonList:

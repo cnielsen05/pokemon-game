@@ -8,6 +8,7 @@
     "HPStat": 27,
     "battleType1": "FLYING",
     "battleType2": "WATER",
+    "catchFactor": 0.25,
     "battleAttacks": [
         "Bubble",
         "Puffpistol"

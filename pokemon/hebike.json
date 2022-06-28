@@ -8,6 +8,7 @@
     "HPStat": 30,
     "battleType1": "NORMAL",
     "battleType2": "GRASS",
+    "catchFactor": 0.25,
     "battleAttacks": [
         "Tackle",
         "VineWhip"

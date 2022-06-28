@@ -8,6 +8,7 @@
     "HPStat": 32,
     "battleType1": "WATER",
     "battleType2": "NONE",
+    "catchFactor": 0.01,
     "battleAttacks": [
         "Tackle",
         "Watergun"

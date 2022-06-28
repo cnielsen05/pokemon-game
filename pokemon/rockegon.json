@@ -8,6 +8,7 @@
     "HPStat": 30,
     "battleType1": "DRAGON",
     "battleType2": "FIRE",
+    "catchFactor": 0.25,
     "battleAttacks": [
         "Ember",
         "DragonicBlast"

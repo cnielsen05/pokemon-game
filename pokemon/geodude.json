@@ -8,6 +8,7 @@
     "HPStat": 45,
     "battleType1": "ROCK",
     "battleType2": "GHOST",
+    "catchFactor": 0.25,
     "battleAttacks": [
         "Tackle",
         "RockyFist"

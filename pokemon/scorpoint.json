@@ -8,6 +8,7 @@
     "HPStat": 46,
     "battleType1": "FIRE",
     "battleType2": "PSYCHIC",
+    "catchFactor": 0.25,
     "battleAttacks": [
         "Ember",
         "Telekinesis"

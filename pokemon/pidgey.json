@@ -8,6 +8,7 @@
     "HPStat": 24,
     "battleType1": "FLYING",
     "battleType2": "NORMAL",
+    "catchFactor": 0.25,
     "battleAttacks": [
         "Tackle",
         "Peck"

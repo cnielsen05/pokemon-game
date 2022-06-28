@@ -1,22 +1,25 @@
 # main.py
 import time
-import os
 import random
 from typing import List
 from battleEngine import BattleEngine
-from enums import Item
-from pokemon import Pokemon, BattleAttack
+from enums import ItemType
+from formatting import Formatting
+from item import Item
+from pokemon import Pokemon
 from threading import Thread
 
-
-thread_running = True
+# Globals for asynchronous code to share information
+isWalking = True
+isBattling = False
 steps_taken = 0
 
 class Game:
     def __init__(self):
         self.keepPlaying = True
-        self.current_pokemon = []
+        self.player_pokemon = []
         self.items = []
+        self.playerMoney = 0
         self.state = {
             "choose_starter_complete": False,
             "route_one_complete": False,
@@ -24,10 +27,11 @@ class Game:
         }
         self.player_options = []
 
+
     def intro(self):
         answered_mom = False
         while (not answered_mom):
-            os.system('cls')
+            Formatting.clearScreen()
             print("Professor: Hello, and welcome to the world of Pokemon. I am Professor Mulberry and you are in the great Jarea region.")
             print("Professor: I am hiring trainers in this region for...RESEARCH! I am getting too old to do it myself, so now... LET'S START YOUR JOURNEY!")
             print("")
@@ -54,13 +58,13 @@ class Game:
             
 
         input("\n*Press ENTER to continue...*")
-        os.system('cls')
+        Formatting.clearScreen()
         print("In the morning...")
         print("")
         print("*You wake up*")
 
         input("\n*Press ENTER to continue...*")
-        os.system('cls')
+        Formatting.clearScreen()
         print("Mom: Finally you woke up")
         print("You: What time is it")
         print("Mom: 10:00")
@@ -68,7 +72,7 @@ class Game:
         print("You: I'm late!")
 
         input("\n*Press ENTER to continue...*")
-        os.system('cls')
+        Formatting.clearScreen()
         print("Mom: For what?")
         print("You: Professor Mulberry is giving out starters for the trainers he is hiring!")
         print("Mom: OHHHHH that.")
@@ -76,14 +80,14 @@ class Game:
         print("*You fall down the stairs*")
 
         input("\n*Press ENTER to continue...*")
-        os.system('cls')
+        Formatting.clearScreen()
         print("You: I'm okay")
         print("*You quickly get ready and run out the door before your mom can finish her sentance*")
         print("Mom: -t that starts in an hour")
         print("Mom: Oh he's already gone!")
 
         input("\n*Press ENTER to continue...*")
-        os.system('cls')
+        Formatting.clearScreen()
         print("")
         print("*At the door of Professor Mulberrys lab*")
         print("")
@@ -113,13 +117,13 @@ class Game:
             print("*your rival slams the door shut")
 
         input("\n*Press ENTER to continue...*")
-        os.system("cls")
+        Formatting.clearScreen()
 
         print("When Professor Mulberry starts giving out the Pokemon")
         print("*You enter the Lab*")
         input("\n*Press ENTER to continue...*")
         while (not self.state["choose_starter_complete"]):
-            os.system('cls')
+            Formatting.clearScreen()
             self.player_options.clear()
             self.player_options.append("A) Atsebi (Fire Type)")
             self.player_options.append("B) Nardent (Water Type)")
@@ -143,53 +147,156 @@ class Game:
             else:
                 starter.level = 3
                 starter.FullHealHP()
-                self.current_pokemon.append(starter)
+                self.player_pokemon.append(starter)
 
-            if (len(self.current_pokemon) > 0):
-                print("Professor: Good choice, I'm sure %s will be an excellent companion on your journey!" % (self.current_pokemon[0].name))
+            if (len(self.player_pokemon) > 0):
+                print("Professor: Good choice, I'm sure %s will be an excellent companion on your journey!" % (self.player_pokemon[0].name))
                 self.state["choose_starter_complete"] = True
 
-    def doWalk(self, route_length: int, wildPokemonList: List[str], trainerPokemon: List[Pokemon], trainerItems: List[Item]):
-        global thread_running
-        global steps_taken
-        start_time = time.time()
+            print("Professor: You can begin your journey on Route 1 now, unless you have more questions for me?")
+            player_choice = input("*Ask a question? Or press ENTER to continue...*")
+            if player_choice != "":
+                print("Professor: ...")
+                time.sleep(3)
+                print("Professor: Oh! You actually want to know something from me? %s..." % (player_choice))
+                print("Professor: Sorry to say, I'm stumped! I wasn't trained to handle this kind of thing!")
+                time.sleep(3)
+                print("Professor: ...")
+                time.sleep(3)
+                print("Professor: ...")
+                time.sleep(3)
+                print("Professor: !!! Wait! I've got it! I'll give you STUFF instead! Let's call it compensation for my inadequacies.")
+                input("Professor: Have these potions and pokeballs, they should help you on your journey.\nPress ENTER to continue...")
+                Formatting.clearScreen()
+                self.items.append(ItemType.POTION)
+                self.items.append(ItemType.POTION)
+                self.items.append(ItemType.POTION)
+                self.items.append(ItemType.POKEBALL)
+                self.items.append(ItemType.POKEBALL)
+                self.items.append(ItemType.POKEBALL)
+                print("*You gain 3x Pokeball!")
+                print("*You gain 3x Potion!")
+                input("*Press ENTER to continue...*")
 
-        while thread_running:
+
+    def doWalk(self, route_length: int, wildPokemonList: List[str], trainerPokemon: List[Pokemon], trainerItems: List[ItemType]):
+        global isWalking
+        global steps_taken
+        isWalking = True
+
+        start_time = time.time()
+        userInterrupt = Thread(target=self.handleUserInput)
+        userInterrupt.start()
+
+        while isWalking and steps_taken <= route_length:
             time.sleep(0.1)
             if time.time() - start_time >= 1:
                 start_time = time.time()
                 steps_taken += 1
-                print("*You are walking along the path, nothing interesting happening...* (step %s of %s)" % (steps_taken, route_length))
+                print("*You are traveling along the route... press ENTER to pause (step %s of %s)" % (steps_taken, route_length))
                 Game.DoWildPokemonEncounterChance(wildPokemonList, trainerPokemon, trainerItems)
+
+        userInterrupt.join()
 
 
     def handleUserInput(self):
-        global thread_running
+        global isWalking
+        global isBattling
 
         user_input = input()
-        print("User typed: %s" % (user_input))
+
+        if not isBattling and isWalking:
+            isWalking = False
+            awaitingChoice = True
+
+            while (awaitingChoice):
+                Formatting.clearScreen()
+                commands = ['ITEM', 'CAMP', 'RESUME JOURNEY']
+                command_counter = 0
+                for command in commands:
+                    print("%s) %s" % (chr(ord('A') + command_counter), command))
+                    command_counter += 1
+
+                user_input = input()
+                chosen_index = ord(user_input[0]) - ord('A')
+                if chosen_index < 0 or chosen_index > len(commands) - 1:
+                    input("Input %s was not recognized. Press ENTER to try again." % user_input)
+                    continue
+
+                match commands[chosen_index]:
+                    case 'ITEM':
+                        if len(self.items) == 0:
+                            print("You have no items.")
+                            input("*Press ENTER to continue*")
+                            continue
+
+                        Formatting.clearScreen()
+                        counter = 0
+                        for item in self.items:
+                            identifier = chr(ord("A") + counter)
+                            print("%s) %s" % (identifier, item))
+
+                        player_input = input()
+                        index = ord(player_input[0]) - ord("A")
+                        if (index < 0 or index > len(self.items) - 1):
+                            input("Input %s not recognized. Press ENTER to try again.")
+                            continue
+
+                        itemToUse = self.items[index]
+                        match itemToUse:
+                            case ItemType.POTION:
+                                # The Item.UsePotion(int) function returns false if the player fails to select a target.
+                                # If that happens, we should skip the rest of execution and go back to getting player input.
+                                if not Item.UsePotion(30, self.player_pokemon):
+                                    continue
+                                else:
+                                    self.items.pop(index)
+
+                            case ItemType.POKEBALL:
+                                print("*You roll the pokeball back and forth in your palm, imagining your next throw...*")
+
+                        awaitingChoice = False
+
+                    case 'CAMP':
+                        print("Camping!")
+                        for pokemon in self.player_pokemon:
+                            for move in pokemon.battleAttacks:
+                                move.currentPP = move.maxPP
+
+                        print("All of your pokemon have had their PP restored!")
+                        input("*Press ENTER to continue...*")
+                        awaitingChoice = False
+
+                    case 'RESUME JOURNEY':
+                        Formatting.clearScreen()
+                        print("Resuming the journey!")
+                        print()
+                        awaitingChoice = False
 
 
-    def DoWildPokemonEncounterChance(wildPokemonList: List[str], trainerPokemon: List[Pokemon], trainerItems: List[Item]):
-        global thread_running
+    def DoWildPokemonEncounterChance(wildPokemonList: List[str], trainerPokemon: List[Pokemon], trainerItems: List[ItemType]):
+        global isWalking
+        global isBattling
 
         encounterWildPokemon = random.randint(0,9) > 7
         if (encounterWildPokemon):
-            thread_running = False
+            isWalking = False
+            isBattling = True
             whichPokemon = random.randint(0, len(wildPokemonList) - 1)
             wildPokemon = Pokemon(wildPokemonList[whichPokemon])
-            print("A wild %s has appeared!" % (wildPokemon.name))
             print()
+            print("A wild %s has appeared!" % (wildPokemon.name))
             input("*Press ENTER to continue...*")
             BattleEngine.DoWildBattle(trainerPokemon, wildPokemon, trainerItems)
+            isBattling = False
 
     
     def route_one(self):
+        Formatting.clearScreen()
         print("Starting the journey along Route 1.")
         print()
-        input("*Press ENTER to continue...*")
 
-        global thread_running
+        global isWalking
         global steps_taken
         route_length = 30
         # Define which pokemon can show up. Make more common pokemon show up more often.
@@ -216,18 +323,12 @@ class Game:
             "stackuri",
             "stackuri"]
 
-        hiddenItemList = [Item.POTION, Item.POTION, Item.POKEBALL]
+        hiddenItemList = [ItemType.POTION, ItemType.POTION, ItemType.POKEBALL]
 
         steps_taken = 0
         while (steps_taken < route_length):
-            thread_running = True
-            walkThread = Thread(target=self.doWalk(route_length, wildPokemonList, self.current_pokemon, self.items))
-            userInterrupt = Thread(target=self.handleUserInput)
-
-            walkThread.start()
-            userInterrupt.start()
-            userInterrupt.join()
-            thread_running = False
+            self.doWalk(route_length, wildPokemonList, self.player_pokemon, self.items)
+            Formatting.clearScreen()
             
             # if random.randint(0,19) > 18:
             #     print("You found a hidden item!")
@@ -248,7 +349,7 @@ class Game:
         # Define which pokemon can show up. Make more common pokemon show up more often.
         wildPokemonList = ["geodude", "rockegon", "geodude", "geodude", "geodude", "rockegon", "pidgey", "jareanpidgey", "jareanpidgey","jareanpidgey", "jareanpidgey", "implien", "implien"]
 
-        hiddenItemList = [Item.POTION, Item.POTION, Item.POKEBALL]
+        hiddenItemList = [ItemType.POTION, ItemType.POTION, ItemType.POKEBALL]
 
         steps_taken = 0
         while (steps_taken < route_length):
@@ -262,7 +363,7 @@ class Game:
                 print("A wild %s has appeared!" % (wildPokemon.name))
                 print()
                 input("*Press ENTER to continue...*")
-                BattleEngine.DoWildBattle(self.current_pokemon, wildPokemon, self.items)
+                BattleEngine.DoWildBattle(self.player_pokemon, wildPokemon, self.items)
             else:
                 time.sleep(1)
                 if random.randint(0,19) > 18:
@@ -280,7 +381,7 @@ class Game:
         print("You: Now time to the first Gym the Grass Gym")
 
         input("\n*Press ENTER to continue...*")
-        os.system('cls')
+        Formatting.clearScreen()
 
         print("*BOOOOOM*")
         print("*An explosion comes from the Grass Gym")
@@ -288,7 +389,7 @@ class Game:
         print("*You start running towards the explosion*")
 
         input("\n*Press ENTER to continue...*")
-        os.system('cls')
+        Formatting.clearScreen()
 
     def run(self):
         while (self.keepPlaying):

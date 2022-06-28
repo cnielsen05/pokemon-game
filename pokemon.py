@@ -12,6 +12,7 @@ class Pokemon:
         self.spDefenseStat = 28
         self.speedStat = 31
         self.HPStat = 19
+        self.catchFactor = 0.25
 
         self.battleType1 = BattleType.FLYING
         self.battleType2 = BattleType.NORMAL
@@ -32,6 +33,7 @@ class Pokemon:
                 self.HPStat = data["HPStat"]
                 self.battleType1 = data["battleType1"]
                 self.battleType2 = data["battleType2"]
+                self.catchFactor = data["catchFactor"]
                 self.battleAttacks.clear()
                 for atk in data["battleAttacks"]:
                     self.battleAttacks.append(BattleAttack(atk))

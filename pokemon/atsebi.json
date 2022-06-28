@@ -8,6 +8,7 @@
     "HPStat": 24,
     "battleType1": "FIRE",
     "battleType2": "NONE",
+    "catchFactor": 0.01,
     "battleAttacks": [
         "Tackle",
         "Ember"

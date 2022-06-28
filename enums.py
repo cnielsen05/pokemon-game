@@ -39,7 +39,7 @@ class PokemonStat(Enum):
     HP = 5
     SPEED = 6
 
-class Item(str, Enum):
+class ItemType(str, Enum):
     POTION = 'POTION'
     SUPER_POTION = 'SUPER_POTION'
     POKEBALL = 'POKEBALL'

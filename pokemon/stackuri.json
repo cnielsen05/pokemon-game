@@ -8,6 +8,7 @@
     "HPStat": 30,
     "battleType1": "FIGHTING",
     "battleType2": "NORMAL",
+    "catchFactor": 0.25,
     "battleAttacks": [
         "Lowkick",
         "Tackle"
