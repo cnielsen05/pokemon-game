@@ -179,7 +179,14 @@ class Game:
                 input("*Press ENTER to continue...*")
 
 
-    def doWalk(self, route_length: int, wildPokemonList: List[str], trainerPokemon: List[Pokemon], trainerItems: List[ItemType]):
+    def doWalk(self, 
+        route_length: int, 
+        wildPokemonList: List[str], 
+        trainerPokemon: List[Pokemon], 
+        trainerItems: List[ItemType], 
+        hiddenItems: List[ItemType], 
+        wildPokemonLevelRange: List[int]):
+
         global isWalking
         global steps_taken
         isWalking = True
@@ -188,13 +195,15 @@ class Game:
         userInterrupt = Thread(target=self.handleUserInput)
         userInterrupt.start()
 
-        while isWalking and steps_taken <= route_length:
+        while isWalking and steps_taken < route_length:
             time.sleep(0.1)
             if time.time() - start_time >= 1:
                 start_time = time.time()
                 steps_taken += 1
                 print("*You are traveling along the route... press ENTER to pause (step %s of %s)" % (steps_taken, route_length))
-                Game.DoWildPokemonEncounterChance(wildPokemonList, trainerPokemon, trainerItems)
+                hadEncounter = Game.DoWildPokemonEncounterChance(wildPokemonList, trainerPokemon, trainerItems, wildPokemonLevelRange)
+                if not hadEncounter:
+                    self.FindHiddenItemChance(hiddenItems)
 
         userInterrupt.join()
 
@@ -234,6 +243,7 @@ class Game:
                         counter = 0
                         for item in self.items:
                             identifier = chr(ord("A") + counter)
+                            counter += 1
                             print("%s) %s" % (identifier, item))
 
                         player_input = input()
@@ -274,7 +284,17 @@ class Game:
                         awaitingChoice = False
 
 
-    def DoWildPokemonEncounterChance(wildPokemonList: List[str], trainerPokemon: List[Pokemon], trainerItems: List[ItemType]):
+    def FindHiddenItemChance(self, hiddenItemList: List[ItemType]):
+        if random.randint(1,100) > 95:
+            print("You found a hidden item!")
+            whichItem = random.randint(0,len(hiddenItemList) - 1)
+            found_item = hiddenItemList[whichItem]
+            print("You have acquired... %s!" % (found_item))
+            self.items.append(found_item)
+            input("*Press ENTER to continue...*")
+
+
+    def DoWildPokemonEncounterChance(wildPokemonList: List[str], trainerPokemon: List[Pokemon], trainerItems: List[ItemType], wildPokemonLevelRange: List[int]) -> bool:
         global isWalking
         global isBattling
 
@@ -284,11 +304,16 @@ class Game:
             isBattling = True
             whichPokemon = random.randint(0, len(wildPokemonList) - 1)
             wildPokemon = Pokemon(wildPokemonList[whichPokemon])
+            levelIndex = random.randint(0, len(wildPokemonLevelRange) - 1)
+            wildPokemon.level = wildPokemonLevelRange[levelIndex]
+            wildPokemon.FullHealHP()
             print()
             print("A wild %s has appeared!" % (wildPokemon.name))
             input("*Press ENTER to continue...*")
             BattleEngine.DoWildBattle(trainerPokemon, wildPokemon, trainerItems)
             isBattling = False
+
+        return encounterWildPokemon
 
     
     def route_one(self):
@@ -322,25 +347,18 @@ class Game:
             "stackuri",
             "stackuri",
             "stackuri"]
+        wildPokemonLevelRange = [1,2]
 
         hiddenItemList = [ItemType.POTION, ItemType.POTION, ItemType.POKEBALL]
 
         steps_taken = 0
         while (steps_taken < route_length):
-            self.doWalk(route_length, wildPokemonList, self.player_pokemon, self.items)
+            self.doWalk(route_length, wildPokemonList, self.player_pokemon, self.items, hiddenItemList, wildPokemonLevelRange)
             Formatting.clearScreen()
-            
-            # if random.randint(0,19) > 18:
-            #     print("You found a hidden item!")
-            #     whichItem = random.randint(0,len(hiddenItemList) - 1)
-            #     found_item = hiddenItemList[whichItem]
-            #     print("You have acquired... %s!" % (found_item))
-            #     self.items.append(found_item)
-            #     input("*Press ENTER to continue...*")
-                
         
         print("You have reached the end of Route 1!")
         self.state["route_one_complete"] = True
+
 
     def route_two(self):
         print("Starting route two!")
@@ -348,32 +366,13 @@ class Game:
         route_length = 50
         # Define which pokemon can show up. Make more common pokemon show up more often.
         wildPokemonList = ["geodude", "rockegon", "geodude", "geodude", "geodude", "rockegon", "pidgey", "jareanpidgey", "jareanpidgey","jareanpidgey", "jareanpidgey", "implien", "implien"]
-
+        wildPokemonLevelRange = [1, 2, 3]
         hiddenItemList = [ItemType.POTION, ItemType.POTION, ItemType.POKEBALL]
 
         steps_taken = 0
         while (steps_taken < route_length):
-            steps_taken += 1
-            print("*You are walking along the path, nothing interesting happening...* (step %s of %s)" % (steps_taken, route_length))
-
-            encounterWildPokemon = random.randint(0,9) > 7
-            if (encounterWildPokemon):
-                whichPokemon = random.randint(0, len(wildPokemonList) - 1)
-                wildPokemon = Pokemon(wildPokemonList[whichPokemon])
-                print("A wild %s has appeared!" % (wildPokemon.name))
-                print()
-                input("*Press ENTER to continue...*")
-                BattleEngine.DoWildBattle(self.player_pokemon, wildPokemon, self.items)
-            else:
-                time.sleep(1)
-                if random.randint(0,19) > 18:
-                    print("You found a hidden item!")
-
-                    whichItem = random.randint(0,len(hiddenItemList) - 1)
-                    found_item = hiddenItemList[whichItem]
-                    print("You have acquired... %s!" % (found_item))
-                    self.items.append(found_item)
-                    input("*Press ENTER to continue...*")
+            self.doWalk(route_length, wildPokemonList, self.player_pokemon, self.items, hiddenItemList, wildPokemonLevelRange)
+            Formatting.clearScreen()
                 
         
         print("You have reached the end of Route 2!")

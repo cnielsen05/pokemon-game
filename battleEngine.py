@@ -1,5 +1,7 @@
 import random
-from enums import ItemType, PokemonStat, Status
+from time import sleep
+from battleAttack import BattleAttack
+from enums import BattleType, ItemType, PokemonStat, Status
 from formatting import Formatting
 from item import Item
 from pokemon import Pokemon
@@ -42,13 +44,13 @@ class BattleEngine:
             print("Your %s has %s/%s HP remaining." % (player_pokemon[0].name, player_pokemon[0].currentHP, player_pokemon[0].calculateMaxHp()))
 
             print()
-            for action in ("A) ATTACK", "B) ITEM", "C) SWAP POKEMON", "D) RUN"):
+            for action in ("A) ATTACK", "B) ITEM", "C) SWAP POKEMON", "D) RUN", "E) POKEDEX"):
                 print(action)
 
             userAction = input()
             Formatting.clearScreen()
 
-            if (userAction != "A" and userAction != "B" and userAction != "C" and userAction != "D"):
+            if (userAction != "A" and userAction != "B" and userAction != "C" and userAction != "D" and userAction != "E"):
                 input("Input %s unrecognized. Press ENTER to try again." % (userAction))
                 continue
             elif (userAction == "A"):
@@ -132,6 +134,17 @@ class BattleEngine:
                 # Get hit if they don't escape
                 if continueBattling:
                     wildPokemon.RandomAttack(player_pokemon[0])
+            elif (userAction == "E"):
+                print("You pull out your Pokedex and point it at the %s..." % (wildPokemon.name))
+                print("*Analyzing...*")
+                sleep(3)
+                typePhrase = "%s" % (wildPokemon.battleType1)
+                if wildPokemon.battleType2 != BattleType.NONE:
+                    typePhrase += " and %s" % (wildPokemon.battleType2)
+
+                print("%s, a %s type. This one appears to be level %s." % (wildPokemon.name, typePhrase, wildPokemon.level))
+                print()
+                input("*Press ENTER to continue...*")
 
 
     def TryToRun(trainerPokemon: Pokemon, wildPokemon: Pokemon) -> bool:
