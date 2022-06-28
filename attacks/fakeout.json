@@ -1,0 +1,8 @@
+{
+    "name": "Fake Out",
+    "baseDmg": 20,
+    "type": "NORMAL",
+    "isPhysical": false,
+    "maxPP": 30,
+    "accuracy": 95
+}

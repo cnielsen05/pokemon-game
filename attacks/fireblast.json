@@ -1,0 +1,8 @@
+{
+    "name": "Fire Blast",
+    "baseDmg": 100,
+    "type": "FIRE",
+    "isPhysical": false,
+    "maxPP": 5,
+    "accuracy": 85
+}

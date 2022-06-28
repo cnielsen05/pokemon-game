@@ -11,6 +11,7 @@
     "catchFactor": 0.01,
     "battleAttacks": [
         {"Move": "Tackle", "UnlockLevel": 1},
-        {"Move": "Watergun", "UnlockLevel": 2}
+        {"Move": "Watergun", "UnlockLevel": 2},
+        {"Move": "Hydropump", "UnlockLevel": 5}
     ]
 }

@@ -1,0 +1,8 @@
+{
+    "name": "Solar Beam",
+    "baseDmg": 120,
+    "type": "GRASS",
+    "isPhysical": false,
+    "maxPP": 10,
+    "accuracy": 90
+}

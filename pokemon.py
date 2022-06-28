@@ -136,9 +136,10 @@ class Pokemon:
                 print("%s has gained %s %s!" % (self.name, newStats[key] - oldStats[key], key))
 
         if len(newMoves) > len(oldMoves):
-            for i in range(len(oldMoves), len(newMoves) - 1):
+            i = len(oldMoves)
+            while i <= len(newMoves) - 1:
                 print("%s has learned %s!" % (self.name, newMoves[i].name))
-        input("*Press ENTER to continue*")
+                i += 1
 
 
     def FullHealHP(self):
@@ -183,7 +184,7 @@ class Pokemon:
             print("It's not very effective!")
             
         defenseValue = self.GetStatValue(PokemonStat.DEFENSE) if isPhysical else self.GetStatValue(PokemonStat.SPECIAL_DEFENSE)
-        damage = 2 + (int)((((attackBaseDmg * effectivenessMultiplier) / 5.0 + 2 ) * (attackerOffensiveStatValue / defenseValue) / 3.0) + random.randint(0,3))
+        damage = 2 + (int)((((attackBaseDmg * effectivenessMultiplier) + 2 ) * (attackerOffensiveStatValue * 0.75 / (5 * defenseValue))) + random.randint(0,3))
         crit = random.randint(0,9) > 8
         critString = ""
         if crit:

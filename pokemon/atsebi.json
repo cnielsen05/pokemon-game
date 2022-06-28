@@ -11,6 +11,7 @@
     "catchFactor": 0.01,
     "battleAttacks": [
         {"Move": "Tackle", "UnlockLevel": 1},
-        {"Move": "Ember", "UnlockLevel": 3}
+        {"Move": "Ember", "UnlockLevel": 3},
+        {"Move": "Fireblast", "UnlockLevel": 5}
     ]
 }

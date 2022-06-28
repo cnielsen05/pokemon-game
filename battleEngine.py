@@ -120,6 +120,12 @@ class BattleEngine:
                         items.pop(index)
                         if caught:
                             continueBattling = False
+                            xpGain = wildPokemon.GetExperienceValue()
+                            print()
+                            print("%s has gained %s XP!" % (player_pokemon[0].name, xpGain))
+                            player_pokemon[0].GainExperience(xpGain)
+                            input("*Press ENTER to continue*")
+                            Formatting.clearScreen()
                             continue
 
                 wildPokemon.RandomAttack(player_pokemon[0])

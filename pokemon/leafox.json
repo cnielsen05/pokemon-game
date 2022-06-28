@@ -1,16 +1,17 @@
 {
     "name": "Leafox",
-    "attackStat": 10,
-    "defenseStat": 24,
-    "spAttackStat": 25,
-    "spDefenseStat": 26,
-    "speedStat": 35,
-    "HPStat": 30,
+    "attackStat": 13,
+    "defenseStat": 23,
+    "spAttackStat": 40,
+    "spDefenseStat": 16,
+    "speedStat": 32,
+    "HPStat": 26,
     "battleType1": "GRASS",
     "battleType2": "NONE",
     "catchFactor": 0.01,
     "battleAttacks": [
-        {"Move": "Tackle", "UnlockLevel": 1},
-        {"Move": "Razorleaf", "UnlockLevel": 2}
+        {"Move": "Fakeout", "UnlockLevel": 1},
+        {"Move": "Razorleaf", "UnlockLevel": 2},
+        {"Move": "Solarbeam", "UnlockLevel": 4}
     ]
 }
