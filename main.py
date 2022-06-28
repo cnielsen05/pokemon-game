@@ -46,6 +46,12 @@ class Game:
 
             if player_input == "B":
                 print("Mom: Thank you for being such a responsible child, I'm so proud of you!")
+                self.items.append(ItemType.POKEBALL)
+                self.items.append(ItemType.POKEBALL)
+                self.items.append(ItemType.POKEBALL)
+                print("Mom: That reminds me, you should take these to help you on your journey!")
+                print("*You have gained 3x pokeballs*")
+                print("Mom: NOW GO TO BED")
                 print("*You scamper quickly to your bed and fall fast asleep.*")
                 answered_mom = True
             elif player_input == "A":
@@ -377,18 +383,62 @@ class Game:
         
         print("You have reached the end of Route 2!")
         self.state["route_two_complete"] = True
-        print("You: Now time to the first Gym the Grass Gym")
+        print("You: Now time for the first Gym. The Grass Gym!")
 
         input("\n*Press ENTER to continue...*")
         Formatting.clearScreen()
 
         print("*BOOOOOM*")
-        print("*An explosion comes from the Grass Gym")
-        print("You: What is happening?")
+        time.sleep(2)
+        print("*An explosion comes from the Grass Gym in the far distance*")
+        print("You: What is happening?!")
         print("*You start running towards the explosion*")
 
         input("\n*Press ENTER to continue...*")
+        Formatting.clearScreen()\
+
+        #to do add more here such as Battles and towns
+        time.sleep(2)
+        print("You finally make it to the Grass Gym door. Everyone is screaming.")
+        print("*You bravely walk into the Grass Gym*")
+
+        input("\n*Press ENTER to continue...*")
         Formatting.clearScreen()
+
+
+        print("*You hide behind a pillar and eavesdrop on the conversation*")
+
+        input("\n*Press ENTER to continue...*")
+        Formatting.clearScreen()
+
+        print("Grass Gym Leader: MORE")
+        time.sleep(2)
+        print("Grass Gym Leader: GIVE me MoRE tO KiLl")
+        time.sleep(4)
+        print("Grass Gym Leader: iT gIvEs ME MorE ENerGy.")
+        time.sleep(1)
+        print("Grass Gym Leader: GiVE ME MorE oR YoU WiLl bE mY NexT KiLl.")
+        print("A Random Person: Yes okay.")
+        print("*You hear someone walk out the building.*")
+
+        input("\n*Press ENTER to continue...*")
+        Formatting.clearScreen()
+
+        print("Grass Gym Leader: AhHh A ChAlengEr.")
+        print("*You get teleported in front of the Grass Gym Leader!*")
+        print("*The Grass Gym Leader's eyes are red*")
+        print("Grass Gym Leader: HoW AboUt iF yOu LoSE I WilL KiLl YoU!")
+
+        input("\n*Press ENTER to continue...*")
+        Formatting.clearScreen()
+
+        print("Grass Gym Leader: YES YoU MuST")
+        print("Grass Gym Leader: LeTs StaRt NOW!")
+
+        input("\n*Press ENTER to continue...*")
+        Formatting.clearScreen()
+
+        print("You have been engaged for a BATTLE!")
 
     def run(self):
         while (self.keepPlaying):
