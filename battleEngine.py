@@ -94,10 +94,11 @@ class BattleEngine:
                     continue
 
                 Formatting.clearScreen()
-                itemCounter = 0
+                counter = 0
                 for item in items:
-                    optionIdentifier = chr(ord("A") + itemCounter)
-                    print("%s) %s" % (optionIdentifier, item))
+                    identifier = chr(ord("A") + counter)
+                    counter += 1
+                    print("%s) %s" % (identifier, item))
 
                 player_input = input()
                 index = ord(player_input[0]) - ord("A")

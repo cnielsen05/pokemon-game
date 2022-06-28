@@ -11,6 +11,7 @@ class Item:
         counter = 0
         for pokemon in player_pokemon:
             identifier = chr(ord("A") + counter)
+            counter += 1
             print("%s) %s" % (identifier, pokemon.name))
 
         player_input = input()
