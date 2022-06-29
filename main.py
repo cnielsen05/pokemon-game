@@ -330,6 +330,7 @@ class Game:
         global isWalking
         global steps_taken
         route_length = 30
+
         # Define which pokemon can show up. Make more common pokemon show up more often.
         wildPokemonList = [
             "flokefish", 
@@ -367,9 +368,13 @@ class Game:
 
 
     def route_two(self):
+        global steps_taken
+        global isWalking
+
         print("Starting route two!")
         self.state["route_two_complete"] = False
         route_length = 50
+
         # Define which pokemon can show up. Make more common pokemon show up more often.
         wildPokemonList = ["geodude", "rockegon", "geodude", "geodude", "geodude", "rockegon", "pidgey", "jareanpidgey", "jareanpidgey","jareanpidgey", "jareanpidgey", "implien", "implien"]
         wildPokemonLevelRange = [1, 2, 3]
@@ -380,9 +385,9 @@ class Game:
             self.doWalk(route_length, wildPokemonList, self.player_pokemon, self.items, hiddenItemList, wildPokemonLevelRange)
             Formatting.clearScreen()
                 
-        
         print("You have reached the end of Route 2!")
         self.state["route_two_complete"] = True
+        
         print("You: Now time for the first Gym. The Grass Gym!")
 
         input("\n*Press ENTER to continue...*")
