@@ -155,7 +155,7 @@ class Game:
                 input("*Press ENTER to continue...*")
             else:
                 starter.level = 2
-                starter.XP = 400
+                starter.XP = 500
                 starter.FullHealHP()
                 self.player_pokemon.append(starter)
 
@@ -169,21 +169,28 @@ class Game:
 
             print("Professor: You should do a practice battle before you go. Let me get my nephew in here...")
             print("Professor: *sucks in breath...*")
-            time.sleep(1)
+            time.sleep(2)
             print("Professor: GAAAAAAAAAAAAAAAA---")
-            time.sleep(1)
+            time.sleep(2)
             print("Professor: --AAAAAAAAAAAAAARRRYYYYYYYY!!!!!!!!")
-            time.sleep(1)
+            time.sleep(2)
+            input("*Press ENTER to continue...*")
+            
             Formatting.clearScreen()
             print("Rival Gary: I'm here gramps! I hope you aren't calling me to help that loser over there...")
-            time.sleep(1)
+            time.sleep(2)
             print("Professor: Gary! What have I told you about speaking to guests that way!")
             print("Professor: But yeah... I did want you to have a practice battle with this kid.")
             input("*Press ENTER to continue...*")
 
+            print()
             print("Rival Gary: Ugh, I would never give you the time of the day if it were up to me... but Gramps says I have to battle you.")
             print("Rival Gary: Prepare to get creamed, sucker!")
+            input("*Press ENTER to continue...*")
 
+            print()
+            print("You begin a trainer battle with Rival Gary!")
+            input("*Press ENTER to continue...*")
             BattleEngine.DoTrainerBattle(self.player_pokemon, self.rival_pokemon, self.items, "Rival Gary", 1000)
 
             print("Professor: You should take some basic supplies with you. I'll give you a pokeball and a potion so you can learn how they work.")

@@ -43,7 +43,7 @@ class BattleEngine:
                     input("*Press ENTER to continue...*")
 
             elif (userAction == "ITEM"):
-                if not BattleEngine.DoItemMenu(items, player_pokemon):
+                if not BattleEngine.DoItemMenu(items, player_pokemon, wildPokemon, allow_pokeball=True):
                     continue
                 else: 
                     input("*Press ENTER to continue...*")
