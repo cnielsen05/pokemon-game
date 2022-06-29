@@ -99,9 +99,9 @@ class Pokemon:
 
     def GainExperience(self, xp: int):
         self.XP += xp
-        while self.XP >= (int)((1 + self.level / 5) * 450):
+        while self.XP >= (int)((1 + self.level / 5) * 450 + 2 * self.level):
             self.LevelUp()
-            self.XP -= (int)((1 + self.level / 5) * 450)
+            self.XP -= (int)((1 + self.level / 5) * 450 + 2 * self.level)
 
 
     def LevelUp(self):
@@ -144,6 +144,21 @@ class Pokemon:
 
     def FullHealHP(self):
         self.currentHP = self.calculateMaxHp()
+        if self.statusCondition == Status.KNOCKED_OUT:
+            self.statusCondition = Status.NONE
+
+
+    def HealHP(self, healAmount: int):
+        damage = self.calculateMaxHp() - self.currentHP
+        if self.statusCondition == Status.KNOCKED_OUT:
+            self.statusCondition = Status.NONE
+            
+        if damage <= healAmount:
+            self.FullHealHP()
+            print("%s healed for %s HP!" % (self.name, damage))
+        else:
+            self.currentHP += healAmount
+            print("%s healed for %s HP!" % (self.name, healAmount))
 
 
     def RandomAttack(self, defender: any):

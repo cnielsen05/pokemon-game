@@ -12,6 +12,8 @@
     "battleAttacks": [
         {"Move": "Tackle", "UnlockLevel": 1},
         {"Move": "Ember", "UnlockLevel": 3},
-        {"Move": "Fireblast", "UnlockLevel": 5}
+        {"Move": "Sludge", "UnlockLevel": 3},
+        {"Move": "Bite", "UnlockLevel": 4},
+        {"Move": "Fireblast", "UnlockLevel": 6}
     ]
 }

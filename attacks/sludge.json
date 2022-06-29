@@ -1,0 +1,8 @@
+{
+    "name": "Sludge",
+    "baseDmg": 40,
+    "type": "POISON",
+    "isPhysical": false,
+    "maxPP": 15,
+    "accuracy": 95
+}

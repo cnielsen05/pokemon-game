@@ -12,6 +12,8 @@
     "battleAttacks": [
         {"Move": "Tackle", "UnlockLevel": 1},
         {"Move": "Watergun", "UnlockLevel": 2},
-        {"Move": "Hydropump", "UnlockLevel": 5}
+        {"Move": "Irontail", "UnlockLevel": 3},
+        {"Move": "Dazzlinglight", "UnlockLevel": 4},
+        {"Move": "Hydropump", "UnlockLevel": 6}
     ]
 }

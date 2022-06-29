@@ -1,0 +1,8 @@
+{
+    "name": "Iron Tail",
+    "baseDmg": 60,
+    "type": "STEEL",
+    "isPhysical": true,
+    "maxPP": 15,
+    "accuracy": 80
+}

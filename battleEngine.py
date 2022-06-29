@@ -7,152 +7,256 @@ from item import Item
 from pokemon import Pokemon
 from typing import List
 
+continueBattling = False
+
 class BattleEngine:
     # def __init__(self):
 
     def DoWildBattle(player_pokemon: List[Pokemon], wildPokemon: Pokemon, items: List[ItemType]):
+        global continueBattling
+
         continueBattling = True
         while (continueBattling):
             Formatting.clearScreen()
-            if (wildPokemon.currentHP <= 0):
+            if BattleEngine.OpponentFaintIfDead(wildPokemon, player_pokemon[0]):
                 continueBattling = False
-                xpGain = wildPokemon.GetExperienceValue()
-                print("%s has fainted." % (wildPokemon.name))
-                print()
-                print("%s has gained %s XP!" % (player_pokemon[0].name, xpGain))
-                player_pokemon[0].GainExperience(xpGain)
-                input("*Press ENTER to continue*")
-                Formatting.clearScreen()
                 continue
 
             if (player_pokemon[0].currentHP <= 0):
                 BattleEngine.SwapPokemon(player_pokemon)
 
-            wildPokemonHealthiness = "completely untouched"
-            healthPercentage = wildPokemon.currentHP / wildPokemon.calculateMaxHp()
-            if (healthPercentage < 0.95):
-                wildPokemonHealthiness = "a little scratched up"
-            if (healthPercentage < 0.7):
-                wildPokemonHealthiness = "like it's taken a few hits"
-            if (healthPercentage < 0.5):
-                wildPokemonHealthiness = "tired"
-            if (healthPercentage < 0.3):
-                wildPokemonHealthiness = "pretty beat up"
-            if (healthPercentage < 0.1):
-                wildPokemonHealthiness = "like it is about to faint"
-            print("The wild %s looks %s." % (wildPokemon.name, wildPokemonHealthiness))
+            BattleEngine.AssessOpponentHealthiness(wildPokemon)
             print("Your %s has %s/%s HP remaining." % (player_pokemon[0].name, player_pokemon[0].currentHP, player_pokemon[0].calculateMaxHp()))
-
             print()
-            for action in ("A) ATTACK", "B) ITEM", "C) SWAP POKEMON", "D) RUN", "E) POKEDEX"):
-                print(action)
-
-            userAction = input()
-            Formatting.clearScreen()
-
-            if (userAction != "A" and userAction != "B" and userAction != "C" and userAction != "D" and userAction != "E"):
+            options = ["ATTACK", "ITEM", "SWAP POKEMON", "RUN", "POKEDEX"]
+            userChoice = Formatting.GetUserChoice(options)
+            if userChoice < 0 or userChoice > len(options) - 1:
                 input("Input %s unrecognized. Press ENTER to try again." % (userAction))
                 continue
-            elif (userAction == "A"):
-                Formatting.clearScreen()
-                print("Choose attack:")
-                for i in range(0, len(player_pokemon[0].GetBattleAttacks())):
-                    letterChoice = chr(ord("A") + i)
-                    attack = player_pokemon[0].GetBattleAttacks()[i]
-                    print("%s) %s (%s/%s)" % (letterChoice, attack.name, attack.currentPP, attack.maxPP))
 
-                player_input = input()
-                attackIndex = ord(player_input[0]) - ord("A")
-                if attackIndex < 0 or attackIndex > 3:
-                    input("Input %s unrecognized. Press ENTER to try again." % (player_input))
+            userAction = options[userChoice]
+                
+            if (userAction == "ATTACK"):
+                if not BattleEngine.DoAttackMenu(player_pokemon[0], wildPokemon):
                     continue
-
-                attackChoice = player_pokemon[0].GetBattleAttacks()[attackIndex]
-
-                if (attackChoice.currentPP <= 0):
-                    input("No more PP available for that attack, choose something else. Press ENTER to try again.")
-                    continue
-
-                Formatting.clearScreen()
-                print("You: %s, use %s!" % (player_pokemon[0].name, attackChoice.name))
-                print()
-                if (wildPokemon.GetStatValue(PokemonStat.SPEED) > player_pokemon[0].GetStatValue(PokemonStat.SPEED)):
-                    print("The wild %s is faster!" % (wildPokemon.name))
-                    wildPokemon.RandomAttack(player_pokemon[0])
-                    if not BattleEngine.CheckForKnockout(player_pokemon[0]):
-                        player_pokemon[0].DoAttack(attackIndex, wildPokemon)
                 else:
-                    player_pokemon[0].DoAttack(attackIndex, wildPokemon)
-                    if not BattleEngine.CheckForKnockout(wildPokemon):
-                        wildPokemon.RandomAttack(player_pokemon[0])
+                    input("*Press ENTER to continue...*")
 
-                input("*Press ENTER to continue...*")
-            elif (userAction == "B"):
-                if len(items) == 0:
-                    print("You have no items.")
-                    input("*Press ENTER to continue*")
+            elif (userAction == "ITEM"):
+                if not BattleEngine.DoItemMenu(items, player_pokemon):
                     continue
+                else: 
+                    input("*Press ENTER to continue...*")
 
-                Formatting.clearScreen()
-                itemCounter = 0
-                for item in items:
-                    optionIdentifier = chr(ord("A") + itemCounter)
-                    print("%s) %s" % (optionIdentifier, item))
-
-                player_input = input()
-                index = ord(player_input[0]) - ord("A")
-                if (index < 0 or index > len(items) - 1):
-                    input("Input %s not recognized. Press ENTER to try again.")
-                    continue
-
-                itemUse = items[index]
-                match itemUse:
-                    case ItemType.POTION:
-                        # The Item.UsePotion(int) function returns false if the player fails to select a target.
-                        # If that happens, we should skip the rest of execution and go back to getting player input.
-                        if not Item.UsePotion(30, player_pokemon):
-                            continue
-                        else:
-                            items.pop(index)
-
-                    case ItemType.POKEBALL:
-                        caught = Item.UsePokeball(wildPokemon, player_pokemon, ItemType.POKEBALL)
-                        items.pop(index)
-                        if caught:
-                            continueBattling = False
-                            xpGain = wildPokemon.GetExperienceValue()
-                            print()
-                            print("%s has gained %s XP!" % (player_pokemon[0].name, xpGain))
-                            player_pokemon[0].GainExperience(xpGain)
-                            input("*Press ENTER to continue*")
-                            Formatting.clearScreen()
-                            continue
-
-                wildPokemon.RandomAttack(player_pokemon[0])
-                input("*Press ENTER to continue...*")
-
-
-            elif (userAction == "C"):
+            elif (userAction == "SWAP POKEMON"):
                 BattleEngine.SwapPokemon(player_pokemon)
-            elif (userAction == "D"):
+
+            elif (userAction == "RUN"):
                 continueBattling = BattleEngine.TryToRun(player_pokemon[0], wildPokemon)
 
                 # Get hit if they don't escape
                 if continueBattling:
                     wildPokemon.RandomAttack(player_pokemon[0])
-            elif (userAction == "E"):
-                print("You pull out your Pokedex and point it at the %s..." % (wildPokemon.name))
-                print("*Analyzing...*")
-                sleep(3)
-                typePhrase = "%s" % (wildPokemon.battleType1)
-                if wildPokemon.battleType2 != BattleType.NONE:
-                    typePhrase += " and %s" % (wildPokemon.battleType2)
-
-                print("%s, a %s type. This one appears to be level %s." % (wildPokemon.name, typePhrase, wildPokemon.level))
-                print()
+            elif (userAction == "POKEDEX"):
+                BattleEngine.UsePokedex(wildPokemon)
                 input("*Press ENTER to continue...*")
 
 
+    def DoTrainerBattle(player_pokemon: List[Pokemon], opponent_pokemon: List[Pokemon], items: List[ItemType], opponent_name: str, winningMoney: int):
+        global continueBattling
+
+        continueBattling = True
+        while (continueBattling):
+            Formatting.clearScreen()
+            if BattleEngine.OpponentFaintIfDead(opponent_pokemon[0], player_pokemon[0]):
+                nextPokemonIndex = -1
+                countingIndex = 0
+                for nextPokemon in opponent_pokemon:
+                    if nextPokemon.currentHP > 0:
+                        nextPokemonIndex = countingIndex
+                        break
+                    countingIndex += 1
+
+                if nextPokemonIndex == -1:
+                    print("%s has no remaining Pokemon to battle with! You win!" % (opponent_name))
+                    print()
+                    print("You gain %s Pokecoins." % (winningMoney))
+                    input("*Press ENTER to continue....*")
+                    continueBattling = False
+                    continue
+                else:
+                    print("The opposing %s has fainted. It's trainer sends out %s in its place!" % (opponent_pokemon[0].name, opponent_pokemon[nextPokemonIndex].name))
+                    opponent_pokemon[0], opponent_pokemon[nextPokemonIndex] = opponent_pokemon[nextPokemonIndex], opponent_pokemon[0]
+
+            if (player_pokemon[0].currentHP <= 0):
+                BattleEngine.SwapPokemon(player_pokemon)
+
+            opponent_active_pokemon = opponent_pokemon[0]
+            BattleEngine.AssessOpponentHealthiness(opponent_active_pokemon)
+            print("Your %s has %s/%s HP remaining." % (player_pokemon[0].name, player_pokemon[0].currentHP, player_pokemon[0].calculateMaxHp()))
+            print()
+            options = ["ATTACK", "ITEM", "SWAP POKEMON", "POKEDEX"]
+            userChoice = Formatting.GetUserChoice(options)
+            if userChoice < 0 or userChoice > len(options) - 1:
+                input("Input %s unrecognized. Press ENTER to try again." % (userAction))
+                continue
+
+            userAction = options[userChoice]
+                
+            if (userAction == "ATTACK"):
+                if not BattleEngine.DoAttackMenu(player_pokemon[0], opponent_active_pokemon):
+                    continue
+                else:
+                    input("*Press ENTER to continue...*")
+
+            elif (userAction == "ITEM"):
+                if not BattleEngine.DoItemMenu(items, player_pokemon, allow_pokeball = False):
+                    continue
+                else: 
+                    input("*Press ENTER to continue...*")
+
+            elif (userAction == "SWAP POKEMON"):
+                BattleEngine.SwapPokemon(player_pokemon)
+
+            elif (userAction == "POKEDEX"):
+                BattleEngine.UsePokedex(opponent_active_pokemon)
+                input("*Press ENTER to continue...*")
+
+
+    def OpponentFaintIfDead(opponent: Pokemon, playerPokemon: Pokemon) -> bool:
+        if (opponent.currentHP <= 0):
+            xpGain = opponent.GetExperienceValue()
+            print("%s has fainted." % (opponent.name))
+            print()
+            print("%s has gained %s XP!" % (playerPokemon.name, xpGain))
+            playerPokemon.GainExperience(xpGain)
+            input("*Press ENTER to continue*")
+            Formatting.clearScreen()
+            return True
+        return False
+
+
+    def AssessOpponentHealthiness(wildPokemon: Pokemon):
+        opponentHealthiness = "completely untouched"
+        healthPercentage = wildPokemon.currentHP / wildPokemon.calculateMaxHp()
+        if (healthPercentage < 0.95):
+            opponentHealthiness = "a little scratched up"
+        if (healthPercentage < 0.7):
+            opponentHealthiness = "like it has a lot of energy left"
+        if (healthPercentage < 0.5):
+            opponentHealthiness = "like it is starting to get tired"
+        if (healthPercentage < 0.3):
+            opponentHealthiness = "pretty beat up"
+        if (healthPercentage < 0.1):
+            opponentHealthiness = "like it is about to faint"
+        print("The opposing %s looks %s." % (wildPokemon.name, opponentHealthiness))
+
+
+    def DoAttackMenu(player_pokemon: Pokemon, opponent: Pokemon) -> bool:
+        Formatting.clearScreen()
+        print("Choose attack:")
+        attacks = player_pokemon.GetBattleAttacks()
+        attackNames = []
+        for attack in attacks:
+            attackNames.append(attack.name)
+
+        attackIndex = Formatting.GetUserChoice(attackNames)
+        if attackIndex < 0 or attackIndex > len(attacks) - 1:
+            input("Input not recognized. Press ENTER to try again.")
+            return False
+
+        attackChoice = attacks[attackIndex]
+
+        if (attackChoice.currentPP <= 0):
+            input("No more PP available for that attack, choose something else. Press ENTER to try again.")
+            return False
+
+        Formatting.clearScreen()
+        print("You: %s, use %s!" % (player_pokemon.name, attackChoice.name))
+        print()
+        if (opponent.GetStatValue(PokemonStat.SPEED) > player_pokemon.GetStatValue(PokemonStat.SPEED)):
+            print("The opposing %s is faster!" % (opponent.name))
+            opponent.RandomAttack(player_pokemon)
+            if not BattleEngine.CheckForKnockout(player_pokemon):
+                player_pokemon.DoAttack(attackIndex, opponent)
+        else:
+            player_pokemon.DoAttack(attackIndex, opponent)
+            if not BattleEngine.CheckForKnockout(opponent):
+                opponent.RandomAttack(player_pokemon)
+
+        input("*Press ENTER to continue...*")
+
+
+    def DoItemMenu(items: List[ItemType], player_pokemon: List[Pokemon], opponent: Pokemon, allow_pokeball: bool = True) -> bool:
+        global continueBattling
+
+        if len(items) == 0:
+            print("You have no items.")
+            input("*Press ENTER to continue*")
+            return False
+
+        Formatting.clearScreen()
+        counter = 0
+        for item in items:
+            identifier = chr(ord("A") + counter)
+            counter += 1
+            print("%s) %s" % (identifier, item))
+
+        player_input = input()
+        index = ord(player_input[0]) - ord("A")
+        if (index < 0 or index > len(items) - 1):
+            input("Input %s not recognized. Press ENTER to try again.")
+            return False
+
+        itemUse = items[index]
+        match itemUse:
+            case ItemType.POTION:
+                # The Item.UsePotion(int) function returns false if the player fails to select a target.
+                # If that happens, we should skip the rest of execution and go back to getting player input.
+                if not Item.UsePotion(30, player_pokemon):
+                    return False
+                else:
+                    items.pop(index)
+
+            case ItemType.POKEBALL:
+                if allow_pokeball:
+                    caught = Item.UsePokeball(opponent, player_pokemon, ItemType.POKEBALL)
+                    items.pop(index)
+                    if caught:
+                        continueBattling = False
+                        xpGain = opponent.GetExperienceValue()
+                        print()
+                        print("%s has gained %s XP!" % (player_pokemon[0].name, xpGain))
+                        player_pokemon[0].GainExperience(xpGain)
+                        input("*Press ENTER to continue*")
+                        Formatting.clearScreen()
+                        return False
+                else:
+                    print("You can't use this item on that Pokemon!")
+                    input("*Press ENTER to continue...*")
+                    Formatting.clearScreen()
+
+        opponent.RandomAttack(player_pokemon[0])
+        return True
+
+
+    def UsePokedex(opponent: Pokemon):
+        print("You pull out your Pokedex and point it at the %s..." % (opponent.name))
+        print("*Analyzing...*")
+        sleep(1)
+        print("...")
+        sleep(1)
+        print("*BEEP*")
+        sleep(1)
+        print("...")
+        typePhrase = "%s" % (opponent.battleType1)
+        if opponent.battleType2 != BattleType.NONE:
+            typePhrase += " and %s" % (opponent.battleType2)
+
+        print("%s, a %s type. This one appears to be level %s." % (opponent.name, typePhrase, opponent.level))
+        print()
+    
+    
     def TryToRun(trainerPokemon: Pokemon, wildPokemon: Pokemon) -> bool:
         print("You try to run...")
         escapeFailed = False
@@ -196,8 +300,8 @@ class BattleEngine:
         for p in pokemonList:
             status = p.statusCondition
             optionLetter = chr((ord("A") + optionCounter))
-            statusString = "(Knocked Out)" if status == Status.KNOCKED_OUT else ""
-            print("%s) %s %s" % (optionLetter, p.name, statusString))
+            statusString = "%s" % (status) if status != Status.NONE else ""
+            print("%s) %s - Level: %s, HP: %s/%s %s" % (optionLetter, p.name, p.level, p.currentHP, p.calculateMaxHp(), statusString))
             optionCounter += 1
 
         player_input = input()

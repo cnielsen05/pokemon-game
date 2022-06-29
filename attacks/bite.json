@@ -1,0 +1,8 @@
+{
+    "name": "Bite",
+    "baseDmg": 40,
+    "type": "DARK",
+    "isPhysical": true,
+    "maxPP": 15,
+    "accuracy": 95
+}
