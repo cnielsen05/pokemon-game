@@ -152,7 +152,7 @@ class Pokemon:
         damage = self.calculateMaxHp() - self.currentHP
         if self.statusCondition == Status.KNOCKED_OUT:
             self.statusCondition = Status.NONE
-            
+
         if damage <= healAmount:
             self.FullHealHP()
             print("%s healed for %s HP!" % (self.name, damage))
@@ -185,8 +185,7 @@ class Pokemon:
             print("%s uses %s!" % (self.name, attack.name))
             attackStatValue = self.GetStatValue(PokemonStat.ATTACK) if attack.isPhysical else self.GetStatValue(PokemonStat.SPECIAL_ATTACK)
 
-            result = defender.ReceiveAttack(attack.type, attack.baseDmg, attackStatValue, attack.isPhysical)
-            print(result)
+            defender.ReceiveAttack(attack.type, attack.baseDmg, attackStatValue, attack.isPhysical)
 
 
     def ReceiveAttack(self, type: BattleType, attackBaseDmg: int, attackerOffensiveStatValue: int, isPhysical: bool) -> str:
@@ -201,12 +200,20 @@ class Pokemon:
         defenseValue = self.GetStatValue(PokemonStat.DEFENSE) if isPhysical else self.GetStatValue(PokemonStat.SPECIAL_DEFENSE)
         damage = 2 + (int)((((attackBaseDmg * effectivenessMultiplier) + 2 ) * (attackerOffensiveStatValue * 0.75 / (5 * defenseValue))) + random.randint(0,3))
         crit = random.randint(0,9) > 8
-        critString = ""
         if crit:
             damage = (int)(damage * 1.75)
-            critString = "CRITICAL HIT!"
-        self.currentHP -= damage
-        return "%s received %s damage. %s" % (self.name, damage, critString)
+            print("CRITICAL HIT!")
+        self.TakeDamage(damage)
+
+
+    def TakeDamage(self, damage: int):
+        if damage > self.currentHP:
+            self.currentHP = 0
+            self.statusCondition = Status.KNOCKED_OUT
+            print("%s took %s damage and got knocked out. It is no longer able to battle!" % (self.name, damage))
+        else:
+            self.currentHP -= damage
+            print("%s took %s damage!" % (self.name, damage))
 
 
     # This function calls the other function, and multiplies the two multipliers together to get a final product
@@ -440,8 +447,6 @@ class Pokemon:
                 multiplier = 2
         elif (defType == BattleType.ICE):
             if (attackType == BattleType.ICE):
-                multiplier = 0.5
-            elif (attackType == BattleType.FIRE):
                 multiplier = 0.5
             elif (attackType == BattleType.FIRE):
                 multiplier = 2

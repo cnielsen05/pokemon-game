@@ -61,6 +61,8 @@ class BattleEngine:
                 BattleEngine.UsePokedex(wildPokemon)
                 input("*Press ENTER to continue...*")
 
+            BattleEngine.ProcessEndOfRoundStatuses(wildPokemon, player_pokemon[0])
+
 
     def DoTrainerBattle(player_pokemon: List[Pokemon], opponent_pokemon: List[Pokemon], items: List[ItemType], opponent_name: str, winningMoney: int):
         global continueBattling
@@ -98,7 +100,6 @@ class BattleEngine:
             options = ["ATTACK", "ITEM", "SWAP POKEMON", "POKEDEX"]
             userChoice = Formatting.GetUserChoice(options)
             if userChoice < 0 or userChoice > len(options) - 1:
-                input("Input %s unrecognized. Press ENTER to try again." % (userAction))
                 continue
 
             userAction = options[userChoice]
@@ -158,7 +159,7 @@ class BattleEngine:
         attacks = player_pokemon.GetBattleAttacks()
         attackNames = []
         for attack in attacks:
-            attackNames.append(attack.name)
+            attackNames.append("[%s] %s (%s/%s)" % (attack.type, attack.name, attack.currentPP, attack.maxPP))
 
         attackIndex = Formatting.GetUserChoice(attackNames)
         if attackIndex < 0 or attackIndex > len(attacks) - 1:
@@ -330,3 +331,79 @@ class BattleEngine:
             else:
                 print("You: %s, return! I choose you, %s!" % (pokemonList[0].name, pokemonList[chosen_index].name))
                 pokemonList[0], pokemonList[chosen_index] = pokemonList[chosen_index], pokemonList[0]
+
+
+    def ProcessEndOfRoundStatuses(opponent: Pokemon, player_pokemon: Pokemon):
+        for p in (opponent, player_pokemon):
+            match p.statusCondition:
+                case Status.NONE:
+                    # Nothing happens intentionally
+                    continue
+                case Status.ASLEEP:
+                    roll = random.randint(1,100)
+                    if roll > 50:
+                        print("%s suddenly woke up!" % (p.name))
+                        input("*Press ENTER to continue...*")
+                case Status.POISONED:
+                    dmg = 1 + p.calculateMaxHp()/20
+                    print("The poison causes %s to wince. It takes %s damage." % (p.name, dmg))
+                    p.TakeDamage(dmg)
+
+
+    def DoBurnChance(target: Pokemon, odds: float):
+        roll = random.randint(1,100)
+        if roll < odds * 100:
+            print("%s got burned!" % (target.name))
+            target.statusCondition = Status.BURNED
+            input("*Press ENTER to continue...*")
+
+
+    def DoSleepChance(target: Pokemon, odds: float):
+        roll = random.randint(1,100)
+        if roll < odds * 100:
+            print("%s fell asleep!" % (target.name))
+            target.statusCondition = Status.ASLEEP
+            input("*Press ENTER to continue...*")
+
+
+    def DoPoisonChance(target: Pokemon, odds: float):
+        roll = random.randint(1,100)
+        if roll < odds * 100:
+            print("%s got poisoned!" % (target.name))
+            target.statusCondition = Status.POISONED
+            input("*Press ENTER to continue...*")
+
+
+    def DoFreezeChance(target: Pokemon, odds: float):
+        roll = random.randint(1,100)
+        if roll < odds * 100:
+            print("%s is frozen solid in a block of ice!" % (target.name))
+            target.statusCondition = Status.FROZEN
+            input("*Press ENTER to continue...*")
+
+
+    def DoParalyzeChance(target: Pokemon, odds: float):
+        roll = random.randint(1,100)
+        if roll < odds * 100:
+            print("%s is moving stiffly, it's been paralyzed!" % (target.name))
+            target.statusCondition = Status.PARALYZED
+            input("*Press ENTER to continue...*")
+
+
+    def DoConfuseChance(target: Pokemon, odds: float):
+        roll = random.randint(1,100)
+        if roll < odds * 100:
+            print("%s is acting strangely, it's confused!" % (target.name))
+            target.statusCondition = Status.CONFUSED
+            input("*Press ENTER to continue...*")
+
+
+    def DoAbsorb(target: Pokemon, caster: Pokemon, amount: int):
+        actualHealed = amount
+        damage = caster.calculateMaxHp() - caster.currentHP
+        if damage < amount:
+            actualHealed = damage
+
+        print("%s drains energy from %s! %s is healed for %s HP." % (caster.name, target.name, caster.name, actualHealed))
+        caster.HealHP(actualHealed)
+        input("*Press ENTER to continue...*")

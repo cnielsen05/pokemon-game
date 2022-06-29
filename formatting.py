@@ -20,5 +20,9 @@ class Formatting:
         userAction = input()
         Formatting.clearScreen()
 
-        userChoice = ord(userAction[0]) - ord("A")
-        return userChoice
+        try:
+            userChoice = ord(userAction[0]) - ord("A")
+            return userChoice
+        except:
+            input("Input %s unrecognized. Press ENTER to try again." % (userAction))
+            return -1

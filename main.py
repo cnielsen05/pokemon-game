@@ -72,54 +72,79 @@ class Game:
 
         input("\n*Press ENTER to continue...*")
         Formatting.clearScreen()
-        print("Mom: Finally you woke up")
-        print("You: What time is it")
-        print("Mom: 10:00")
+        time.sleep(1)
+        print("Mom: Finally you woke up.")
+        time.sleep(2)
+        print("You: What time is it?")
+        time.sleep(1)
+        print("Mom: 10:00.")
+        time.sleep(1)
         print("You: WHAT!")
         print("You: I'm late!")
 
         input("\n*Press ENTER to continue...*")
         Formatting.clearScreen()
+        time.sleep(1)
         print("Mom: For what?")
+        time.sleep(1)
         print("You: Professor Mulberry is giving out starters for the trainers he is hiring!")
-        print("Mom: OHHHHH that.")
-        print("Mom: Wait bu-")
+        time.sleep(1)
+        print("Mom: Oh yeah, I almost forgot that was happening today.")
+        print("Mom: You'll need to go qui-")
+        time.sleep(1)
         print("*You fall down the stairs*")
 
         input("\n*Press ENTER to continue...*")
         Formatting.clearScreen()
-        print("You: I'm okay")
-        print("*You quickly get ready and run out the door before your mom can finish her sentance*")
-        print("Mom: -t that starts in an hour")
-        print("Mom: Oh he's already gone!")
+        print("You: I'm okay!")
+        time.sleep(2)
+        print("*You quickly pull on clothes and run out the door before your mom can finish her sentence...*")
+        print("Mom: ... quickly. The event is supposed to start in an hour. He could have at least grabbed something to eat.")
+        print("Mom: What's he going to do now, sit around longer with an empty stomach? That kid really needs to think before he acts.")
 
         input("\n*Press ENTER to continue...*")
         Formatting.clearScreen()
         print("")
-        print("*At the door of Professor Mulberrys lab*")
+        print("At the door of Professor Mulberrys lab. 10:29 AM")
         print("")
-        print("You: Finally I got here")
-        print("*A door opens*")
-        print("Rival: what is all that racket!")
-        print("Rival: Ohhhh its the loser!")
-        print("Rival: Ha what are you doing here ya loser")
-        print("You: hey come out or you will not get a pokemon until next year")
-        print("Rival: HA HA HA HA HA your so pathetic you even forgot the time it starts!")
-        print("You: what do you mean?!")
-        print("Rival it happens in a hour loser oh and I can't forget the title DUMBY")
+        time.sleep(2)
+        print("*You bump into a garbage can with a loud CLANG! as you arrive*")
+        print("You: Nice, I made it! I think I made good time too...")
+        time.sleep(1)
+        print()
+        print("*A door opens...*")
+        time.sleep(1)
+        print("Rival: What is all that racket!")
+        time.sleep(2)
+        print("Rival: Of course, it's the loser!")
+        print("Rival: What are you doing here, loser?")
+        print("You: You don't need to call me names. Better hurry up and come out or you won't get a Pokemon until next year.")
+        time.sleep(2)
+        print()
+        input("*Press ENTER to continue...*")
+        Formatting.clearScreen()
+        print("Rival: Wait... hurry? You idiot, do you even know what time it is? Gramps isn't giving out any Pokemon until 11:30, that's not for another hour you idiot!")
+        print("You: What do you mean?!")
+        print("Rival: Exactly like I said! You, the idiotic dumb loser, are ONE HOUR EARLY. You are truly a pea-brained.")
 
         self.player_options.clear()
-        self.player_options.append("A) Your no smarter")
-        self.player_options.append("B) Okay I guess I did forget the time it starts")
+        self.player_options.append("A) You're no genius yourself. I should fight you here and now for talking to me that way.")
+        self.player_options.append("B) Oh man, is it really not starting for another hour? I guess this one is my mistake.")
 
         player_input = self.getPlayerInput("")
         if player_input == "A":
-            print("You: Your no smarter")
-            print("Rival: WHAT! Than I'm just gonna stand here until it starts while I insult you")
+            print("You: You're no genius yourself. I should fight you here and now for talking to me that way.")
+            print("Rival: WHAT! You are choosing the wrong enemy, fool. You WILL regret this.")
         if player_input == "B":
-            print("You: Okay I guess I did forget the time it starts")
-            print("Rival: Good you know your place")
-            print("*your rival slams the door shut")
+            print("You: Oh man, is it really not starting for another hour? I guess this one is my mistake.")
+            time.sleep(2)
+            print("Rival: Wait, you aren't going to insult me back?")
+            print("Rival: That makes me feel weird being mean to you.. here take this I guess.")
+            print("You have acquired Greatball X 5")
+            for i in range(1,6):
+                self.items.append(ItemType.GREATBALL)
+
+            print("*Your rival slams the door shut*")
 
         input("\n*Press ENTER to continue...*")
         Formatting.clearScreen()
@@ -153,6 +178,7 @@ class Game:
             if not starter:
                 print("'%s' not recognized. Please try again." % (player_input))
                 input("*Press ENTER to continue...*")
+                continue
             else:
                 starter.level = 2
                 starter.XP = 500
@@ -162,80 +188,81 @@ class Game:
                 rival_starter.level = 1
                 rival_starter.FullHealHP()
                 self.rival_pokemon.append(rival_starter)
-
-            if (len(self.player_pokemon) > 0):
-                print("Professor: Good choice, I'm sure %s will be an excellent companion on your journey!" % (self.player_pokemon[0].name))
                 self.state["choose_starter_complete"] = True
+                
 
-            print("Professor: You should do a practice battle before you go. Let me get my nephew in here...")
-            print("Professor: *sucks in breath...*")
-            time.sleep(2)
-            print("Professor: GAAAAAAAAAAAAAAAA---")
-            time.sleep(2)
-            print("Professor: --AAAAAAAAAAAAAARRRYYYYYYYY!!!!!!!!")
-            time.sleep(2)
-            input("*Press ENTER to continue...*")
-            
+        if (len(self.player_pokemon) > 0):
+            print("Professor: Good choice, I'm sure %s will be an excellent companion on your journey!" % (self.player_pokemon[0].name))
+
+        print("Professor: You should do a practice battle before you go. Let me get my nephew in here...")
+        print("Professor: *sucks in breath...*")
+        time.sleep(2)
+        print("Professor: GAAAAAAAAAAAAAAAA---")
+        time.sleep(2)
+        print("Professor: --AAAAAAAAAAAAAARRRYYYYYYYY!!!!!!!!")
+        time.sleep(2)
+        input("*Press ENTER to continue...*")
+        
+        Formatting.clearScreen()
+        print("Rival Gary: I'm here gramps! I hope you aren't calling me to help that loser over there...")
+        time.sleep(2)
+        print("Professor: Gary! What have I told you about speaking to guests that way!")
+        print("Professor: But yeah... I did want you to have a practice battle with this kid.")
+        input("*Press ENTER to continue...*")
+
+        print()
+        print("Rival Gary: Ugh, I would never give you the time of the day if it were up to me... but Gramps says I have to battle you.")
+        print("Rival Gary: Prepare to get creamed, sucker!")
+        input("*Press ENTER to continue...*")
+
+        print()
+        print("You begin a trainer battle with Rival Gary!")
+        input("*Press ENTER to continue...*")
+
+        # Example new list of pokemon to battle against
+        # not_rival_pokemon = []
+        # for name in ("clovney", "sleepoud", "pidgey"):
+        #   newPokemon = Pokemon(name)
+        #   newPokemon.level = 2
+        #   not_rival_pokemon.append(newPokemon)
+        #   BattleEngine.DoTrainerBattle(self.player_pokemon, self.not_rival_pokemon, self.items, "Trainer Fakeguy", 300)
+        BattleEngine.DoTrainerBattle(self.player_pokemon, self.rival_pokemon, self.items, "Rival Gary", 1000)
+
+        print("Professor: You should take some basic supplies with you. I'll give you a pokeball and a potion so you can learn how they work.")
+        print("Professor: You will need to learn the tools of your trade well, if you are ever to become a Pokemon Master.")
+        print()
+        time.sleep(2)
+        print("*You receive Potion x 1*")
+        print("*You receive Pokeball x 1*")
+        self.items.append(ItemType.POKEBALL)
+        self.items.append(ItemType.POTION)
+        print()
+        input("*Press ENTER to continue...*")
+
+        print("Professor: You can begin your journey on Route 1 now, unless you have more questions for me?")
+        player_choice = input("*Ask a question? Or press ENTER to continue...*")
+        if player_choice != "":
+            print("Professor: ...")
+            time.sleep(3)
+            print("Professor: Oh! You actually want to know something from me? %s..." % (player_choice))
+            print("Professor: Sorry to say, I'm stumped! I wasn't trained to handle this kind of thing!")
+            time.sleep(3)
+            print("Professor: ...")
+            time.sleep(3)
+            print("Professor: ...")
+            time.sleep(3)
+            print("Professor: !!! Wait! I've got it! I'll give you STUFF instead! Let's call it compensation for my inadequacies.")
+            input("Professor: Have these potions and pokeballs, they should help you on your journey.\nPress ENTER to continue...")
             Formatting.clearScreen()
-            print("Rival Gary: I'm here gramps! I hope you aren't calling me to help that loser over there...")
-            time.sleep(2)
-            print("Professor: Gary! What have I told you about speaking to guests that way!")
-            print("Professor: But yeah... I did want you to have a practice battle with this kid.")
-            input("*Press ENTER to continue...*")
-
-            print()
-            print("Rival Gary: Ugh, I would never give you the time of the day if it were up to me... but Gramps says I have to battle you.")
-            print("Rival Gary: Prepare to get creamed, sucker!")
-            input("*Press ENTER to continue...*")
-
-            print()
-            print("You begin a trainer battle with Rival Gary!")
-            input("*Press ENTER to continue...*")
-
-            # Example new list of pokemon to battle against
-            # not_rival_pokemon = []
-            # for name in ("clovney", "sleepoud", "pidgey"):
-            #   newPokemon = Pokemon(name)
-            #   newPokemon.level = 2
-            #   not_rival_pokemon.append(newPokemon)
-            #   BattleEngine.DoTrainerBattle(self.player_pokemon, self.not_rival_pokemon, self.items, "Trainer Fakeguy", 300)
-            BattleEngine.DoTrainerBattle(self.player_pokemon, self.rival_pokemon, self.items, "Rival Gary", 1000)
-
-            print("Professor: You should take some basic supplies with you. I'll give you a pokeball and a potion so you can learn how they work.")
-            print("Professor: You will need to learn the tools of your trade well, if you are ever to become a Pokemon Master.")
-            print()
-            time.sleep(2)
-            print("*You receive Potion x 1*")
-            print("*You receive Pokeball x 1*")
-            self.items.append(ItemType.POKEBALL)
             self.items.append(ItemType.POTION)
-            print()
+            self.items.append(ItemType.POTION)
+            self.items.append(ItemType.POTION)
+            self.items.append(ItemType.POKEBALL)
+            self.items.append(ItemType.POKEBALL)
+            self.items.append(ItemType.POKEBALL)
+            print("*You gain 3x Pokeball!")
+            print("*You gain 3x Potion!")
             input("*Press ENTER to continue...*")
-
-            print("Professor: You can begin your journey on Route 1 now, unless you have more questions for me?")
-            player_choice = input("*Ask a question? Or press ENTER to continue...*")
-            if player_choice != "":
-                print("Professor: ...")
-                time.sleep(3)
-                print("Professor: Oh! You actually want to know something from me? %s..." % (player_choice))
-                print("Professor: Sorry to say, I'm stumped! I wasn't trained to handle this kind of thing!")
-                time.sleep(3)
-                print("Professor: ...")
-                time.sleep(3)
-                print("Professor: ...")
-                time.sleep(3)
-                print("Professor: !!! Wait! I've got it! I'll give you STUFF instead! Let's call it compensation for my inadequacies.")
-                input("Professor: Have these potions and pokeballs, they should help you on your journey.\nPress ENTER to continue...")
-                Formatting.clearScreen()
-                self.items.append(ItemType.POTION)
-                self.items.append(ItemType.POTION)
-                self.items.append(ItemType.POTION)
-                self.items.append(ItemType.POKEBALL)
-                self.items.append(ItemType.POKEBALL)
-                self.items.append(ItemType.POKEBALL)
-                print("*You gain 3x Pokeball!")
-                print("*You gain 3x Potion!")
-                input("*Press ENTER to continue...*")
 
     
     def route_one(self):
@@ -277,12 +304,16 @@ class Game:
         while (steps_taken < route_length):
             self.doWalk(route_length, wildPokemonList, self.player_pokemon, self.items, hiddenItemList, wildPokemonLevelRange)
             Formatting.clearScreen()
-        
+
+        isWalking = False
         print("You have reached the end of Route 1!")
         self.state["route_one_complete"] = True
 
 
     def route_two(self):
+        global isWalking
+        global steps_taken
+
         print("Starting route two!")
         self.state["route_two_complete"] = False
         route_length = 50
@@ -296,9 +327,10 @@ class Game:
             self.doWalk(route_length, wildPokemonList, self.player_pokemon, self.items, hiddenItemList, wildPokemonLevelRange)
             Formatting.clearScreen()
                 
-        
+        isWalking = False
         print("You have reached the end of Route 2!")
         self.state["route_two_complete"] = True
+
         print("You: Now time for the first Gym. The Grass Gym!")
 
         input("\n*Press ENTER to continue...*")

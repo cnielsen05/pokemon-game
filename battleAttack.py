@@ -40,6 +40,7 @@ class BattleAttack:
         }
         return json.dumps(data)
 
+        
 
 class MoveData():
     def __init__(self):

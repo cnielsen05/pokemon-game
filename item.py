@@ -1,7 +1,7 @@
 import random
 from time import sleep
 from typing import List
-from enums import ItemType
+from enums import ItemType, Status
 from formatting import Formatting
 from pokemon import Pokemon
 
@@ -23,6 +23,7 @@ class Item:
         chosen_pokemon = player_pokemon[index]
         print("You use POTION on %s!" % (chosen_pokemon.name))
         chosen_pokemon.HealHP(healAmount)
+        input("*Press ENTER to continue...*")
         return True
 
 
@@ -35,10 +36,14 @@ class Item:
             case ItemType.GREATBALL:
                 ballFactor = 1.5
 
-        odds = target.catchFactor * ballFactor + 0.25*(1 - (target.currentHP/target.calculateMaxHp()))
+        odds = target.catchFactor + (target.catchFactor * ballFactor)*(1 - (target.currentHP/target.calculateMaxHp()))
+        if target.statusCondition != Status.NONE:
+            odds *= 1.2
+
         roll = random.randint(1,100)
         if roll < 5:
             print("*Your fingers glow for a moment as the ball leaves your hand...*")
+            odds *= 0.65
         elif roll < 15:
             print("*You throw the ball expertly, like you were made for this! Amazing!*")
         elif roll < 30:
@@ -49,7 +54,9 @@ class Item:
             print("*You throw the ball and barely hit your target!*")
         else:
             print("*You trip while you throw the ball!*")
-        if odds * 100 > roll:
+            odds *= 1.5
+
+        if odds * 100 < roll:
             sleep(1)
             print("*Shake* ...")
             sleep(1)
