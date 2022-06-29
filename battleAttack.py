@@ -1,4 +1,4 @@
-from enums import BattleType
+from enums import BattleType, CombatModifiers, EffectType, Targeting
 import json
 
 class BattleAttack:
@@ -11,6 +11,7 @@ class BattleAttack:
         self.maxPP = 20
         self.accuracy = 90
         self.unlockLevel = 1
+        self.effects = [MoveEffect()]
         
         if attackname:
             attackFileName = "attacks/%s.json" % (attackname.lower())
@@ -25,6 +26,9 @@ class BattleAttack:
                 self.accuracy = data["accuracy"]
                 if unlockLevel:
                     self.unlockLevel = unlockLevel
+                self.effects = []
+                for effect in data["effects"]:
+                    self.effects.append(MoveEffect(effect["target"], effect["effectType"], effect["effectDetail"], effect["chance"]))
 
         self.currentPP = self.maxPP
 
@@ -36,16 +40,31 @@ class BattleAttack:
             "type": self.type,
             "isPhysical": self.isPhysical,
             "maxPP": self.maxPP,
-            "accuracy": self.accuracy
+            "accuracy": self.accuracy,
+            "effects": []
         }
+        for effect in self.effects:
+            data["effects"].append({"target": effect.target, "effectType": effect.effectType, "effectDetail": effect.effectDetail, "chance": effect.chance})
+        
         return json.dumps(data)
 
         
 
-class MoveData():
-    def __init__(self):
-        self.Move = "Tackle"
-        self.UnlockLevel = 1
+class MoveEffect():
+    def __init__(self, t: Targeting = None, eType: EffectType = None, eDetail: any = None, c: int = None):
+        self.target = Targeting.SELF
+        self.effectType = EffectType.ADD_COMBAT_MODIFIER
+        self.effectDetail = CombatModifiers.ACCURACY_UP
+        self.chance = 100
+
+        if t:
+            self.target = t
+        if eType:
+            self.effectType = eType
+        if eDetail:
+            self.effectDetail = eDetail
+        if c:
+            self.chance = c
 
 
 if __name__ == "__main__":

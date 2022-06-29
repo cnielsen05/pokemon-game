@@ -63,6 +63,10 @@ class BattleEngine:
 
             BattleEngine.ProcessEndOfRoundStatuses(wildPokemon, player_pokemon[0])
 
+        # End of battle
+        for pokemon in player_pokemon:
+            pokemon.combatModifiers.clear()
+
 
     def DoTrainerBattle(player_pokemon: List[Pokemon], opponent_pokemon: List[Pokemon], items: List[ItemType], opponent_name: str, winningMoney: int):
         global continueBattling
@@ -94,8 +98,9 @@ class BattleEngine:
                 BattleEngine.SwapPokemon(player_pokemon)
 
             opponent_active_pokemon = opponent_pokemon[0]
+            player_active_pokemon = player_pokemon[0]
             BattleEngine.AssessOpponentHealthiness(opponent_active_pokemon)
-            print("Your %s has %s/%s HP remaining." % (player_pokemon[0].name, player_pokemon[0].currentHP, player_pokemon[0].calculateMaxHp()))
+            print("Your %s has %s/%s HP remaining." % (player_active_pokemon.name, player_active_pokemon.currentHP, player_active_pokemon.calculateMaxHp()))
             print()
             options = ["ATTACK", "ITEM", "SWAP POKEMON", "POKEDEX"]
             userChoice = Formatting.GetUserChoice(options)
@@ -105,7 +110,7 @@ class BattleEngine:
             userAction = options[userChoice]
                 
             if (userAction == "ATTACK"):
-                if not BattleEngine.DoAttackMenu(player_pokemon[0], opponent_active_pokemon):
+                if not BattleEngine.DoAttackMenu(player_active_pokemon, opponent_active_pokemon):
                     continue
                 else:
                     input("*Press ENTER to continue...*")
@@ -122,6 +127,12 @@ class BattleEngine:
             elif (userAction == "POKEDEX"):
                 BattleEngine.UsePokedex(opponent_active_pokemon)
                 input("*Press ENTER to continue...*")
+
+            BattleEngine.ProcessEndOfRoundStatuses(opponent_active_pokemon, player_pokemon[0])
+
+        # End of battle
+        for pokemon in player_pokemon:
+            pokemon.combatModifiers.clear()
 
 
     def OpponentFaintIfDead(opponent: Pokemon, playerPokemon: Pokemon) -> bool:
@@ -185,7 +196,7 @@ class BattleEngine:
             if not BattleEngine.CheckForKnockout(opponent):
                 opponent.RandomAttack(player_pokemon)
 
-        input("*Press ENTER to continue...*")
+        return True
 
 
     def DoItemMenu(items: List[ItemType], player_pokemon: List[Pokemon], opponent: Pokemon, allow_pokeball: bool = True) -> bool:
@@ -352,20 +363,58 @@ class BattleEngine:
 
 
     def ProcessEndOfRoundStatuses(opponent: Pokemon, player_pokemon: Pokemon):
+        print("Checking end of round updates...")
         for p in (opponent, player_pokemon):
+            roll = random.randint(1,100)
+            print("status: %s" % (p.statusCondition))
             match p.statusCondition:
                 case Status.NONE:
                     # Nothing happens intentionally
                     continue
+
                 case Status.ASLEEP:
-                    roll = random.randint(1,100)
                     if roll > 50:
                         print("%s suddenly woke up!" % (p.name))
-                        input("*Press ENTER to continue...*")
+                        p.statusCondition = Status.NONE
+                    else:
+                        print("%s is asleep." % (p.name))
+
                 case Status.POISONED:
-                    dmg = 1 + p.calculateMaxHp()/20
+                    dmg = 1 + (int)(p.calculateMaxHp()/20)
                     print("The poison causes %s to wince. It takes %s damage." % (p.name, dmg))
                     p.TakeDamage(dmg)
+
+                case Status.PARALYZED:
+                    if roll > 60:
+                        print("%s shook off the paralysis!" % (p.name))
+                        p.statusCondition = Status.NONE
+                    else:
+                        print("%s is paralyzed." % (p.name))
+
+                case Status.CONFUSED:
+                    if roll > 40:
+                        print("%s took a deep breath and closed it's eyes for a moment, then snapped to attention. It is no longer confused!" % (p.name))
+                        p.statusCondition = Status.NONE
+                    else:
+                        print("%s is confused!" % (p.name))
+
+                case Status.FROZEN:
+                    if roll + p.attackStat / 5 > 100:
+                        print("%s used it's overwhelming strength to shatter the ice and break out! Incredible!" % (p.name))
+                        p.statusCondition = Status.NONE
+                    else:
+                        print("%s is frozen in a solid block of ice." % (p.name))
+
+                case Status.BURNED:
+                    if roll + p.spAttackStat / 2 > 100:
+                        print("%s overcame the burn with sheer will power!" % (p.name))
+                        p.statusCondition = Status.NONE
+                    else:
+                        damage = 2 + (int)(p.calculateMaxHp() / 10)
+                        print("%s winces as it's burned skin throbs. It takes %s damage!" % (p.name, damage))
+
+            input("*Press ENTER to continue...*")
+
 
 
     def DoBurnChance(target: Pokemon, odds: float):

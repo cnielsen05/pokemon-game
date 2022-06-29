@@ -4,5 +4,6 @@
     "type": "WATER",
     "isPhysical": true,
     "maxPP": 5,
-    "accuracy": 90
+    "accuracy": 90,
+    "effects": []
 }

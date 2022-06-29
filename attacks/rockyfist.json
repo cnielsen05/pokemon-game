@@ -4,5 +4,6 @@
     "type": "ROCK",
     "isPhysical": true,
     "maxPP": 15,
-    "accuracy": 80
+    "accuracy": 80,
+    "effects": []
 }

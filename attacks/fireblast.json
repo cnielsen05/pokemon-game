@@ -4,5 +4,6 @@
     "type": "FIRE",
     "isPhysical": false,
     "maxPP": 5,
-    "accuracy": 85
+    "accuracy": 85,
+    "effects": []
 }

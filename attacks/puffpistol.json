@@ -4,5 +4,6 @@
     "type": "FLYING",
     "isPhysical": false,
     "maxPP": 20,
-    "accuracy": 95
+    "accuracy": 95,
+    "effects": []
 }

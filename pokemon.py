@@ -1,6 +1,6 @@
 from typing import List
 from battleAttack import BattleAttack
-from enums import BattleType, Status, PokemonStat
+from enums import BattleType, CombatModifiers, Status, PokemonStat, Targeting, EffectType
 import json
 import random
 
@@ -42,6 +42,7 @@ class Pokemon:
         self.level = 1
         self.XP = 0
         self.statusCondition = Status.NONE
+        self.combatModifiers = []
 
         self.currentHP = self.calculateMaxHp()
 
@@ -74,19 +75,234 @@ class Pokemon:
         return unlockedAttacks
 
 
+    def AddStatusEffect(self, status: Status):
+        self.statusCondition = status
+
+
+    def AddCombatModifier(self, effect: CombatModifiers):
+        # Accuracy Modifier
+        if (effect == CombatModifiers.ACCURACY_DOWN or 
+            effect == CombatModifiers.ACCURACY_DOWN_DOWN or
+            effect == CombatModifiers.ACCURACY_UP or 
+            effect == CombatModifiers.ACCURACY_UP_UP):
+
+            # Clear all existing accuracy modifiers
+            index = 0
+            while index < len(self.combatModifiers):
+                if (self.combatModifiers[index] == CombatModifiers.ACCURACY_DOWN or 
+                    self.CombatModifiers[index] == CombatModifiers.ACCURACY_DOWN_DOWN or
+                    self.CombatModifiers[index] == CombatModifiers.ACCURACY_UP or
+                    self.CombatModifiers[index] == CombatModifiers.ACCURACY_UP_UP):
+
+                    self.combatModifiers.pop(index)
+                else:
+                    index += 1
+            self.combatModifiers.append(effect)
+
+        # Attack Modifier
+        elif (effect == CombatModifiers.ATK_DOWN or 
+            effect == CombatModifiers.ATK_DOWN_DOWN or
+            effect == CombatModifiers.ATK_UP or 
+            effect == CombatModifiers.ATK_UP_UP):
+
+            # Clear all existing accuracy modifiers
+            index = 0
+            while index < len(self.combatModifiers):
+                if (self.combatModifiers[index] == CombatModifiers.ATK_UP_UP or 
+                    self.CombatModifiers[index] == CombatModifiers.ATK_UP or
+                    self.CombatModifiers[index] == CombatModifiers.ATK_DOWN or
+                    self.CombatModifiers[index] == CombatModifiers.ATK_DOWN_DOWN):
+
+                    self.combatModifiers.pop(index)
+                else:
+                    index += 1
+            self.combatModifiers.append(effect)
+
+        # SpAttack Modifier
+        elif (effect == CombatModifiers.SPATK_DOWN or 
+            effect == CombatModifiers.SPATK_DOWN_DOWN or
+            effect == CombatModifiers.SPATK_UP or 
+            effect == CombatModifiers.SPATK_UP_UP):
+
+            # Clear all existing accuracy modifiers
+            index = 0
+            while index < len(self.combatModifiers):
+                if (self.combatModifiers[index] == CombatModifiers.SPATK_UP_UP or 
+                    self.CombatModifiers[index] == CombatModifiers.SPATK_UP or
+                    self.CombatModifiers[index] == CombatModifiers.SPATK_DOWN or
+                    self.CombatModifiers[index] == CombatModifiers.SPATK_DOWN_DOWN):
+
+                    self.combatModifiers.pop(index)
+                else:
+                    index += 1
+            self.combatModifiers.append(effect)
+
+        # Defense Modifier
+        elif (effect == CombatModifiers.DEF_DOWN or 
+            effect == CombatModifiers.DEF_DOWN_DOWN or
+            effect == CombatModifiers.DEF_UP or 
+            effect == CombatModifiers.DEF_UP_UP):
+
+            # Clear all existing accuracy modifiers
+            index = 0
+            while index < len(self.combatModifiers):
+                if (self.combatModifiers[index] == CombatModifiers.DEF_UP_UP or 
+                    self.CombatModifiers[index] == CombatModifiers.DEF_UP or
+                    self.CombatModifiers[index] == CombatModifiers.DEF_DOWN or
+                    self.CombatModifiers[index] == CombatModifiers.DEF_DOWN_DOWN):
+
+                    self.combatModifiers.pop(index)
+                else:
+                    index += 1
+            self.combatModifiers.append(effect)
+
+        # SpDef Modifier
+        elif (effect == CombatModifiers.SPDEF_DOWN or 
+            effect == CombatModifiers.SPDEF_DOWN_DOWN or
+            effect == CombatModifiers.SPDEF_UP or 
+            effect == CombatModifiers.SPDEF_UP_UP):
+
+            # Clear all existing accuracy modifiers
+            index = 0
+            while index < len(self.combatModifiers):
+                if (self.combatModifiers[index] == CombatModifiers.SPDEF_UP_UP or 
+                    self.CombatModifiers[index] == CombatModifiers.SPDEF_UP or
+                    self.CombatModifiers[index] == CombatModifiers.SPDEF_DOWN or
+                    self.CombatModifiers[index] == CombatModifiers.SPDEF_DOWN_DOWN):
+
+                    self.combatModifiers.pop(index)
+                else:
+                    index += 1
+            self.combatModifiers.append(effect)
+
+        # Speed Modifier
+        elif (effect == CombatModifiers.SPEED_DOWN or 
+            effect == CombatModifiers.SPEED_DOWN_DOWN or
+            effect == CombatModifiers.SPEED_UP or 
+            effect == CombatModifiers.SPEED_DOWN):
+
+            # Clear all existing accuracy modifiers
+            index = 0
+            while index < len(self.combatModifiers):
+                if (self.combatModifiers[index] == CombatModifiers.SPEED_DOWN or 
+                    self.CombatModifiers[index] == CombatModifiers.SPEED_DOWN_DOWN or
+                    self.CombatModifiers[index] == CombatModifiers.SPEED_UP or
+                    self.CombatModifiers[index] == CombatModifiers.SPEED_UP_UP):
+
+                    self.combatModifiers.pop(index)
+                else:
+                    index += 1
+            self.combatModifiers.append(effect)
+
+        elif (effect == CombatModifiers.CHARGED_UP):
+            alreadyCharged = False
+            for mod in self.combatModifiers:
+                if mod == CombatModifiers.CHARGED_UP:
+                    alreadyCharged = True
+
+            if not alreadyCharged:
+                self.combatModifiers.append(effect)
+
+
     def GetStatValue(self, stat: PokemonStat) -> int:
+        modFactor = 1.0
+        
         if stat == PokemonStat.ATTACK:
-            return 1 + (int)(1/5*self.attackStat*self.level)
+            for modifier in self.combatModifiers:
+                if modifier == CombatModifiers.ATK_UP_UP:
+                    modFactor = 4.0
+                    break
+                elif modifier == CombatModifiers.ATK_UP:
+                    modFactor = 2.0
+                    break
+                elif modifier == CombatModifiers.ATK_DOWN:
+                    modFactor = 0.5
+                    break
+                elif modifier == CombatModifiers.ATK_DOWN_DOWN:
+                    modFactor = 0.25
+                    break
+
+            if self.statusCondition == Status.BURNED:
+                modFactor *= 0.5
+
+            return 1 + (int)(1.0/5*self.attackStat*self.level*modFactor)
+
         elif stat == PokemonStat.SPECIAL_ATTACK:
-            return 1 + (int)(1/5*self.spAttackStat*self.level)
+            for modifier in self.combatModifiers:
+                if modifier == CombatModifiers.SPATK_UP_UP:
+                    modFactor = 4.0
+                    break
+                elif modifier == CombatModifiers.SPATK_UP:
+                    modFactor = 2.0
+                    break
+                elif modifier == CombatModifiers.SPATK_DOWN:
+                    modFactor = 0.5
+                    break
+                elif modifier == CombatModifiers.SPATK_DOWN_DOWN:
+                    modFactor = 0.25
+                    break
+
+            if self.statusCondition == Status.CURSED:
+                modFactor *= 0.5
+
+            return 1 + (int)(1.0/5*self.spAttackStat*self.level*modFactor)
+
         elif stat == PokemonStat.DEFENSE:
-            return 1 + (int)(1/5*self.defenseStat*self.level)
+            for modifier in self.combatModifiers:
+                if modifier == CombatModifiers.DEF_UP_UP:
+                    modFactor = 4.0
+                    break
+                elif modifier == CombatModifiers.DEF_UP:
+                    modFactor = 2.0
+                    break
+                elif modifier == CombatModifiers.DEF_DOWN:
+                    modFactor = 0.5
+                    break
+                elif modifier == CombatModifiers.DEF_DOWN_DOWN:
+                    modFactor = 0.25
+                    break
+
+            return 1 + (int)(1.0/5*self.defenseStat*self.level*modFactor)
+
         elif stat == PokemonStat.SPECIAL_DEFENSE:
-            return 1 + (int)(1/5*self.spDefenseStat*self.level)
+            for modifier in self.combatModifiers:
+                if modifier == CombatModifiers.SPDEF_UP_UP:
+                    modFactor = 4.0
+                    break
+                elif modifier == CombatModifiers.SPDEF_UP:
+                    modFactor = 2.0
+                    break
+                elif modifier == CombatModifiers.SPDEF_DOWN:
+                    modFactor = 0.5
+                    break
+                elif modifier == CombatModifiers.SPDEF_DOWN_DOWN:
+                    modFactor = 0.25
+                    break
+
+            return 1 + (int)(1.0/5*self.spDefenseStat*self.level*modFactor)
+
         elif stat == PokemonStat.HP:
             return self.calculateMaxHp()
+
         elif stat == PokemonStat.SPEED:
-            return 1 + (int)(1/5*self.speedStat*self.level)
+            for modifier in self.combatModifiers:
+                if modifier == CombatModifiers.SPEED_UP_UP:
+                    modFactor = 4.0
+                    break
+                elif modifier == CombatModifiers.SPEED_UP:
+                    modFactor = 2.0
+                    break
+                elif modifier == CombatModifiers.SPEED_DOWN:
+                    modFactor = 0.5
+                    break
+                elif modifier == CombatModifiers.SPEED_DOWN_DOWN:
+                    modFactor = 0.25
+                    break
+
+            if self.statusCondition == Status.PARALYZED:
+                modFactor *= 0.5
+
+            return 1 + (int)(1.0/5*self.speedStat*self.level*modFactor)
 
 
     def calculateMaxHp(self) -> int:
@@ -175,21 +391,56 @@ class Pokemon:
 
 
     def DoAttack(self, attackIndex: int, defender: any):
-        attack = self.GetBattleAttacks()[attackIndex]
+        # Some status effects impact attacking
+        if self.statusCondition == Status.CONFUSED:
+            roll = random.randint(1,100)
+            if roll < 50:
+                print("%s hurts itself in its confusion!" % (self.name))
+                damage = (int)(self.calculateMaxHp() / 7)
+                self.TakeDamage(damage)
+                return
 
+        elif self.statusCondition == Status.ASLEEP:
+            print("%s snores." % (self.name))
+            return
+
+        elif self.statusCondition == Status.PARALYZED:
+            roll = random.randint(1,100)
+            if roll < 50:
+                print("%s is stuck in place due to paralysis!" % (self.name))
+                return
+
+        elif self.statusCondition == Status.FROZEN:
+            return
+
+        attack = self.GetBattleAttacks()[attackIndex]
         attack.currentPP -= 1
-        miss = random.randint(1, 100) > attack.accuracy
+
+        effectiveAccuracy = attack.accuracy
+        for mod in self.combatModifiers:
+            if mod == CombatModifiers.ACCURACY_DOWN:
+                effectiveAccuracy -= 20
+            elif mod == CombatModifiers.ACCURACY_DOWN_DOWN:
+                effectiveAccuracy -= 40
+            elif mod == CombatModifiers.ACCURACY_UP:
+                effectiveAccuracy += 15
+            elif mod == CombatModifiers.ACCURACY_UP_UP:
+                effectiveAccuracy += 50
+
+        miss = random.randint(1, 100) > effectiveAccuracy
         if (miss):
             print("%s tries to use %s, but misses!" % (self.name, attack.name))
         else:
             print("%s uses %s!" % (self.name, attack.name))
-            attackStatValue = self.GetStatValue(PokemonStat.ATTACK) if attack.isPhysical else self.GetStatValue(PokemonStat.SPECIAL_ATTACK)
+            
+            defender.ReceiveAttack(attack, self)
+            self.HandleOnAttackEffects(attack)
 
-            defender.ReceiveAttack(attack.type, attack.baseDmg, attackStatValue, attack.isPhysical)
 
+    def ReceiveAttack(self, attack: BattleAttack, attacker: object) -> str:
+        attackerOffensiveStatValue = attacker.GetStatValue(PokemonStat.ATTACK) if attack.isPhysical else attacker.GetStatValue(PokemonStat.SPECIAL_ATTACK)
 
-    def ReceiveAttack(self, type: BattleType, attackBaseDmg: int, attackerOffensiveStatValue: int, isPhysical: bool) -> str:
-        effectivenessMultiplier = Pokemon.CalculateDamageTypeMultiplier(self.battleType1, self.battleType2, type)
+        effectivenessMultiplier = Pokemon.CalculateDamageTypeMultiplier(self.battleType1, self.battleType2, attack.type)
         if effectivenessMultiplier >= 2.0:
             print("It's super effective!")
         elif effectivenessMultiplier == 0:
@@ -197,15 +448,61 @@ class Pokemon:
         elif effectivenessMultiplier < 1.0:
             print("It's not very effective!")
             
-        defenseValue = self.GetStatValue(PokemonStat.DEFENSE) if isPhysical else self.GetStatValue(PokemonStat.SPECIAL_DEFENSE)
-        damage = 2 + (int)((((attackBaseDmg * effectivenessMultiplier) + 2 ) * (attackerOffensiveStatValue * 0.75 / (5 * defenseValue))) + random.randint(0,3))
+        defenseValue = self.GetStatValue(PokemonStat.DEFENSE) if attack.isPhysical else self.GetStatValue(PokemonStat.SPECIAL_DEFENSE)
+        damage = 2 + (int)((((attack.baseDmg * effectivenessMultiplier) + 2 ) * (attackerOffensiveStatValue * 0.75 / (5 * defenseValue))) + random.randint(0,3))
         crit = random.randint(0,9) > 8
         if crit:
             damage = (int)(damage * 1.75)
             print("CRITICAL HIT!")
         self.TakeDamage(damage)
+        self.HandleAttackReceivedEffects(attack, attacker, damage)
 
 
+    def HandleAttackReceivedEffects(self, attack: BattleAttack, attacker: object, damage: int):
+        for effect in attack.effects:
+            if effect.target == Targeting.OPPONENT:
+                if effect.effectType == EffectType.ADD_COMBAT_MODIFIER:
+                    roll = random.randint(1,100)
+                    if roll < effect.chance:
+                        self.AddCombatModifier(effect.effectDetail)
+                        print("Something about %s looks different than before..." % (self.name))
+                elif effect.effectType == EffectType.ADD_STATUS_EFFECT:
+                    roll = random.randint(1,100)
+                    if roll < effect.chance:
+                        self.AddStatusEffect(effect.effectDetail)
+                        print("%s becomes %s!" % (self.name, effect.effectDetail))
+                elif effect.effectType == EffectType.CLEANSE_COMBAT_MODIFIERS:
+                    print("%s stumbles and resets it's position, it seems to have lost it's rhythm!" % (self.name))
+                    self.combatModifiers.clear()
+                elif effect.effectType == EffectType.CLEANSE_STATUS_EFFECTS:
+                    print("%s moves freely, as all status effects are cleared!" % (self.name))
+                    self.statusCondition = Status.NONE
+                elif effect.effectType == EffectType.DRAIN:
+                    drainFactor = effect.effectDetail
+                    drainAmount = (int)(damage * drainFactor)
+                    print("%s drains energy from it's opponent!" % (attacker.name))
+                    attacker.HealHP(drainAmount)
+
+
+    def HandleOnAttackEffects(self, attack: BattleAttack):
+        for effect in attack.effects:
+            if effect.target == Targeting.SELF:
+                if effect.effectType == EffectType.ADD_COMBAT_MODIFIER:
+                    self.AddCombatModifier(effect.effectDetail)
+                elif effect.effectType == EffectType.ADD_STATUS_EFFECT:
+                    self.AddStatusEffect(effect.effectDetail)
+                elif effect.effectType == EffectType.CLEANSE_COMBAT_MODIFIERS:
+                    print("%s stumbles and resets it's position, it seems to have lost it's rhythm!" % (self.name))
+                    self.combatModifiers.clear()
+                elif effect.effectType == EffectType.CLEANSE_STATUS_EFFECTS:
+                    print("%s moves freely, as all status effects are cleared!" % (self.name))
+                    self.statusCondition = Status.NONE
+                elif effect.effectType == EffectType.HEAL:
+                    healAmount = (int)(self.calculateMaxHp() * effect.effectDetail)
+                    print("%s is healed for %s HP!" % (self.name, healAmount))
+
+    
+    
     def TakeDamage(self, damage: int):
         if damage > self.currentHP:
             self.currentHP = 0

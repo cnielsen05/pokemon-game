@@ -4,5 +4,6 @@
     "type": "ICE",
     "isPhysical": true,
     "maxPP": 15,
-    "accuracy": 93
+    "accuracy": 93,
+    "effects": []
 }

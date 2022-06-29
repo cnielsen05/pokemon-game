@@ -4,5 +4,6 @@
     "type": "FAIRY",
     "isPhysical": true,
     "maxPP": 15,
-    "accuracy": 85
+    "accuracy": 85,
+    "effects": []
 }

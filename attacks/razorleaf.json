@@ -4,5 +4,6 @@
     "type": "GRASS",
     "isPhysical": false,
     "maxPP": 20,
-    "accuracy": 90
+    "accuracy": 90,
+    "effects": []
 }
