@@ -22,15 +22,7 @@ class Item:
 
         chosen_pokemon = player_pokemon[index]
         print("You use POTION on %s!" % (chosen_pokemon.name))
-        missingHP = chosen_pokemon.calculateMaxHp() - chosen_pokemon.currentHP
-        healedAmount = missingHP
-        if missingHP >= 30:
-            chosen_pokemon.currentHP += 30
-            healedAmount = 30
-        else:
-            chosen_pokemon.currentHP += missingHP
-            
-        print("%s heals for %s HP!" % (chosen_pokemon.name, healedAmount))
+        chosen_pokemon.HealHP(healAmount)
         return True
 
 

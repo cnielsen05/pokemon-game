@@ -1,0 +1,8 @@
+{
+    "name": "Dazzling Light",
+    "baseDmg": 55,
+    "type": "FAIRY",
+    "isPhysical": true,
+    "maxPP": 15,
+    "accuracy": 85
+}

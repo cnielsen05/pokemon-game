@@ -1,0 +1,8 @@
+{
+    "name": "Electro Ball",
+    "baseDmg": 40,
+    "type": "ELECTRIC",
+    "isPhysical": false,
+    "maxPP": 15,
+    "accuracy": 95
+}

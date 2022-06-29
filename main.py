@@ -18,6 +18,7 @@ class Game:
     def __init__(self):
         self.keepPlaying = True
         self.player_pokemon = []
+        self.rival_pokemon = []
         self.items = []
         self.playerMoney = 0
         self.state = {
@@ -107,8 +108,6 @@ class Game:
         print("You: what do you mean?!")
         print("Rival it happens in a hour loser oh and I can't forget the title DUMBY")
 
-        
-
         self.player_options.clear()
         self.player_options.append("A) Your no smarter")
         self.player_options.append("B) Okay I guess I did forget the time it starts")
@@ -137,27 +136,66 @@ class Game:
 
             player_input = self.getPlayerInput("Choose your starter:")
             starter = None
+            rival_starter = None
 
             if (player_input == "A"):
                 starter = Pokemon("atsebi")
+                rival_starter = Pokemon("nardent")
 
             elif (player_input == "B"):
                 starter = Pokemon("nardent")
+                rival_starter = Pokemon("leafox")
 
             elif (player_input == "C"):
                 starter = Pokemon("leafox")
+                rival_starter = Pokemon("atsebi")
 
             if not starter:
                 print("'%s' not recognized. Please try again." % (player_input))
                 input("*Press ENTER to continue...*")
             else:
-                starter.level = 3
+                starter.level = 2
+                starter.XP = 400
                 starter.FullHealHP()
                 self.player_pokemon.append(starter)
+
+                rival_starter.level = 1
+                rival_starter.FullHealHP()
+                self.rival_pokemon.append(rival_starter)
 
             if (len(self.player_pokemon) > 0):
                 print("Professor: Good choice, I'm sure %s will be an excellent companion on your journey!" % (self.player_pokemon[0].name))
                 self.state["choose_starter_complete"] = True
+
+            print("Professor: You should do a practice battle before you go. Let me get my nephew in here...")
+            print("Professor: *sucks in breath...*")
+            time.sleep(1)
+            print("Professor: GAAAAAAAAAAAAAAAA---")
+            time.sleep(1)
+            print("Professor: --AAAAAAAAAAAAAARRRYYYYYYYY!!!!!!!!")
+            time.sleep(1)
+            Formatting.clearScreen()
+            print("Rival Gary: I'm here gramps! I hope you aren't calling me to help that loser over there...")
+            time.sleep(1)
+            print("Professor: Gary! What have I told you about speaking to guests that way!")
+            print("Professor: But yeah... I did want you to have a practice battle with this kid.")
+            input("*Press ENTER to continue...*")
+
+            print("Rival Gary: Ugh, I would never give you the time of the day if it were up to me... but Gramps says I have to battle you.")
+            print("Rival Gary: Prepare to get creamed, sucker!")
+
+            BattleEngine.DoTrainerBattle(self.player_pokemon, self.rival_pokemon, self.items, "Rival Gary", 1000)
+
+            print("Professor: You should take some basic supplies with you. I'll give you a pokeball and a potion so you can learn how they work.")
+            print("Professor: You will need to learn the tools of your trade well, if you are ever to become a Pokemon Master.")
+            print()
+            time.sleep(2)
+            print("*You receive Potion x 1*")
+            print("*You receive Pokeball x 1*")
+            self.items.append(ItemType.POKEBALL)
+            self.items.append(ItemType.POTION)
+            print()
+            input("*Press ENTER to continue...*")
 
             print("Professor: You can begin your journey on Route 1 now, unless you have more questions for me?")
             player_choice = input("*Ask a question? Or press ENTER to continue...*")
@@ -184,6 +222,138 @@ class Game:
                 print("*You gain 3x Potion!")
                 input("*Press ENTER to continue...*")
 
+    
+    def route_one(self):
+        Formatting.clearScreen()
+        print("Starting the journey along Route 1.")
+        print()
+
+        global isWalking
+        global steps_taken
+        route_length = 30
+        # Define which pokemon can show up. Make more common pokemon show up more often.
+        wildPokemonList = [
+            "flokefish", 
+            "flokefish", 
+            "flokefish", 
+            "sleepoud", 
+            "sleepoud", 
+            "scorpoint", 
+            "flokefish",
+            "stackuri",
+            "jareanpidgey", 
+            "jareanpidgey", 
+            "jareanpidgey",
+            "hebike",
+            "hebike",
+            "hebike",
+            "hebike",
+            "hebike",
+            "clovney",
+            "clovney",
+            "stackuri",
+            "stackuri",
+            "stackuri"]
+        wildPokemonLevelRange = [1,2]
+
+        hiddenItemList = [ItemType.POTION, ItemType.POKEFEAST, ItemType.POKEBALL]
+
+        steps_taken = 0
+        while (steps_taken < route_length):
+            self.doWalk(route_length, wildPokemonList, self.player_pokemon, self.items, hiddenItemList, wildPokemonLevelRange)
+            Formatting.clearScreen()
+        
+        print("You have reached the end of Route 1!")
+        self.state["route_one_complete"] = True
+
+
+    def route_two(self):
+        print("Starting route two!")
+        self.state["route_two_complete"] = False
+        route_length = 50
+        # Define which pokemon can show up. Make more common pokemon show up more often.
+        wildPokemonList = ["geodude", "rockegon", "geodude", "geodude", "geodude", "rockegon", "pidgey", "jareanpidgey", "jareanpidgey","jareanpidgey", "jareanpidgey", "implien", "implien"]
+        wildPokemonLevelRange = [1, 2, 3]
+        hiddenItemList = [ItemType.POTION, ItemType.POKEFEAST, ItemType.POKEFEAST, ItemType.POKEBALL]
+
+        steps_taken = 0
+        while (steps_taken < route_length):
+            self.doWalk(route_length, wildPokemonList, self.player_pokemon, self.items, hiddenItemList, wildPokemonLevelRange)
+            Formatting.clearScreen()
+                
+        
+        print("You have reached the end of Route 2!")
+        self.state["route_two_complete"] = True
+        print("You: Now time for the first Gym. The Grass Gym!")
+
+        input("\n*Press ENTER to continue...*")
+        Formatting.clearScreen()
+
+        print("*BOOOOOM*")
+        time.sleep(2)
+        print("*An explosion comes from the Grass Gym in the far distance*")
+        print("You: What is happening?!")
+        print("*You start running towards the explosion*")
+
+        input("\n*Press ENTER to continue...*")
+        Formatting.clearScreen()\
+
+        #to do add more here such as Battles and towns
+        time.sleep(2)
+        print("You finally make it to the Grass Gym door. Everyone is screaming.")
+        print("*You bravely walk into the Grass Gym*")
+
+        input("\n*Press ENTER to continue...*")
+        Formatting.clearScreen()
+
+
+        print("*You hide behind a pillar and eavesdrop on the conversation*")
+
+        input("\n*Press ENTER to continue...*")
+        Formatting.clearScreen()
+
+        print("Grass Gym Leader: MORE")
+        time.sleep(2)
+        print("Grass Gym Leader: GIVE me MoRE tO KiLl")
+        time.sleep(4)
+        print("Grass Gym Leader: iT gIvEs ME MorE ENerGy.")
+        time.sleep(1)
+        print("Grass Gym Leader: GiVE ME MorE oR YoU WiLl bE mY NexT KiLl.")
+        print("A Random Person: Yes okay.")
+        print("*You hear someone walk out the building.*")
+
+        input("\n*Press ENTER to continue...*")
+        Formatting.clearScreen()
+
+        print("Grass Gym Leader: AhHh A ChAlengEr.")
+        print("*You get teleported in front of the Grass Gym Leader!*")
+        print("*The Grass Gym Leader's eyes are red*")
+        print("Grass Gym Leader: HoW AboUt iF yOu LoSE I WilL KiLl YoU!")
+
+        input("\n*Press ENTER to continue...*")
+        Formatting.clearScreen()
+
+        print("Grass Gym Leader: YES YoU MuST")
+        print("Grass Gym Leader: LeTs StaRt NOW!")
+
+        input("\n*Press ENTER to continue...*")
+        Formatting.clearScreen()
+
+        print("You have been engaged for a BATTLE!")
+
+    def run(self):
+        while (self.keepPlaying):
+            # Our game code goes in here
+            if (not self.state["choose_starter_complete"]):
+                self.intro()
+            elif (not self.state["route_one_complete"]):
+                self.route_one()
+            elif (not self.state["route_two_complete"]):
+                self.route_two()
+            else:
+                print("Congratulations, you've reached the end of the game! You WIN!")
+                self.keepPlaying = False
+            
 
     def doWalk(self, 
         route_length: int, 
@@ -291,12 +461,23 @@ class Game:
 
 
     def FindHiddenItemChance(self, hiddenItemList: List[ItemType]):
-        if random.randint(1,100) > 95:
+        if random.randint(1,100) > 93:
             print("You found a hidden item!")
             whichItem = random.randint(0,len(hiddenItemList) - 1)
             found_item = hiddenItemList[whichItem]
-            print("You have acquired... %s!" % (found_item))
-            self.items.append(found_item)
+
+            if found_item == ItemType.POKEFEAST:
+                time.sleep(1)
+                print()
+                print("Lucky you! You've stumbled across a huge feast of wild berries and all of your Pokemon dig in! Delicious and nutritious!")
+                print()
+                print("Your Pokemon have all had their HP restored!")
+                for pokemon in self.player_pokemon:
+                    pokemon.HealHP(30)
+            else:
+                print("You have acquired... %s!" % (found_item))
+                self.items.append(found_item)
+
             input("*Press ENTER to continue...*")
 
 
@@ -322,138 +503,6 @@ class Game:
         return encounterWildPokemon
 
     
-    def route_one(self):
-        Formatting.clearScreen()
-        print("Starting the journey along Route 1.")
-        print()
-
-        global isWalking
-        global steps_taken
-        route_length = 30
-        # Define which pokemon can show up. Make more common pokemon show up more often.
-        wildPokemonList = [
-            "flokefish", 
-            "flokefish", 
-            "flokefish", 
-            "sleepoud", 
-            "sleepoud", 
-            "scorpoint", 
-            "flokefish",
-            "stackuri",
-            "jareanpidgey", 
-            "jareanpidgey", 
-            "jareanpidgey",
-            "hebike",
-            "hebike",
-            "hebike",
-            "hebike",
-            "hebike",
-            "clovney",
-            "clovney",
-            "stackuri",
-            "stackuri",
-            "stackuri"]
-        wildPokemonLevelRange = [1,2]
-
-        hiddenItemList = [ItemType.POTION, ItemType.POTION, ItemType.POKEBALL]
-
-        steps_taken = 0
-        while (steps_taken < route_length):
-            self.doWalk(route_length, wildPokemonList, self.player_pokemon, self.items, hiddenItemList, wildPokemonLevelRange)
-            Formatting.clearScreen()
-        
-        print("You have reached the end of Route 1!")
-        self.state["route_one_complete"] = True
-
-
-    def route_two(self):
-        print("Starting route two!")
-        self.state["route_two_complete"] = False
-        route_length = 50
-        # Define which pokemon can show up. Make more common pokemon show up more often.
-        wildPokemonList = ["geodude", "rockegon", "geodude", "geodude", "geodude", "rockegon", "pidgey", "jareanpidgey", "jareanpidgey","jareanpidgey", "jareanpidgey", "implien", "implien"]
-        wildPokemonLevelRange = [1, 2, 3]
-        hiddenItemList = [ItemType.POTION, ItemType.POTION, ItemType.POKEBALL]
-
-        steps_taken = 0
-        while (steps_taken < route_length):
-            self.doWalk(route_length, wildPokemonList, self.player_pokemon, self.items, hiddenItemList, wildPokemonLevelRange)
-            Formatting.clearScreen()
-                
-        
-        print("You have reached the end of Route 2!")
-        self.state["route_two_complete"] = True
-        print("You: Now time for the first Gym. The Grass Gym!")
-
-        input("\n*Press ENTER to continue...*")
-        Formatting.clearScreen()
-
-        print("*BOOOOOM*")
-        time.sleep(2)
-        print("*An explosion comes from the Grass Gym in the far distance*")
-        print("You: What is happening?!")
-        print("*You start running towards the explosion*")
-
-        input("\n*Press ENTER to continue...*")
-        Formatting.clearScreen()\
-
-        #to do add more here such as Battles and towns
-        time.sleep(2)
-        print("You finally make it to the Grass Gym door. Everyone is screaming.")
-        print("*You bravely walk into the Grass Gym*")
-
-        input("\n*Press ENTER to continue...*")
-        Formatting.clearScreen()
-
-
-        print("*You hide behind a pillar and eavesdrop on the conversation*")
-
-        input("\n*Press ENTER to continue...*")
-        Formatting.clearScreen()
-
-        print("Grass Gym Leader: MORE")
-        time.sleep(2)
-        print("Grass Gym Leader: GIVE me MoRE tO KiLl")
-        time.sleep(4)
-        print("Grass Gym Leader: iT gIvEs ME MorE ENerGy.")
-        time.sleep(1)
-        print("Grass Gym Leader: GiVE ME MorE oR YoU WiLl bE mY NexT KiLl.")
-        print("A Random Person: Yes okay.")
-        print("*You hear someone walk out the building.*")
-
-        input("\n*Press ENTER to continue...*")
-        Formatting.clearScreen()
-
-        print("Grass Gym Leader: AhHh A ChAlengEr.")
-        print("*You get teleported in front of the Grass Gym Leader!*")
-        print("*The Grass Gym Leader's eyes are red*")
-        print("Grass Gym Leader: HoW AboUt iF yOu LoSE I WilL KiLl YoU!")
-
-        input("\n*Press ENTER to continue...*")
-        Formatting.clearScreen()
-
-        print("Grass Gym Leader: YES YoU MuST")
-        print("Grass Gym Leader: LeTs StaRt NOW!")
-
-        input("\n*Press ENTER to continue...*")
-        Formatting.clearScreen()
-
-        print("You have been engaged for a BATTLE!")
-
-    def run(self):
-        while (self.keepPlaying):
-            # Our game code goes in here
-            if (not self.state["choose_starter_complete"]):
-                self.intro()
-            elif (not self.state["route_one_complete"]):
-                self.route_one()
-            elif (not self.state["route_two_complete"]):
-                self.route_two()
-            else:
-                print("Congratulations, you've reached the end of the game! You WIN!")
-                self.keepPlaying = False
-            
-
     def getPlayerInput(self, prompt: str) -> str:
         print(prompt)
         for option in self.player_options:
