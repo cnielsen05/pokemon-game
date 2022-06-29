@@ -191,6 +191,14 @@ class Game:
             print()
             print("You begin a trainer battle with Rival Gary!")
             input("*Press ENTER to continue...*")
+
+            # Example new list of pokemon to battle against
+            # not_rival_pokemon = []
+            # for name in ("clovney", "sleepoud", "pidgey"):
+            #   newPokemon = Pokemon(name)
+            #   newPokemon.level = 2
+            #   not_rival_pokemon.append(newPokemon)
+            #   BattleEngine.DoTrainerBattle(self.player_pokemon, self.not_rival_pokemon, self.items, "Trainer Fakeguy", 300)
             BattleEngine.DoTrainerBattle(self.player_pokemon, self.rival_pokemon, self.items, "Rival Gary", 1000)
 
             print("Professor: You should take some basic supplies with you. I'll give you a pokeball and a potion so you can learn how they work.")
