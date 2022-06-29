@@ -125,7 +125,7 @@ class Game:
         Formatting.clearScreen()
         print("Rival: Wait... hurry? You idiot, do you even know what time it is? Gramps isn't giving out any Pokemon until 11:30, that's not for another hour you idiot!")
         print("You: What do you mean?!")
-        print("Rival: Exactly like I said! You, the idiotic dumb loser, are ONE HOUR EARLY. You are truly a pea-brained.")
+        print("Rival: Exactly like I said! You, the idiotic dumb loser, are ONE HOUR EARLY. You are truly a pea-brained moron.")
 
         self.player_options.clear()
         self.player_options.append("A) You're no genius yourself. I should fight you here and now for talking to me that way.")
@@ -189,7 +189,7 @@ class Game:
                 rival_starter.FullHealHP()
                 self.rival_pokemon.append(rival_starter)
                 self.state["choose_starter_complete"] = True
-                
+
 
         if (len(self.player_pokemon) > 0):
             print("Professor: Good choice, I'm sure %s will be an excellent companion on your journey!" % (self.player_pokemon[0].name))

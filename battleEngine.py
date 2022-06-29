@@ -237,6 +237,24 @@ class BattleEngine:
                     input("*Press ENTER to continue...*")
                     Formatting.clearScreen()
 
+            case ItemType.GREATBALL:
+                if allow_pokeball:
+                    caught = Item.UsePokeball(opponent, player_pokemon, ItemType.GREATBALL)
+                    items.pop(index)
+                    if caught:
+                        continueBattling = False
+                        xpGain = opponent.GetExperienceValue()
+                        print()
+                        print("%s has gained %s XP!" % (player_pokemon[0].name, xpGain))
+                        player_pokemon[0].GainExperience(xpGain)
+                        input("*Press ENTER to continue*")
+                        Formatting.clearScreen()
+                        return False
+                else:
+                    print("You can't use this item on that Pokemon!")
+                    input("*Press ENTER to continue...*")
+                    Formatting.clearScreen()
+
         opponent.RandomAttack(player_pokemon[0])
         return True
 
