@@ -1,3 +1,4 @@
+import time
 from typing import List
 from battleAttack import BattleAttack
 from enums import BattleType, CombatModifiers, Status, PokemonStat, Targeting, EffectType
@@ -375,7 +376,12 @@ class Pokemon:
 
 
     def Evolve(self, newPokemon: str):
+        print("%s is evolving!" % (self.name))
+        time.sleep(2)
+        print("...")
+        time.sleep(2)
         pokemonFileName = "pokemon/%s.json" % (newPokemon)
+        oldName = self.name
 
         with open(pokemonFileName, 'r') as pokemonFile:
             data = json.load(pokemonFile)
@@ -392,6 +398,9 @@ class Pokemon:
             self.battleAttacks.clear()
             for atk in data["battleAttacks"]:
                 self.battleAttacks.append(BattleAttack(atk["Move"], atk["UnlockLevel"]))
+
+        newName = self.name
+        print("%s has evolved into %s!" % (oldName, newName))
     
     
     def FullHealHP(self):
@@ -536,7 +545,6 @@ class Pokemon:
                     healAmount = (int)(self.calculateMaxHp() * effect.effectDetail)
                     print("%s is healed for %s HP!" % (self.name, healAmount))
 
-    
     
     def TakeDamage(self, damage: int):
         if damage > self.currentHP:
