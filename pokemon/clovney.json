@@ -9,6 +9,8 @@
     "battleType1": "FAIRY",
     "battleType2": "NONE",
     "catchFactor": 0.25,
+    "evolveLevel": 0,
+    "evolutionName": "",
     "battleAttacks": [
         {"Move": "Happyspark", "UnlockLevel": 1},
         {"Move": "Scratch", "UnlockLevel": 1},

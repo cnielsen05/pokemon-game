@@ -9,11 +9,13 @@
     "battleType1": "FIRE",
     "battleType2": "NONE",
     "catchFactor": 0.01,
+    "evolveLevel": 7,
+    "evolutionName": "Kindon",
     "battleAttacks": [
         {"Move": "Tackle", "UnlockLevel": 1},
         {"Move": "Ember", "UnlockLevel": 3},
         {"Move": "Sludge", "UnlockLevel": 3},
-        {"Move": "Bite", "UnlockLevel": 4},
-        {"Move": "Fireblast", "UnlockLevel": 6}
+        {"Move": "Bite", "UnlockLevel": 4}
+        
     ]
 }

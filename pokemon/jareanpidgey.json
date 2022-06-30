@@ -9,6 +9,8 @@
     "battleType1": "FLYING",
     "battleType2": "ICE",
     "catchFactor": 0.25,
+    "evolveLevel": 0,
+    "evolutionName": "",
     "battleAttacks": [
         {"Move": "Peck", "UnlockLevel": 1},
         {"Move": "FrostPeck", "UnlockLevel": 2}

@@ -1,0 +1,21 @@
+{
+    "name": "Vineox",
+    "attackStat": 20,
+    "defenseStat": 25,
+    "spAttackStat": 55,
+    "spDefenseStat": 20,
+    "speedStat": 25,
+    "HPStat": 55,
+    "battleType1": "GRASS",
+    "battleType2": "NONE",
+    "catchFactor": 0.01,
+    "evolveLevel": 0,
+    "evolutionName": "",
+    "battleAttacks": [
+        {"Move": "Fakeout", "UnlockLevel": 7},
+        {"Move": "Razorleaf", "UnlockLevel": 7},
+        {"Move": "Lowkick", "UnlockLevel": 7},
+        {"Move": "Electroball", "UnlockLevel": 7},
+        {"Move": "Solarbeam", "UnlockLevel": 9}
+    ]
+}

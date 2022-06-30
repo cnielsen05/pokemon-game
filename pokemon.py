@@ -1,3 +1,4 @@
+import time
 from typing import List
 from battleAttack import BattleAttack
 from enums import BattleType, CombatModifiers, Status, PokemonStat, Targeting, EffectType
@@ -14,6 +15,8 @@ class Pokemon:
         self.speedStat = 31
         self.HPStat = 19
         self.catchFactor = 0.25
+        self.evolveLevel = 0
+        self.evolutionName = ""
 
         self.accuracyModifierLevel = 0
         self.attackModifierLevel = 0
@@ -42,6 +45,8 @@ class Pokemon:
                 self.battleType1 = data["battleType1"]
                 self.battleType2 = data["battleType2"]
                 self.catchFactor = data["catchFactor"]
+                self.evolveLevel = data["evolveLevel"]
+                self.evolutionName = data["evolutionName"]
                 self.battleAttacks.clear()
                 for atk in data["battleAttacks"]:
                     self.battleAttacks.append(BattleAttack(atk["Move"], atk["UnlockLevel"]))
@@ -65,6 +70,8 @@ class Pokemon:
             "HPStat": self.HPStat,
             "battleType1": self.battleType1,
             "battleType2": self.battleType2,
+            "evolveLevel": self.evolveLevel,
+            "evolutionName": self.evolutionName,
             "battleAttacks": []
         }
         for attack in self.battleAttacks:
@@ -315,6 +322,9 @@ class Pokemon:
 
         self.level += 1
 
+        if self.evolveLevel > 0 and self.level >= self.evolveLevel:
+            self.Evolve(self.evolutionName)
+
         newStats = {
             "HP": self.calculateMaxHp(),
             "Attack": self.GetStatValue(PokemonStat.ATTACK),
@@ -334,11 +344,42 @@ class Pokemon:
 
         if len(newMoves) > len(oldMoves):
             i = len(oldMoves)
-            while i <= len(newMoves) - 1:
+            while i < len(newMoves):
+                print()
                 print("%s has learned %s!" % (self.name, newMoves[i].name))
                 i += 1
 
 
+    def Evolve(self, newPokemon: str):
+        print("%s is evolving!" % (self.name))
+        time.sleep(2)
+        print("...")
+        time.sleep(2)
+        pokemonFileName = "pokemon/%s.json" % (newPokemon)
+        oldName = self.name
+
+        with open(pokemonFileName, 'r') as pokemonFile:
+            data = json.load(pokemonFile)
+            self.name = data["name"]
+            self.attackStat = data["attackStat"]
+            self.defenseStat = data["defenseStat"]
+            self.spAttackStat = data["spAttackStat"]
+            self.spDefenseStat = data["spDefenseStat"]
+            self.speedStat = data["speedStat"]
+            self.HPStat = data["HPStat"]
+            self.battleType1 = data["battleType1"]
+            self.battleType2 = data["battleType2"]
+            self.catchFactor = data["catchFactor"]
+            self.evolutionName = data["evolutionName"]
+            self.evolutionLevel = data["evolutionLevel"]
+            self.battleAttacks.clear()
+            for atk in data["battleAttacks"]:
+                self.battleAttacks.append(BattleAttack(atk["Move"], atk["UnlockLevel"]))
+
+        newName = self.name
+        print("%s has evolved into %s!" % (oldName, newName))
+    
+    
     def FullHealHP(self):
         self.currentHP = self.calculateMaxHp()
         if self.statusCondition == Status.KNOCKED_OUT:
@@ -471,7 +512,6 @@ class Pokemon:
                     healAmount = (int)(self.calculateMaxHp() * effect.effectDetail)
                     print("%s is healed for %s HP!" % (self.name, healAmount))
 
-    
     
     def TakeDamage(self, damage: int):
         if damage > self.currentHP:

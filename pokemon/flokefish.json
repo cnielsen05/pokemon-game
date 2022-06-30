@@ -9,6 +9,8 @@
     "battleType1": "GRASS",
     "battleType2": "WATER",
     "catchFactor": 0.25,
+    "evolveLevel": 0,
+    "evolutionName": "",
     "battleAttacks": [
         {"Move": "Tackle", "UnlockLevel": 1},
         {"Move": "Vinewhip", "UnlockLevel": 2}

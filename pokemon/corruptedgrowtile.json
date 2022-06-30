@@ -1,0 +1,18 @@
+{
+    "name": "Corrupted Growtile",
+    "attackStat": 40,
+    "defenseStat": 30,
+    "spAttackStat": 40,
+    "spDefenseStat": 45,
+    "speedStat": 10,
+    "HPStat": 35,
+    "battleType1": "GRASS",
+    "battleType2": "DARK",
+    "catchFactor": 0,
+    "evolveLevel": 0,
+    "evolutionName": "",
+    "battleAttacks": [
+        {"Move": "Darkwhip", "UnlockLevel": 1},
+        {"Move": "Thornspit", "UnlockLevel": 1}
+    ]
+}

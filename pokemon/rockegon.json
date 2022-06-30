@@ -9,6 +9,8 @@
     "battleType1": "DRAGON",
     "battleType2": "FIRE",
     "catchFactor": 0.25,
+    "evolveLevel": 0,
+    "evolutionName": "",
     "battleAttacks": [
         {"Move": "Ember", "UnlockLevel": 1},
         {"Move": "Dragonicblast", "UnlockLevel": 2}
