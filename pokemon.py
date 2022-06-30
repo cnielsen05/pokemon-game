@@ -15,6 +15,13 @@ class Pokemon:
         self.HPStat = 19
         self.catchFactor = 0.25
 
+        self.accuracyModifierLevel = 0
+        self.attackModifierLevel = 0
+        self.specialAttackModifierLevel = 0
+        self.defenseModifierLevel = 0
+        self.specialDefenseModifierLevel = 0
+        self.speedModifierLevel = 0
+
         self.battleType1 = BattleType.FLYING
         self.battleType2 = BattleType.NORMAL
 
@@ -81,124 +88,88 @@ class Pokemon:
 
     def AddCombatModifier(self, effect: CombatModifiers):
         # Accuracy Modifier
-        if (effect == CombatModifiers.ACCURACY_DOWN or 
-            effect == CombatModifiers.ACCURACY_DOWN_DOWN or
-            effect == CombatModifiers.ACCURACY_UP or 
-            effect == CombatModifiers.ACCURACY_UP_UP):
-
-            # Clear all existing accuracy modifiers
-            index = 0
-            while index < len(self.combatModifiers):
-                if (self.combatModifiers[index] == CombatModifiers.ACCURACY_DOWN or 
-                    self.combatModifiers[index] == CombatModifiers.ACCURACY_DOWN_DOWN or
-                    self.combatModifiers[index] == CombatModifiers.ACCURACY_UP or
-                    self.combatModifiers[index] == CombatModifiers.ACCURACY_UP_UP):
-
-                    self.combatModifiers.pop(index)
-                else:
-                    index += 1
-            self.combatModifiers.append(effect)
-            print("%s's ACCURACY has changed!" % (self.name))
+        if effect == CombatModifiers.ACCURACY_DOWN:
+            self.accuracyModifierLevel -= 1
+            print("%s's ACCURACY fell!" % (self.name))
+        elif effect == CombatModifiers.ACCURACY_DOWN_DOWN:
+            self.accuracyModifierLevel -= 2
+            print("%s's ACCURACY fell sharply!" % (self.name))
+        elif effect == CombatModifiers.ACCURACY_UP:
+            self.accuracyModifierLevel += 1
+            print("%s's ACCURACY rose!" % (self.name))
+        elif effect == CombatModifiers.ACCURACY_UP_UP:
+            self.accuracyModifierLevel += 2
+            print("%s's ACCURACY rose sharply!" % (self.name))
 
         # Attack Modifier
-        elif (effect == CombatModifiers.ATK_DOWN or 
-            effect == CombatModifiers.ATK_DOWN_DOWN or
-            effect == CombatModifiers.ATK_UP or 
-            effect == CombatModifiers.ATK_UP_UP):
-
-            # Clear all existing accuracy modifiers
-            index = 0
-            while index < len(self.combatModifiers):
-                if (self.combatModifiers[index] == CombatModifiers.ATK_UP_UP or 
-                    self.combatModifiers[index] == CombatModifiers.ATK_UP or
-                    self.combatModifiers[index] == CombatModifiers.ATK_DOWN or
-                    self.combatModifiers[index] == CombatModifiers.ATK_DOWN_DOWN):
-
-                    self.combatModifiers.pop(index)
-                else:
-                    index += 1
-            self.combatModifiers.append(effect)
-            print("%s's ATTACK has changed!" % (self.name))
+        elif effect == CombatModifiers.ATK_DOWN:
+            self.attackModifierLevel -= 1
+            print("%s's ATTACK fell!" % (self.name))
+        elif effect == CombatModifiers.ATK_DOWN_DOWN:
+            self.attackModifierLevel -= 2
+            print("%s's ATTACK fell sharply!" % (self.name))
+        elif effect == CombatModifiers.ATK_UP:
+            self.attackModifierLevel += 1
+            print("%s's ATTACK rose!" % (self.name))
+        elif effect == CombatModifiers.ATK_UP_UP:
+            self.attackModifierLevel += 2
+            print("%s's ATTACK rose sharply!" % (self.name))
 
         # SpAttack Modifier
-        elif (effect == CombatModifiers.SPATK_DOWN or 
-            effect == CombatModifiers.SPATK_DOWN_DOWN or
-            effect == CombatModifiers.SPATK_UP or 
-            effect == CombatModifiers.SPATK_UP_UP):
-
-            # Clear all existing accuracy modifiers
-            index = 0
-            while index < len(self.combatModifiers):
-                if (self.combatModifiers[index] == CombatModifiers.SPATK_UP_UP or 
-                    self.combatModifiers[index] == CombatModifiers.SPATK_UP or
-                    self.combatModifiers[index] == CombatModifiers.SPATK_DOWN or
-                    self.combatModifiers[index] == CombatModifiers.SPATK_DOWN_DOWN):
-
-                    self.combatModifiers.pop(index)
-                else:
-                    index += 1
-            self.combatModifiers.append(effect)
-            print("%s's SPECIAL ATTACK has changed!" % (self.name))
+        elif effect == CombatModifiers.SPATK_DOWN:
+            self.specialAttackModifierLevel -= 1
+            print("%s's SPECIAL ATTACK fell!" % (self.name))
+        elif effect == CombatModifiers.SPATK_DOWN_DOWN:
+            self.specialAttackModifierLevel -= 2
+            print("%s's SPECIAL ATTACK fell sharply!" % (self.name))
+        elif effect == CombatModifiers.SPATK_UP:
+            self.specialAttackModifierLevel += 1
+            print("%s's SPECIAL ATTACK rose!" % (self.name))
+        elif effect == CombatModifiers.SPATK_UP_UP:
+            self.specialAttackModifierLevel += 2
+            print("%s's SPECIAL ATTACK rose sharply!" % (self.name))
 
         # Defense Modifier
-        elif (effect == CombatModifiers.DEF_DOWN or 
-            effect == CombatModifiers.DEF_DOWN_DOWN or
-            effect == CombatModifiers.DEF_UP or 
-            effect == CombatModifiers.DEF_UP_UP):
-
-            # Clear all existing accuracy modifiers
-            index = 0
-            while index < len(self.combatModifiers):
-                if (self.combatModifiers[index] == CombatModifiers.DEF_UP_UP or 
-                    self.combatModifiers[index] == CombatModifiers.DEF_UP or
-                    self.combatModifiers[index] == CombatModifiers.DEF_DOWN or
-                    self.combatModifiers[index] == CombatModifiers.DEF_DOWN_DOWN):
-
-                    self.combatModifiers.pop(index)
-                else:
-                    index += 1
-            self.combatModifiers.append(effect)
-            print("%s's DEFENSE has changed!" % (self.name))
+        elif effect == CombatModifiers.DEF_DOWN:
+            self.defenseModifierLevel -= 1
+            print("%s's DEFENSE fell!" % (self.name))
+        elif effect == CombatModifiers.DEF_DOWN_DOWN:
+            self.defenseModifierLevel -= 2
+            print("%s's DEFENSE fell sharply!" % (self.name))
+        elif effect == CombatModifiers.DEF_UP:
+            self.defenseModifierLevel += 1
+            print("%s's DEFENSE rose!" % (self.name))
+        elif effect == CombatModifiers.DEF_UP_UP:
+            self.defenseModifierLevel += 2
+            print("%s's DEFENSE rose sharply!" % (self.name))
 
         # SpDef Modifier
-        elif (effect == CombatModifiers.SPDEF_DOWN or 
-            effect == CombatModifiers.SPDEF_DOWN_DOWN or
-            effect == CombatModifiers.SPDEF_UP or 
-            effect == CombatModifiers.SPDEF_UP_UP):
-
-            # Clear all existing accuracy modifiers
-            index = 0
-            while index < len(self.combatModifiers):
-                if (self.combatModifiers[index] == CombatModifiers.SPDEF_UP_UP or 
-                    self.combatModifiers[index] == CombatModifiers.SPDEF_UP or
-                    self.combatModifiers[index] == CombatModifiers.SPDEF_DOWN or
-                    self.combatModifiers[index] == CombatModifiers.SPDEF_DOWN_DOWN):
-
-                    self.combatModifiers.pop(index)
-                else:
-                    index += 1
-            self.combatModifiers.append(effect)
-            print("%s's SPECIAL DEFENSE has changed!" % (self.name))
+        elif effect == CombatModifiers.SPDEF_DOWN:
+            self.specialAttackModifierLevel -= 1
+            print("%s's SPECIAL DEFENSE fell!" % (self.name))
+        elif effect == CombatModifiers.SPDEF_DOWN_DOWN:
+            self.specialAttackModifierLevel -= 2
+            print("%s's SPECIAL DEFENSE fell sharply!" % (self.name))
+        elif effect == CombatModifiers.SPDEF_UP:
+            self.specialAttackModifierLevel += 1
+            print("%s's SPECIAL DEFENSE rose!" % (self.name))
+        elif effect == CombatModifiers.SPDEF_UP_UP:
+            self.specialAttackModifierLevel += 2
+            print("%s's SPECIAL DEFENSE rose sharply!" % (self.name))
 
         # Speed Modifier
-        elif (effect == CombatModifiers.SPEED_DOWN or 
-            effect == CombatModifiers.SPEED_DOWN_DOWN or
-            effect == CombatModifiers.SPEED_UP or 
-            effect == CombatModifiers.SPEED_DOWN):
-
-            # Clear all existing accuracy modifiers
-            index = 0
-            while index < len(self.combatModifiers):
-                if (self.combatModifiers[index] == CombatModifiers.SPEED_DOWN or 
-                    self.combatModifiers[index] == CombatModifiers.SPEED_DOWN_DOWN or
-                    self.combatModifiers[index] == CombatModifiers.SPEED_UP or
-                    self.combatModifiers[index] == CombatModifiers.SPEED_UP_UP):
-
-                    self.combatModifiers.pop(index)
-                else:
-                    index += 1
-            self.combatModifiers.append(effect)
-            print("%s's SPEED has changed!" % (self.name))
+        elif effect == CombatModifiers.SPEED_DOWN:
+            self.speedModifierLevel -= 1
+            print("%s's SPECIAL ATTACK fell!" % (self.name))
+        elif effect == CombatModifiers.SPEED_DOWN_DOWN:
+            self.speedModifierLevel -= 2
+            print("%s's SPECIAL ATTACK fell sharply!" % (self.name))
+        elif effect == CombatModifiers.SPEED_UP:
+            self.speedModifierLevel += 1
+            print("%s's SPECIAL ATTACK rose!" % (self.name))
+        elif effect == CombatModifiers.SPEED_UP_UP:
+            self.speedModifierLevel += 2
+            print("%s's SPECIAL ATTACK rose sharply!" % (self.name))
 
         elif (effect == CombatModifiers.CHARGED_UP):
             alreadyCharged = False
@@ -209,24 +180,64 @@ class Pokemon:
             if not alreadyCharged:
                 self.combatModifiers.append(effect)
 
+        # Ensure combat modifiers all remain in the -4 to +4 range
+        # Accuracy
+        if self.accuracyModifierLevel < -4:
+            self.accuracyModifierLevel = -4
+            print("%s's ACCURACY cannot fall any lower!" % (self.name))
+        elif self.accuracyModifierLevel > 4:
+            self.accuracyModifierLevel = 4
+            print("%s's ACCURACY cannot raise any higher!" % (self.name))
+
+        # Attack
+        if self.attackModifierLevel < -4:
+            self.attackModifierLevel = -4
+            print("%s's SPECIAL ATTACK cannot fall any lower!" % (self.name))
+        elif self.attackModifierLevel > 4:
+            self.attackModifierLevel = 4
+            print("%s's SPECIAL ATTACK cannot raise any higher!" % (self.name))
+
+        # Special Attack
+        if self.specialAttackModifierLevel < -4:
+            self.specialAttackModifierLevel = -4
+            print("%s's SPECIAL ATTACK cannot fall any lower!" % (self.name))
+        elif self.specialAttackModifierLevel > 4:
+            self.specialAttackModifierLevel = 4
+            print("%s's SPECIAL ATTACK cannot raise any higher!" % (self.name))
+
+        # Defense
+        if self.defenseModifierLevel < -4:
+            self.defenseModifierLevel = -4
+            print("%s's DEFENSE cannot fall any lower!" % (self.name))
+        elif self.defenseModifierLevel > 4:
+            self.defenseModifierLevel = 4
+            print("%s's DEFENSE cannot raise any higher!" % (self.name))
+
+        # Special Defense
+        if self.specialDefenseModifierLevel < -4:
+            self.specialDefenseModifierLevel = -4
+            print("%s's SPECIAL DEFENSE cannot fall any lower!" % (self.name))
+        elif self.specialDefenseModifierLevel > 4:
+            self.specialDefenseModifierLevel = 4
+            print("%s's SPECIAL DEFENSE cannot raise any higher!" % (self.name))
+
+        # Speed
+        if self.speedModifierLevel < -4:
+            self.speedModifierLevel = -4
+            print("%s's SPEED cannot fall any lower!" % (self.name))
+        elif self.speedModifierLevel > 4:
+            self.speedModifierLevel = 4
+            print("%s's SPEED cannot raise any higher!" % (self.name))
+
 
     def GetStatValue(self, stat: PokemonStat) -> int:
         modFactor = 1.0
         
         if stat == PokemonStat.ATTACK:
-            for modifier in self.combatModifiers:
-                if modifier == CombatModifiers.ATK_UP_UP:
-                    modFactor = 4.0
-                    break
-                elif modifier == CombatModifiers.ATK_UP:
-                    modFactor = 2.0
-                    break
-                elif modifier == CombatModifiers.ATK_DOWN:
-                    modFactor = 0.5
-                    break
-                elif modifier == CombatModifiers.ATK_DOWN_DOWN:
-                    modFactor = 0.25
-                    break
+            if self.attackModifierLevel > 0:
+                modFactor += 0.75 * self.attackModifierLevel
+            elif self.attackModifierLevel < 0:
+                modFactor -= 0.2 * self.attackModiferLevel
 
             if self.statusCondition == Status.BURNED:
                 modFactor *= 0.5
@@ -234,19 +245,10 @@ class Pokemon:
             return 1 + (int)(1.0/5*self.attackStat*self.level*modFactor)
 
         elif stat == PokemonStat.SPECIAL_ATTACK:
-            for modifier in self.combatModifiers:
-                if modifier == CombatModifiers.SPATK_UP_UP:
-                    modFactor = 4.0
-                    break
-                elif modifier == CombatModifiers.SPATK_UP:
-                    modFactor = 2.0
-                    break
-                elif modifier == CombatModifiers.SPATK_DOWN:
-                    modFactor = 0.5
-                    break
-                elif modifier == CombatModifiers.SPATK_DOWN_DOWN:
-                    modFactor = 0.25
-                    break
+            if self.specialAttackModifierLevel > 0:
+                modFactor += 0.75 * self.specialAttackModifierLevel
+            elif self.specialAttackModifierLevel < 0:
+                modFactor -= 0.2 * self.specialAttackModiferLevel
 
             if self.statusCondition == Status.CURSED:
                 modFactor *= 0.5
@@ -254,36 +256,18 @@ class Pokemon:
             return 1 + (int)(1.0/5*self.spAttackStat*self.level*modFactor)
 
         elif stat == PokemonStat.DEFENSE:
-            for modifier in self.combatModifiers:
-                if modifier == CombatModifiers.DEF_UP_UP:
-                    modFactor = 4.0
-                    break
-                elif modifier == CombatModifiers.DEF_UP:
-                    modFactor = 2.0
-                    break
-                elif modifier == CombatModifiers.DEF_DOWN:
-                    modFactor = 0.5
-                    break
-                elif modifier == CombatModifiers.DEF_DOWN_DOWN:
-                    modFactor = 0.25
-                    break
+            if self.defenseModifierLevel > 0:
+                modFactor += 0.75 * self.defenseModifierLevel
+            elif self.defenseModifierLevel < 0:
+                modFactor -= 0.2 * self.defenseModiferLevel
 
             return 1 + (int)(1.0/5*self.defenseStat*self.level*modFactor)
 
         elif stat == PokemonStat.SPECIAL_DEFENSE:
-            for modifier in self.combatModifiers:
-                if modifier == CombatModifiers.SPDEF_UP_UP:
-                    modFactor = 4.0
-                    break
-                elif modifier == CombatModifiers.SPDEF_UP:
-                    modFactor = 2.0
-                    break
-                elif modifier == CombatModifiers.SPDEF_DOWN:
-                    modFactor = 0.5
-                    break
-                elif modifier == CombatModifiers.SPDEF_DOWN_DOWN:
-                    modFactor = 0.25
-                    break
+            if self.specialDefenseModifierLevel > 0:
+                modFactor += 0.75 * self.specialDefenseModifierLevel
+            elif self.specialDefenseModifierLevel < 0:
+                modFactor -= 0.2 * self.specialDefenseModiferLevel
 
             return 1 + (int)(1.0/5*self.spDefenseStat*self.level*modFactor)
 
@@ -291,19 +275,10 @@ class Pokemon:
             return self.calculateMaxHp()
 
         elif stat == PokemonStat.SPEED:
-            for modifier in self.combatModifiers:
-                if modifier == CombatModifiers.SPEED_UP_UP:
-                    modFactor = 4.0
-                    break
-                elif modifier == CombatModifiers.SPEED_UP:
-                    modFactor = 2.0
-                    break
-                elif modifier == CombatModifiers.SPEED_DOWN:
-                    modFactor = 0.5
-                    break
-                elif modifier == CombatModifiers.SPEED_DOWN_DOWN:
-                    modFactor = 0.25
-                    break
+            if self.speedModifierLevel > 0:
+                modFactor += 0.75 * self.speedModifierLevel
+            elif self.speedModifierLevel < 0:
+                modFactor -= 0.2 * self.speedModiferLevel
 
             if self.statusCondition == Status.PARALYZED:
                 modFactor *= 0.5
@@ -422,17 +397,7 @@ class Pokemon:
         attack = self.GetBattleAttacks()[attackIndex]
         attack.currentPP -= 1
 
-        effectiveAccuracy = attack.accuracy
-        for mod in self.combatModifiers:
-            if mod == CombatModifiers.ACCURACY_DOWN:
-                effectiveAccuracy -= 20
-            elif mod == CombatModifiers.ACCURACY_DOWN_DOWN:
-                effectiveAccuracy -= 40
-            elif mod == CombatModifiers.ACCURACY_UP:
-                effectiveAccuracy += 15
-            elif mod == CombatModifiers.ACCURACY_UP_UP:
-                effectiveAccuracy += 50
-
+        effectiveAccuracy = (int)(attack.accuracy + attack.accuracy / 4.0 * (self.accuracyModifierLevel))
         miss = random.randint(1, 100) > effectiveAccuracy
         if (miss):
             print("%s tries to use %s, but misses!" % (self.name, attack.name))
