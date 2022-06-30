@@ -96,14 +96,15 @@ class Pokemon:
             index = 0
             while index < len(self.combatModifiers):
                 if (self.combatModifiers[index] == CombatModifiers.ACCURACY_DOWN or 
-                    self.CombatModifiers[index] == CombatModifiers.ACCURACY_DOWN_DOWN or
-                    self.CombatModifiers[index] == CombatModifiers.ACCURACY_UP or
-                    self.CombatModifiers[index] == CombatModifiers.ACCURACY_UP_UP):
+                    self.combatModifiers[index] == CombatModifiers.ACCURACY_DOWN_DOWN or
+                    self.combatModifiers[index] == CombatModifiers.ACCURACY_UP or
+                    self.combatModifiers[index] == CombatModifiers.ACCURACY_UP_UP):
 
                     self.combatModifiers.pop(index)
                 else:
                     index += 1
             self.combatModifiers.append(effect)
+            print("%s's ACCURACY has changed!" % (self.name))
 
         # Attack Modifier
         elif (effect == CombatModifiers.ATK_DOWN or 
@@ -115,14 +116,15 @@ class Pokemon:
             index = 0
             while index < len(self.combatModifiers):
                 if (self.combatModifiers[index] == CombatModifiers.ATK_UP_UP or 
-                    self.CombatModifiers[index] == CombatModifiers.ATK_UP or
-                    self.CombatModifiers[index] == CombatModifiers.ATK_DOWN or
-                    self.CombatModifiers[index] == CombatModifiers.ATK_DOWN_DOWN):
+                    self.combatModifiers[index] == CombatModifiers.ATK_UP or
+                    self.combatModifiers[index] == CombatModifiers.ATK_DOWN or
+                    self.combatModifiers[index] == CombatModifiers.ATK_DOWN_DOWN):
 
                     self.combatModifiers.pop(index)
                 else:
                     index += 1
             self.combatModifiers.append(effect)
+            print("%s's ATTACK has changed!" % (self.name))
 
         # SpAttack Modifier
         elif (effect == CombatModifiers.SPATK_DOWN or 
@@ -134,14 +136,15 @@ class Pokemon:
             index = 0
             while index < len(self.combatModifiers):
                 if (self.combatModifiers[index] == CombatModifiers.SPATK_UP_UP or 
-                    self.CombatModifiers[index] == CombatModifiers.SPATK_UP or
-                    self.CombatModifiers[index] == CombatModifiers.SPATK_DOWN or
-                    self.CombatModifiers[index] == CombatModifiers.SPATK_DOWN_DOWN):
+                    self.combatModifiers[index] == CombatModifiers.SPATK_UP or
+                    self.combatModifiers[index] == CombatModifiers.SPATK_DOWN or
+                    self.combatModifiers[index] == CombatModifiers.SPATK_DOWN_DOWN):
 
                     self.combatModifiers.pop(index)
                 else:
                     index += 1
             self.combatModifiers.append(effect)
+            print("%s's SPECIAL ATTACK has changed!" % (self.name))
 
         # Defense Modifier
         elif (effect == CombatModifiers.DEF_DOWN or 
@@ -153,14 +156,15 @@ class Pokemon:
             index = 0
             while index < len(self.combatModifiers):
                 if (self.combatModifiers[index] == CombatModifiers.DEF_UP_UP or 
-                    self.CombatModifiers[index] == CombatModifiers.DEF_UP or
-                    self.CombatModifiers[index] == CombatModifiers.DEF_DOWN or
-                    self.CombatModifiers[index] == CombatModifiers.DEF_DOWN_DOWN):
+                    self.combatModifiers[index] == CombatModifiers.DEF_UP or
+                    self.combatModifiers[index] == CombatModifiers.DEF_DOWN or
+                    self.combatModifiers[index] == CombatModifiers.DEF_DOWN_DOWN):
 
                     self.combatModifiers.pop(index)
                 else:
                     index += 1
             self.combatModifiers.append(effect)
+            print("%s's DEFENSE has changed!" % (self.name))
 
         # SpDef Modifier
         elif (effect == CombatModifiers.SPDEF_DOWN or 
@@ -172,14 +176,15 @@ class Pokemon:
             index = 0
             while index < len(self.combatModifiers):
                 if (self.combatModifiers[index] == CombatModifiers.SPDEF_UP_UP or 
-                    self.CombatModifiers[index] == CombatModifiers.SPDEF_UP or
-                    self.CombatModifiers[index] == CombatModifiers.SPDEF_DOWN or
-                    self.CombatModifiers[index] == CombatModifiers.SPDEF_DOWN_DOWN):
+                    self.combatModifiers[index] == CombatModifiers.SPDEF_UP or
+                    self.combatModifiers[index] == CombatModifiers.SPDEF_DOWN or
+                    self.combatModifiers[index] == CombatModifiers.SPDEF_DOWN_DOWN):
 
                     self.combatModifiers.pop(index)
                 else:
                     index += 1
             self.combatModifiers.append(effect)
+            print("%s's SPECIAL DEFENSE has changed!" % (self.name))
 
         # Speed Modifier
         elif (effect == CombatModifiers.SPEED_DOWN or 
@@ -191,14 +196,15 @@ class Pokemon:
             index = 0
             while index < len(self.combatModifiers):
                 if (self.combatModifiers[index] == CombatModifiers.SPEED_DOWN or 
-                    self.CombatModifiers[index] == CombatModifiers.SPEED_DOWN_DOWN or
-                    self.CombatModifiers[index] == CombatModifiers.SPEED_UP or
-                    self.CombatModifiers[index] == CombatModifiers.SPEED_UP_UP):
+                    self.combatModifiers[index] == CombatModifiers.SPEED_DOWN_DOWN or
+                    self.combatModifiers[index] == CombatModifiers.SPEED_UP or
+                    self.combatModifiers[index] == CombatModifiers.SPEED_UP_UP):
 
                     self.combatModifiers.pop(index)
                 else:
                     index += 1
             self.combatModifiers.append(effect)
+            print("%s's SPEED has changed!" % (self.name))
 
         elif (effect == CombatModifiers.CHARGED_UP):
             alreadyCharged = False
@@ -495,7 +501,6 @@ class Pokemon:
                     roll = random.randint(1,100)
                     if roll < effect.chance:
                         self.AddCombatModifier(effect.effectDetail)
-                        print("Something about %s looks different than before..." % (self.name))
                 elif effect.effectType == EffectType.ADD_STATUS_EFFECT:
                     roll = random.randint(1,100)
                     if roll < effect.chance:

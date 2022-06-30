@@ -5,5 +5,12 @@
     "isPhysical": false,
     "maxPP": 25,
     "accuracy": 95,
-    "effects": []
+    "effects": [
+        {
+            "target": "OPPONENT",
+            "effectType": "ADD_STATUS_EFFECT",
+            "effectDetail": "CURSED",
+            "chance": 30
+        }
+    ]
 }

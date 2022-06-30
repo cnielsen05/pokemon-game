@@ -39,17 +39,16 @@ class BattleEngine:
             if (userAction == "ATTACK"):
                 if not BattleEngine.DoAttackMenu(player_pokemon[0], wildPokemon):
                     continue
-                else:
-                    input("*Press ENTER to continue...*")
 
             elif (userAction == "ITEM"):
                 if not BattleEngine.DoItemMenu(items, player_pokemon, wildPokemon, allow_pokeball=True):
                     continue
-                else: 
-                    input("*Press ENTER to continue...*")
+                else:
+                    wildPokemon.RandomAttack(player_pokemon[0])
 
             elif (userAction == "SWAP POKEMON"):
                 BattleEngine.SwapPokemon(player_pokemon)
+                wildPokemon.RandomAttack(player_pokemon[0])
 
             elif (userAction == "RUN"):
                 continueBattling = BattleEngine.TryToRun(player_pokemon[0], wildPokemon)
@@ -57,9 +56,10 @@ class BattleEngine:
                 # Get hit if they don't escape
                 if continueBattling:
                     wildPokemon.RandomAttack(player_pokemon[0])
+
             elif (userAction == "POKEDEX"):
                 BattleEngine.UsePokedex(wildPokemon)
-                input("*Press ENTER to continue...*")
+                wildPokemon.RandomAttack(player_pokemon[0])
 
             BattleEngine.ProcessEndOfRoundStatuses(wildPokemon, player_pokemon[0])
 
@@ -112,21 +112,20 @@ class BattleEngine:
             if (userAction == "ATTACK"):
                 if not BattleEngine.DoAttackMenu(player_active_pokemon, opponent_active_pokemon):
                     continue
-                else:
-                    input("*Press ENTER to continue...*")
 
             elif (userAction == "ITEM"):
                 if not BattleEngine.DoItemMenu(items, player_pokemon, allow_pokeball = False):
                     continue
-                else: 
-                    input("*Press ENTER to continue...*")
+                else:
+                    opponent_active_pokemon.RandomAttack(player_pokemon)
 
             elif (userAction == "SWAP POKEMON"):
                 BattleEngine.SwapPokemon(player_pokemon)
+                opponent_active_pokemon.RandomAttack(player_pokemon)
 
             elif (userAction == "POKEDEX"):
+                print("%s: It seems like you've never seen a %s before? I'll give you a moment to prepare yourself." % (opponent_name, opponent_active_pokemon.name))
                 BattleEngine.UsePokedex(opponent_active_pokemon)
-                input("*Press ENTER to continue...*")
 
             BattleEngine.ProcessEndOfRoundStatuses(opponent_active_pokemon, player_pokemon[0])
 
@@ -266,7 +265,6 @@ class BattleEngine:
                     input("*Press ENTER to continue...*")
                     Formatting.clearScreen()
 
-        opponent.RandomAttack(player_pokemon[0])
         return True
 
 
@@ -363,10 +361,8 @@ class BattleEngine:
 
 
     def ProcessEndOfRoundStatuses(opponent: Pokemon, player_pokemon: Pokemon):
-        print("Checking end of round updates...")
         for p in (opponent, player_pokemon):
             roll = random.randint(1,100)
-            print("status: %s" % (p.statusCondition))
             match p.statusCondition:
                 case Status.NONE:
                     # Nothing happens intentionally
@@ -413,8 +409,14 @@ class BattleEngine:
                         damage = 2 + (int)(p.calculateMaxHp() / 10)
                         print("%s winces as it's burned skin throbs. It takes %s damage!" % (p.name, damage))
 
-            input("*Press ENTER to continue...*")
+                case Status.CURSED:
+                    if roll + p.HPStat / 4 > 100:
+                        print("%s overcame the curse with sheer will power!" % (p.name))
+                        p.statusCondition = Status.NONE
+                    else:
+                        print("%s is trembling in fear, it can't focus!" % (p.name, damage))
 
+        input("*Press ENTER to continue...*")
 
 
     def DoBurnChance(target: Pokemon, odds: float):

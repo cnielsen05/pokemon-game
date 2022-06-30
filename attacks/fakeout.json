@@ -1,9 +1,16 @@
 {
     "name": "Fake Out",
-    "baseDmg": 20,
+    "baseDmg": 10,
     "type": "NORMAL",
     "isPhysical": false,
     "maxPP": 30,
     "accuracy": 95,
-    "effects": []
+    "effects": [
+        {
+            "target": "OPPONENT",
+            "effectType": "ADD_STATUS_EFFECT",
+            "effectDetail": "CONFUSED",
+            "chance": 40
+        }
+    ]
 }

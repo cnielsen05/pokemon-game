@@ -5,5 +5,12 @@
     "isPhysical": false,
     "maxPP": 15,
     "accuracy": 95,
-    "effects": []
+    "effects": [
+        {
+            "target": "OPPONENT",
+            "effectType": "ADD_STATUS_EFFECT",
+            "effectDetail": "PARALYZED",
+            "chance": 50
+        }
+    ]
 }

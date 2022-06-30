@@ -10,7 +10,7 @@
             "target": "OPPONENT",
             "effectType": "ADD_STATUS_EFFECT",
             "effectDetail": "BURNED",
-            "chance": 30
+            "chance": 40
         }
     ]
 }
