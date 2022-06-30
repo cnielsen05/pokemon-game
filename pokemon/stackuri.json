@@ -9,6 +9,8 @@
     "battleType1": "FIGHTING",
     "battleType2": "NORMAL",
     "catchFactor": 0.25,
+    "evolveLevel": 0,
+    "evolutionName": "",
     "battleAttacks": [
         {"Move": "Tackle", "UnlockLevel": 1},
         {"Move": "Lowkick", "UnlockLevel": 2}

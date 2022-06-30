@@ -9,6 +9,8 @@
     "battleType1": "FIRE",
     "battleType2": "PSYCHIC",
     "catchFactor": 0.25,
+    "evolveLevel": 0,
+    "evolutionName": "",
     "battleAttacks": [
         {"Move": "Ember", "UnlockLevel": 1},
         {"Move": "Telekinesis", "UnlockLevel": 2}

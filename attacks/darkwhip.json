@@ -1,0 +1,8 @@
+{
+    "name": "Dark Whip",
+    "baseDmg": 50,
+    "type": "DARK",
+    "isPhysical": true,
+    "maxPP": 15,
+    "accuracy": 80
+}

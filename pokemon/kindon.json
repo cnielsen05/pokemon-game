@@ -1,0 +1,21 @@
+{
+    "name": "Kindon",
+    "attackStat": 30,
+    "defenseStat": 25,
+    "spAttackStat": 45,
+    "spDefenseStat": 30,
+    "speedStat": 20,
+    "HPStat": 50,
+    "battleType1": "FIRE",
+    "battleType2": "NONE",
+    "catchFactor": 0.01,
+    "evolveLevel": 0,
+    "evolutionName": "",
+    "battleAttacks": [
+        {"Move": "Tackle", "UnlockLevel": 7},
+        {"Move": "Ember", "UnlockLevel": 7},
+        {"Move": "Sludge", "UnlockLevel": 7},
+        {"Move": "Bite", "UnlockLevel": 7},
+        {"Move": "Fireblast", "UnlockLevel": 9}
+    ]
+}

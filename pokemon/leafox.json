@@ -9,11 +9,13 @@
     "battleType1": "GRASS",
     "battleType2": "NONE",
     "catchFactor": 0.01,
+    "evolveLevel": 7,
+    "evolutionName": "Vineox",
     "battleAttacks": [
         {"Move": "Fakeout", "UnlockLevel": 1},
         {"Move": "Razorleaf", "UnlockLevel": 2},
         {"Move": "Lowkick", "UnlockLevel": 3},
-        {"Move": "Electroball", "UnlockLevel": 4},
-        {"Move": "Solarbeam", "UnlockLevel": 6}
+        {"Move": "Electroball", "UnlockLevel": 4}
+        
     ]
 }

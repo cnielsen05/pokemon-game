@@ -9,6 +9,8 @@
     "battleType1": "ROCK",
     "battleType2": "GHOST",
     "catchFactor": 0.25,
+    "evolveLevel": 0,
+    "evolutionName": "",
     "battleAttacks": [
         {"Move": "Tackle", "UnlockLevel": 1},
         {"Move": "Rockyfist", "UnlockLevel": 2}
