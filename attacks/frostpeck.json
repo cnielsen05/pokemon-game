@@ -5,5 +5,18 @@
     "isPhysical": true,
     "maxPP": 15,
     "accuracy": 93,
-    "effects": []
+    "effects": [
+        {
+            "target": "OPPONENT",
+            "effectType": "ADD_STATUS_EFFECT",
+            "effectDetail": "FROZEN",
+            "chance": 5
+        },
+        {
+            "target": "SELF",
+            "effectType": "ADD_STATUS_EFFECT",
+            "effectDetail": "FROZEN",
+            "chance": 5
+        }
+    ]
 }

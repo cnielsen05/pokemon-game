@@ -5,5 +5,12 @@
     "isPhysical": false,
     "maxPP": 20,
     "accuracy": 90,
-    "effects": []
+    "effects": [
+        {
+            "target": "SELF",
+            "effectType": "ADD_COMBAT_MODIFIER",
+            "effectDetail": "DEF_UP",
+            "chance": 70
+        }
+    ]
 }
