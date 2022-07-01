@@ -1,7 +1,7 @@
 {
     "name": "Sand Attack",
-    "baseDmg": 10,
-    "type": "NORMAL",
+    "baseDmg": 5,
+    "type": "GROUND",
     "isPhysical": true,
     "maxPP": 20,
     "accuracy": 95,

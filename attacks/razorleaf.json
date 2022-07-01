@@ -1,6 +1,6 @@
 {
-    "name": "Razor Leaf",
-    "baseDmg": 40,
+    "name": "Cloak of Thorns",
+    "baseDmg": 30,
     "type": "GRASS",
     "isPhysical": false,
     "maxPP": 20,
@@ -10,7 +10,13 @@
             "target": "SELF",
             "effectType": "ADD_COMBAT_MODIFIER",
             "effectDetail": "DEF_UP",
-            "chance": 70
+            "chance": 50
+        },
+        {
+            "target": "SELF",
+            "effectType": "ADD_COMBAT_MODIFIER",
+            "effectDetail": "SPDEF_UP",
+            "chance": 50
         }
     ]
 }

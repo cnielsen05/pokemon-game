@@ -245,7 +245,7 @@ class Pokemon:
             if self.attackModifierLevel > 0:
                 modFactor += 0.75 * self.attackModifierLevel
             elif self.attackModifierLevel < 0:
-                modFactor -= 0.2 * self.attackModiferLevel
+                modFactor -= 0.2 * self.attackModifierLevel
 
             if self.statusCondition == Status.BURNED:
                 modFactor *= 0.5
