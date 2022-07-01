@@ -1,5 +1,5 @@
-import os
-import platform
+from PIL import Image
+from sys import platform
 import random
 from time import sleep
 from battleAttack import BattleAttack
@@ -288,11 +288,12 @@ class BattleEngine:
 
         print("%s, a %s type. This one appears to be level %s." % (opponent.name, typePhrase, opponent.level))
         print()
-        pokemonimg = "images/%s.jpg" % (opponent.name)
-        if platform == 'win32':
-            os.system("\"%s\"" % (pokemonimg))
-        else: # MacOS
-            os.system('open %s' % (pokemonimg))
+        try:
+            pokemonimg = "images/%s.jpg" % (opponent.name)
+            img = Image.open(pokemonimg)
+            img.show()
+        except:
+            print("No visual data found for this Pokemon.")
 
     
     def TryToRun(trainerPokemon: Pokemon, wildPokemon: Pokemon) -> bool:

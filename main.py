@@ -320,7 +320,7 @@ class Game:
         Formatting.clearScreen()
 
         print("*BOOOOOM*")
-        time.sleep(2)
+        time.sleep(1)
         print("*An explosion comes from the Grass Gym in the far distance*")
         print("You: What is happening?!")
         print("*You start running towards the explosion*")
@@ -329,7 +329,7 @@ class Game:
         Formatting.clearScreen()\
 
         #to do add more here such as Battles and towns
-        time.sleep(2)
+        time.sleep(1)
         print("You finally make it to the Grass Gym door. Everyone is screaming.")
         print("*You bravely walk into the Grass Gym*")
 
@@ -343,9 +343,9 @@ class Game:
         Formatting.clearScreen()
 
         print("Grass Gym Leader: MORE")
-        time.sleep(2)
+        time.sleep(1)
         print("Grass Gym Leader: GIVE me MoRE tO KiLl")
-        time.sleep(4)
+        time.sleep(1)
         print("Grass Gym Leader: iT gIvEs ME MorE ENerGy.")
         time.sleep(1)
         print("Grass Gym Leader: GiVE ME MorE oR YoU WiLl bE mY NexT KiLl.")
