@@ -1,15 +1,15 @@
 {
-    "name": "Sludge",
+    "name": "Absorb",
     "baseDmg": 50,
-    "type": "POISON",
+    "type": "GRASS",
     "isPhysical": false,
-    "maxPP": 15,
+    "maxPP": 20,
     "accuracy": 80,
     "effects": [
         {
             "target": "OPPONENT",
-            "effectType": "ADD_STATUS_EFFECT",
-            "effectDetail": "POISONED",
+            "effectType": "DRAIN",
+            "effectDetail": 1.0,
             "chance": 100
         }
     ]

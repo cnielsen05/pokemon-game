@@ -1,3 +1,5 @@
+import os
+import platform
 import random
 from time import sleep
 from battleAttack import BattleAttack
@@ -59,7 +61,10 @@ class BattleEngine:
 
             elif (userAction == "POKEDEX"):
                 BattleEngine.UsePokedex(wildPokemon)
-                wildPokemon.RandomAttack(player_pokemon[0])
+                roll = random.randint(1,100)
+                if roll < 20 and wildPokemon.GetStatValue(PokemonStat.SPEED) > player_pokemon[0].GetStatValue(PokemonStat.SPEED):
+                    print("The wild %s attacks suddenly!")
+                    wildPokemon.RandomAttack(player_pokemon[0])
 
             BattleEngine.ProcessEndOfRoundStatuses(wildPokemon, player_pokemon[0])
 
@@ -283,7 +288,12 @@ class BattleEngine:
 
         print("%s, a %s type. This one appears to be level %s." % (opponent.name, typePhrase, opponent.level))
         print()
-    
+        pokemonimg = "images/%s.jpg" % (opponent.name)
+        if platform == 'win32':
+            os.system("\"%s\"" % (pokemonimg))
+        else: # MacOS
+            os.system('open %s' % (pokemonimg))
+
     
     def TryToRun(trainerPokemon: Pokemon, wildPokemon: Pokemon) -> bool:
         print("You try to run...")

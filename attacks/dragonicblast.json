@@ -1,9 +1,16 @@
 {
-    "name": "Dragonic Blast",
+    "name": "Draconic Blast",
     "baseDmg": 60,
     "type": "DRAGON",
     "isPhysical": true,
     "maxPP": 10,
     "accuracy": 90,
-    "effects": []
+    "effects": [
+        {
+            "target": "OPPONENT",
+            "effectType": "ADD_STATUS_EFFECT",
+            "effectDetail": "BURNED",
+            "chance": 30
+        }
+    ]
 }

@@ -24,6 +24,7 @@ class Pokemon:
         self.defenseModifierLevel = 0
         self.specialDefenseModifierLevel = 0
         self.speedModifierLevel = 0
+        self.isFlinched = False
 
         self.battleType1 = BattleType.FLYING
         self.battleType2 = BattleType.NORMAL
@@ -413,6 +414,19 @@ class Pokemon:
 
 
     def DoAttack(self, attackIndex: int, defender: any):
+        # Skip a turn if flinched
+        if self.isFlinched:
+            print("%s flinched!" % (self.name))
+            self.isFlinched = False
+            return
+
+        attack = self.GetBattleAttacks()[attackIndex]
+        attack.currentPP -= 1
+
+        if self.statusCondition == Status.FROZEN and attack.type == BattleType.FIRE:
+            self.statusCondition = Status.NONE
+            print("The heat melts the ice around %s, it is no longer frozen!" % (self.name))
+
         # Some status effects impact attacking
         if self.statusCondition == Status.CONFUSED:
             roll = random.randint(1,100)
@@ -435,9 +449,6 @@ class Pokemon:
         elif self.statusCondition == Status.FROZEN:
             return
 
-        attack = self.GetBattleAttacks()[attackIndex]
-        attack.currentPP -= 1
-
         effectiveAccuracy = (int)(attack.accuracy + attack.accuracy / 4.0 * (self.accuracyModifierLevel))
         miss = random.randint(1, 100) > effectiveAccuracy
         if (miss):
@@ -450,6 +461,10 @@ class Pokemon:
 
 
     def ReceiveAttack(self, attack: BattleAttack, attacker: object) -> str:
+        if attack.type == BattleType.FIRE and self.statusCondition == Status.FROZEN:
+            self.statusCondition = Status.NONE
+            print("The heat melts the flames around %s! It is no longer frozen!" % (self.name))
+
         attackerOffensiveStatValue = attacker.GetStatValue(PokemonStat.ATTACK) if attack.isPhysical else attacker.GetStatValue(PokemonStat.SPECIAL_ATTACK)
 
         effectivenessMultiplier = Pokemon.CalculateDamageTypeMultiplier(self.battleType1, self.battleType2, attack.type)
@@ -493,15 +508,24 @@ class Pokemon:
                     drainAmount = (int)(damage * drainFactor)
                     print("%s drains energy from it's opponent!" % (attacker.name))
                     attacker.HealHP(drainAmount)
+                elif effect.effectType == EffectType.FLINCH:
+                    roll = random.randint(1,100)
+                    if roll < effect.chance:
+                        self.isFlinched = True
 
 
     def HandleOnAttackEffects(self, attack: BattleAttack):
         for effect in attack.effects:
             if effect.target == Targeting.SELF:
+                roll = random.randint(1,100)
+                # We need to skip effects that don't trigger because we roll outside of their range
+                if roll > effect.chance:
+                    continue
+
                 if effect.effectType == EffectType.ADD_COMBAT_MODIFIER:
-                    self.AddCombatModifier(effect.effectDetail)
+                        self.AddCombatModifier(effect.effectDetail)
                 elif effect.effectType == EffectType.ADD_STATUS_EFFECT:
-                    self.AddStatusEffect(effect.effectDetail)
+                        self.AddStatusEffect(effect.effectDetail)
                 elif effect.effectType == EffectType.CLEANSE_COMBAT_MODIFIERS:
                     print("%s stumbles and resets it's position, it seems to have lost it's rhythm!" % (self.name))
                     self.combatModifiers.clear()

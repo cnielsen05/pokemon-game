@@ -1,5 +1,6 @@
 import os
 from sys import platform
+import time
 from typing import List
 
 class Formatting:
@@ -8,6 +9,13 @@ class Formatting:
             os.system('cls')
         else:
             os.system('clear')
+
+
+    def PressEnterToContinue():
+        time.sleep(1)
+        print()
+        input("Press ENTER to continue...")    
+        Formatting.clearScreen()    
 
 
     def GetUserChoice(options: List[str]) -> int:

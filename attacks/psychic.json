@@ -1,0 +1,9 @@
+{
+    "name": "Psychic",
+    "baseDmg": 90,
+    "type": "PSYCHIC",
+    "isPhysical": false,
+    "maxPP": 15,
+    "accuracy": 95,
+    "effects": []
+}

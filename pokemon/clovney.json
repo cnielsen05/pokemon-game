@@ -13,7 +13,8 @@
     "evolutionName": "",
     "battleAttacks": [
         {"Move": "Happyspark", "UnlockLevel": 1},
-        {"Move": "Scratch", "UnlockLevel": 1},
-        {"Move": "Cutenessblast", "UnlockLevel": 2}
+        {"Move": "Scratch", "UnlockLevel": 2},
+        {"Move": "Cutenessblast", "UnlockLevel": 3},
+        {"Move": "Bite", "UnlockLevel": 4}
     ]
 }

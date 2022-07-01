@@ -13,6 +13,7 @@
     "evolutionName": "",
     "battleAttacks": [
         {"Move": "Telekinesis", "UnlockLevel": 1},
-        {"Move": "Ember", "UnlockLevel": 2}
+        {"Move": "Ember", "UnlockLevel": 2},
+        {"Move": "Psychic", "UnlockLevel": 4}
     ]
 }

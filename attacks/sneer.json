@@ -1,0 +1,28 @@
+{
+    "name": "Sneer",
+    "baseDmg": 0,
+    "type": "DARK",
+    "isPhysical": false,
+    "maxPP": 30,
+    "accuracy": 100,
+    "effects": [
+        {
+            "target": "OPPONENT",
+            "effectType": "ADD_COMBAT_MODIFIER",
+            "effectDetail": "ATK_DOWN_DOWN",
+            "chance": 100
+        },
+        {
+            "target": "OPPONENT",
+            "effectType": "ADD_COMBAT_MODIFIER",
+            "effectDetail": "SPATK_DOWN_DOWN",
+            "chance": 100
+        },
+        {
+            "target": "SELF",
+            "effectType": "ADD_COMBAT_MODIFIER",
+            "effectDetail": "SPEED_UP",
+            "chance": 100
+        }
+    ]
+}

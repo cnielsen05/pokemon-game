@@ -16,6 +16,7 @@
         {"Move": "Razorleaf", "UnlockLevel": 7},
         {"Move": "Lowkick", "UnlockLevel": 7},
         {"Move": "Electroball", "UnlockLevel": 7},
+        {"Move": "Absorb", "UnlockLevel": 7},
         {"Move": "Solarbeam", "UnlockLevel": 9}
     ]
 }

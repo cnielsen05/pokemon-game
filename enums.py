@@ -50,6 +50,7 @@ class EffectType(str, Enum):
     CLEANSE_STATUS_EFFECTS = 'CLEANSE_STATUS_EFFECTS'
     HEAL = 'HEAL'
     DRAIN = 'DRAIN'
+    FLINCH = 'FLINCH'
     PUSH_OUT = 'PUSH_OUT'
     PULL_IN = 'PULL_IN'
     CHARGE = 'CHARGE'

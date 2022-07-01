@@ -1,9 +1,16 @@
 {
     "name": "Rocky Fist",
-    "baseDmg": 60,
+    "baseDmg": 40,
     "type": "ROCK",
     "isPhysical": true,
     "maxPP": 15,
     "accuracy": 80,
-    "effects": []
+    "effects": [
+        {
+            "target": "SELF",
+            "effectType": "ADD_COMBAT_MODIFIER",
+            "effectDetail": "DEFENSE_UP",
+            "chance": 100
+        }
+    ]
 }

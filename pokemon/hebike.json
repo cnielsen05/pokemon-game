@@ -1,8 +1,8 @@
 {
     "name": "Hebike",
-    "attackStat": 24,
+    "attackStat": 28,
     "defenseStat": 26,
-    "spAttackStat": 23,
+    "spAttackStat": 19,
     "spDefenseStat": 27,
     "speedStat": 20,
     "HPStat": 30,
@@ -13,6 +13,7 @@
     "evolutionName": "",
     "battleAttacks": [
         {"Move": "Tackle", "UnlockLevel": 1},
-        {"Move": "Vinewhip", "UnlockLevel": 2}
+        {"Move": "Vinewhip", "UnlockLevel": 2},
+        {"Move": "Poisonsting", "UnlockLevel": 3}
     ]
 }

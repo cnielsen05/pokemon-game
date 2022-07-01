@@ -3,7 +3,7 @@
     "baseDmg": 40,
     "type": "WATER",
     "isPhysical": true,
-    "maxPP": 25,
+    "maxPP": 20,
     "accuracy": 95,
     "effects": []
 }

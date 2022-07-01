@@ -1,16 +1,16 @@
 {
-    "name": "Sludge",
-    "baseDmg": 50,
+    "name": "Poison Sting",
+    "baseDmg": 35,
     "type": "POISON",
-    "isPhysical": false,
-    "maxPP": 15,
-    "accuracy": 80,
+    "isPhysical": true,
+    "maxPP": 35,
+    "accuracy": 95,
     "effects": [
         {
             "target": "OPPONENT",
             "effectType": "ADD_STATUS_EFFECT",
             "effectDetail": "POISONED",
-            "chance": 100
+            "chance": 70
         }
     ]
 }

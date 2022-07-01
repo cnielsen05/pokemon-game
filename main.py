@@ -1,4 +1,5 @@
 # main.py
+from ast import For
 import time
 import random
 from typing import List
@@ -33,14 +34,16 @@ class Game:
         answered_mom = False
         while (not answered_mom):
             Formatting.clearScreen()
+            print("*You sit alone in your room, quiet save the rumbling from an old television set in the corner.*")
+            print()
             print("Professor: Hello, and welcome to the world of Pokemon. I am Professor Mulberry and you are in the great Jarea region.")
             print("Professor: I am hiring trainers in this region for...RESEARCH! I am getting too old to do it myself, so now... LET'S START YOUR JOURNEY!")
             print("")
-            print("*your mom walks into the room*")
+            print("*Your mom walks into the room.*")
             print("")
 
             self.player_options.clear()
-            self.player_options.append("A) NO!")
+            self.player_options.append("A) NO! I DO WAT I WANNA!")
             self.player_options.append("B) Yes, mom.")
 
             player_input = self.getPlayerInput("Mom: Stop watching TV, it's late. NOW RUN OFF TO BED!")
@@ -52,7 +55,7 @@ class Game:
                 self.items.append(ItemType.POKEBALL)
                 print("Mom: That reminds me, you should take these to help you on your journey!")
                 print("*You have gained 3x pokeballs*")
-                print("Mom: NOW GO TO BED")
+                print("Mom: NOW, GO TO BED!")
                 print("*You scamper quickly to your bed and fall fast asleep.*")
                 answered_mom = True
             elif player_input == "A":
@@ -61,72 +64,60 @@ class Game:
                 answered_mom = True
             else:
                 print("'%s' not recognized. Please try again." % (player_input))
-                input("*Press ENTER to continue...*")
+                Formatting.PressEnterToContinue()
             
 
-        input("\n*Press ENTER to continue...*")
-        Formatting.clearScreen()
-        print("In the morning...")
-        print("")
-        print("*You wake up*")
-
-        input("\n*Press ENTER to continue...*")
-        Formatting.clearScreen()
+        Formatting.PressEnterToContinue()
         time.sleep(1)
-        print("Mom: Finally you woke up.")
-        time.sleep(2)
+        print("*As you drift off to sleep, you have an uneasy feeling...*")
+        time.sleep(1)
+        print("*You toss and turn with nightmares all night long.*")
+        Formatting.PressEnterToContinue()
+        
+        print("*The sun breaks through your curtains and dances over your eyelids. You wake up.*")
+        Formatting.PressEnterToContinue()
+
+        print("*Before you become fully aware of your surroundings, your Mom is in your doorway again.*")
+        print()
+        print("Mom: Finally, you woke up.")
         print("You: What time is it?")
-        time.sleep(1)
-        print("Mom: 10:00.")
-        time.sleep(1)
-        print("You: WHAT!")
-        print("You: I'm late!")
+        print("Mom: Just after 10.")
+        print("You: WHAT! I'm late!")
+        Formatting.PressEnterToContinue()
 
-        input("\n*Press ENTER to continue...*")
-        Formatting.clearScreen()
-        time.sleep(1)
-        print("Mom: For what?")
-        time.sleep(1)
+        print("Mom: Late for what?")
         print("You: Professor Mulberry is giving out starters for the trainers he is hiring!")
-        time.sleep(1)
         print("Mom: Oh yeah, I almost forgot that was happening today.")
         print("Mom: You'll need to go qui-")
-        time.sleep(1)
+        print()
         print("*You fall down the stairs*")
+        time.sleep(1)
+        Formatting.PressEnterToContinue()
 
-        input("\n*Press ENTER to continue...*")
-        Formatting.clearScreen()
         print("You: I'm okay!")
-        time.sleep(2)
         print("*You quickly pull on clothes and run out the door before your mom can finish her sentence...*")
         print("Mom: ... quickly. The event is supposed to start in an hour. He could have at least grabbed something to eat.")
         print("Mom: What's he going to do now, sit around longer with an empty stomach? That kid really needs to think before he acts.")
+        Formatting.PressEnterToContinue()
 
-        input("\n*Press ENTER to continue...*")
-        Formatting.clearScreen()
-        print("")
         print("At the door of Professor Mulberrys lab. 10:29 AM")
         print("")
-        time.sleep(2)
         print("*You bump into a garbage can with a loud CLANG! as you arrive*")
         print("You: Nice, I made it! I think I made good time too...")
-        time.sleep(1)
-        print()
+        Formatting.PressEnterToContinue()
+
         print("*A door opens...*")
         time.sleep(1)
         print("Rival: What is all that racket!")
-        time.sleep(2)
         print("Rival: Of course, it's the loser!")
         print("Rival: What are you doing here, loser?")
         print("You: You don't need to call me names. Better hurry up and come out or you won't get a Pokemon until next year.")
-        time.sleep(2)
-        print()
-        input("*Press ENTER to continue...*")
-        Formatting.clearScreen()
+        Formatting.PressEnterToContinue()
+
         print("Rival: Wait... hurry? You idiot, do you even know what time it is? Gramps isn't giving out any Pokemon until 11:30, that's not for another hour you idiot!")
         print("You: What do you mean?!")
         print("Rival: Exactly like I said! You, the idiotic dumb loser, are ONE HOUR EARLY. You are truly a pea-brained moron.")
-
+        print()
         self.player_options.clear()
         self.player_options.append("A) You're no genius yourself. I should fight you here and now for talking to me that way.")
         self.player_options.append("B) Oh man, is it really not starting for another hour? I guess this one is my mistake.")
@@ -137,21 +128,21 @@ class Game:
             print("Rival: WHAT! You are choosing the wrong enemy, fool. You WILL regret this.")
         if player_input == "B":
             print("You: Oh man, is it really not starting for another hour? I guess this one is my mistake.")
-            time.sleep(2)
+            print("Rival: ...")
+            time.sleep(1)
             print("Rival: Wait, you aren't going to insult me back?")
-            print("Rival: That makes me feel weird being mean to you.. here take this I guess.")
-            print("You have acquired Greatball X 5")
+            print("Rival: That makes me feel weird for being mean to you. Here, take this I guess...")
+            print("You have acquired Greatball x 5")
             for i in range(1,6):
                 self.items.append(ItemType.GREATBALL)
 
             print("*Your rival slams the door shut*")
 
-        input("\n*Press ENTER to continue...*")
-        Formatting.clearScreen()
+        Formatting.PressEnterToContinue()
+        print("*You wait around idly for an hour until Professor Mulberry starts giving out the Pokemon...*")
+        print("*You enter the Lab promptly at 11:30.*")
+        Formatting.PressEnterToContinue()
 
-        print("When Professor Mulberry starts giving out the Pokemon")
-        print("*You enter the Lab*")
-        input("\n*Press ENTER to continue...*")
         while (not self.state["choose_starter_complete"]):
             Formatting.clearScreen()
             self.player_options.clear()
@@ -177,7 +168,7 @@ class Game:
 
             if not starter:
                 print("'%s' not recognized. Please try again." % (player_input))
-                input("*Press ENTER to continue...*")
+                Formatting.PressEnterToContinue()
                 continue
             else:
                 starter.level = 2
@@ -196,28 +187,20 @@ class Game:
 
         print("Professor: You should do a practice battle before you go. Let me get my nephew in here...")
         print("Professor: *sucks in breath...*")
-        time.sleep(2)
         print("Professor: GAAAAAAAAAAAAAAAA---")
-        time.sleep(2)
+        time.sleep(1)
         print("Professor: --AAAAAAAAAAAAAARRRYYYYYYYY!!!!!!!!")
-        time.sleep(2)
-        input("*Press ENTER to continue...*")
-        
-        Formatting.clearScreen()
-        print("Rival Gary: I'm here gramps! I hope you aren't calling me to help that loser over there...")
-        time.sleep(2)
-        print("Professor: Gary! What have I told you about speaking to guests that way!")
-        print("Professor: But yeah... I did want you to have a practice battle with this kid.")
-        input("*Press ENTER to continue...*")
-
         print()
+        Formatting.PressEnterToContinue()
+        
+        print("Rival Gary: I'm here gramps! I hope you aren't calling me to help that loser over there...")
+        print("Professor: Gary! What have I told you about speaking to guests that way?")
+        print("Professor: But, yes. Actually, I did want you to have a practice battle with this kid.")
+        Formatting.PressEnterToContinue()
+
         print("Rival Gary: Ugh, I would never give you the time of the day if it were up to me... but Gramps says I have to battle you.")
         print("Rival Gary: Prepare to get creamed, sucker!")
-        input("*Press ENTER to continue...*")
-
-        print()
-        print("You begin a trainer battle with Rival Gary!")
-        input("*Press ENTER to continue...*")
+        Formatting.PressEnterToContinue()
 
         # Example new list of pokemon to battle against
         # not_rival_pokemon = []
@@ -231,38 +214,38 @@ class Game:
         print("Professor: You should take some basic supplies with you. I'll give you a pokeball and a potion so you can learn how they work.")
         print("Professor: You will need to learn the tools of your trade well, if you are ever to become a Pokemon Master.")
         print()
-        time.sleep(2)
-        print("*You receive Potion x 1*")
-        print("*You receive Pokeball x 1*")
-        self.items.append(ItemType.POKEBALL)
-        self.items.append(ItemType.POTION)
+        time.sleep(1)
+        print("*You receive Potion x 5*")
+        print("*You receive Pokeball x 10*")
+        for i in range(0,5):
+            self.items.append(ItemType.POTION)
+        for i in range(0,10):
+            self.items.append(ItemType.POKEBALL)
+
         print()
-        input("*Press ENTER to continue...*")
+        Formatting.PressEnterToContinue()
 
         print("Professor: You can begin your journey on Route 1 now, unless you have more questions for me?")
         player_choice = input("*Ask a question? Or press ENTER to continue...*")
         if player_choice != "":
             print("Professor: ...")
-            time.sleep(3)
+            time.sleep(1)
             print("Professor: Oh! You actually want to know something from me? %s..." % (player_choice))
             print("Professor: Sorry to say, I'm stumped! I wasn't trained to handle this kind of thing!")
-            time.sleep(3)
+            time.sleep(1)
             print("Professor: ...")
-            time.sleep(3)
+            time.sleep(1)
             print("Professor: ...")
-            time.sleep(3)
+            time.sleep(1)
             print("Professor: !!! Wait! I've got it! I'll give you STUFF instead! Let's call it compensation for my inadequacies.")
-            input("Professor: Have these potions and pokeballs, they should help you on your journey.\nPress ENTER to continue...")
-            Formatting.clearScreen()
-            self.items.append(ItemType.POTION)
-            self.items.append(ItemType.POTION)
-            self.items.append(ItemType.POTION)
-            self.items.append(ItemType.POKEBALL)
-            self.items.append(ItemType.POKEBALL)
-            self.items.append(ItemType.POKEBALL)
-            print("*You gain 3x Pokeball!")
-            print("*You gain 3x Potion!")
-            input("*Press ENTER to continue...*")
+            print("Professor: Have these Greatballs, they should help you on your journey.")
+
+            for i in range(0,5):
+                self.items.append(ItemType.GREATBALL)
+
+            print()
+            print("*You gain 5x Greatball!")
+            Formatting.PressEnterToContinue()
 
     
     def route_one(self):
@@ -318,7 +301,7 @@ class Game:
         self.state["route_two_complete"] = False
         route_length = 50
         # Define which pokemon can show up. Make more common pokemon show up more often.
-        wildPokemonList = ["geodude", "rockegon", "geodude", "geodude", "geodude", "rockegon", "pidgey", "jareanpidgey", "jareanpidgey","jareanpidgey", "jareanpidgey", "implien", "implien"]
+        wildPokemonList = ["geodude", "rocketgon", "geodude", "geodude", "geodude", "rockegon", "pidgey", "jareanpidgey", "jareanpidgey","jareanpidgey", "jareanpidgey", "implien", "implien"]
         wildPokemonLevelRange = [1, 2, 3]
         hiddenItemList = [ItemType.POTION, ItemType.POKEFEAST, ItemType.POKEFEAST, ItemType.POKEBALL]
 
@@ -497,7 +480,7 @@ class Game:
                                 move.currentPP = move.maxPP
 
                         print("All of your pokemon have had their PP restored!")
-                        input("*Press ENTER to continue...*")
+                        Formatting.PressEnterToContinue()
                         awaitingChoice = False
 
                     case 'RESUME JOURNEY':
@@ -525,7 +508,7 @@ class Game:
                 print("You have acquired... %s!" % (found_item))
                 self.items.append(found_item)
 
-            input("*Press ENTER to continue...*")
+            Formatting.PressEnterToContinue()
 
 
     def DoWildPokemonEncounterChance(wildPokemonList: List[str], trainerPokemon: List[Pokemon], trainerItems: List[ItemType], wildPokemonLevelRange: List[int]) -> bool:
@@ -543,7 +526,7 @@ class Game:
             wildPokemon.FullHealHP()
             print()
             print("A wild %s has appeared!" % (wildPokemon.name))
-            input("*Press ENTER to continue...*")
+            Formatting.PressEnterToContinue()
             BattleEngine.DoWildBattle(trainerPokemon, wildPokemon, trainerItems)
             isBattling = False
 

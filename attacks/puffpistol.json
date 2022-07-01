@@ -1,9 +1,16 @@
 {
     "name": "Puff Pistol",
-    "baseDmg": 35,
+    "baseDmg": 25,
     "type": "FLYING",
     "isPhysical": false,
     "maxPP": 20,
     "accuracy": 95,
-    "effects": []
+    "effects": [
+        {
+            "target": "SELF",
+            "effectType": "ADD_COMBAT_MODIFIER",
+            "effectDetail": "SPATK_UP",
+            "chance": 100
+        }
+    ]
 }

@@ -1,16 +1,16 @@
 {
     "name": "Ember",
-    "baseDmg": 50,
+    "baseDmg": 40,
     "type": "FIRE",
     "isPhysical": false,
     "maxPP": 20,
-    "accuracy": 80,
+    "accuracy": 85,
     "effects": [
         {
             "target": "OPPONENT",
             "effectType": "ADD_STATUS_EFFECT",
             "effectDetail": "BURNED",
-            "chance": 40
+            "chance": 50
         }
     ]
 }

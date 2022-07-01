@@ -1,15 +1,15 @@
 {
-    "name": "Sludge",
-    "baseDmg": 50,
-    "type": "POISON",
-    "isPhysical": false,
+    "name": "Deep Freeze",
+    "baseDmg": 10,
+    "type": "ICE",
+    "isPhysical": true,
     "maxPP": 15,
-    "accuracy": 80,
+    "accuracy": 70,
     "effects": [
         {
             "target": "OPPONENT",
             "effectType": "ADD_STATUS_EFFECT",
-            "effectDetail": "POISONED",
+            "effectDetail": "FROZEN",
             "chance": 100
         }
     ]

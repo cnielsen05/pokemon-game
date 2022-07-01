@@ -14,8 +14,9 @@
     "battleAttacks": [
         {"Move": "Fakeout", "UnlockLevel": 1},
         {"Move": "Razorleaf", "UnlockLevel": 2},
-        {"Move": "Lowkick", "UnlockLevel": 3},
-        {"Move": "Electroball", "UnlockLevel": 4}
+        {"Move": "Sneer", "UnlockLevel": 3},
+        {"Move": "Electroball", "UnlockLevel": 4},
+        {"Move": "Absorb", "UnlockLevel": 5}
         
     ]
 }

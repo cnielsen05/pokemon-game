@@ -1,9 +1,16 @@
 {
     "name": "Dazzling Light",
-    "baseDmg": 55,
+    "baseDmg": 45,
     "type": "FAIRY",
-    "isPhysical": true,
+    "isPhysical": false,
     "maxPP": 15,
     "accuracy": 85,
-    "effects": []
+    "effects": [
+        {
+            "target": "OPPONENT",
+            "effectType": "ADD_COMBAT_MODIFIER",
+            "effectDetail": "ACCURACY_DOWN_DOWN",
+            "chance": 100
+        }
+    ]
 }

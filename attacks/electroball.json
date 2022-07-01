@@ -1,6 +1,6 @@
 {
     "name": "Electro Ball",
-    "baseDmg": 40,
+    "baseDmg": 50,
     "type": "ELECTRIC",
     "isPhysical": false,
     "maxPP": 15,
@@ -10,7 +10,7 @@
             "target": "OPPONENT",
             "effectType": "ADD_STATUS_EFFECT",
             "effectDetail": "PARALYZED",
-            "chance": 50
+            "chance": 25
         }
     ]
 }

@@ -3,7 +3,7 @@
     "baseDmg": 20,
     "type": "NORMAL",
     "isPhysical": true,
-    "maxPP": 20,
+    "maxPP": 35,
     "accuracy": 90,
     "effects": []
 }

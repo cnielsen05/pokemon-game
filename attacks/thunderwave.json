@@ -1,15 +1,15 @@
 {
-    "name": "Fire Blast",
-    "baseDmg": 100,
-    "type": "FIRE",
+    "name": "Thunder Wave",
+    "baseDmg": 10,
+    "type": "ELECTRIC",
     "isPhysical": false,
-    "maxPP": 5,
-    "accuracy": 85,
+    "maxPP": 15,
+    "accuracy": 95,
     "effects": [
         {
             "target": "OPPONENT",
             "effectType": "ADD_STATUS_EFFECT",
-            "effectDetail": "BURNED",
+            "effectDetail": "PARALYZED",
             "chance": 100
         }
     ]

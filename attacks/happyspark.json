@@ -5,5 +5,12 @@
     "isPhysical": false,
     "maxPP": 30,
     "accuracy": 100,
-    "effects": []
+    "effects": [
+        {
+            "target": "OPPONENT",
+            "effectType": "ADD_COMBAT_MODIFIER",
+            "effectDetail": "ATTACK_DOWN",
+            "chance": 100
+        }
+    ]
 }

@@ -1,9 +1,9 @@
 {
-    "name": "Fake Out",
-    "baseDmg": 30,
+    "name": "Sand Attack",
+    "baseDmg": 10,
     "type": "NORMAL",
-    "isPhysical": false,
-    "maxPP": 30,
+    "isPhysical": true,
+    "maxPP": 20,
     "accuracy": 95,
     "effects": [
         {
