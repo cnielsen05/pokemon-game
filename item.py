@@ -6,6 +6,45 @@ from formatting import Formatting
 from pokemon import Pokemon
 
 class Item:
+    def ChooseItem(items: List[ItemType]) -> ItemType:
+        notChosen = True
+        while (notChosen):
+            unique_items = []
+            counts = {}
+            for item in items:
+                try:
+                    unique_items.index(item)
+                    counts[item] += 1
+                except:
+                    unique_items.append(item)
+                    counts[item] = 1
+
+            counter = 0
+            for item in unique_items:
+                identifier = chr(ord("A") + counter)
+                counter += 1
+                print("%s) %s (Owned: %s)" % (identifier, item, counts[item]))
+
+            player_input = input()
+            index = ord(player_input[0]) - ord("A")
+
+            if (index < 0 or index > len(unique_items) - 1):
+                input("Input %s not recognized. Press ENTER to try again.")
+                continue
+
+            chosenItem = unique_items[index]
+            originalIndex = 0
+            while originalIndex < len(items):
+                if items[originalIndex] == chosenItem:
+                    break
+                else:
+                    originalIndex += 1
+
+            notChosen = False
+            return originalIndex
+
+
+
     def UsePotion(healAmount: int, player_pokemon: List[Pokemon]) -> bool:
         print("Which Pokemon will you use the potion on?")
         counter = 0

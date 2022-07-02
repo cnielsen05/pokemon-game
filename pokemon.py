@@ -243,9 +243,9 @@ class Pokemon:
         
         if stat == PokemonStat.ATTACK:
             if self.attackModifierLevel > 0:
-                modFactor += 0.75 * self.attackModifierLevel
+                modFactor += (0.75 * self.attackModifierLevel)
             elif self.attackModifierLevel < 0:
-                modFactor -= 0.2 * self.attackModifierLevel
+                modFactor += (0.2 * self.attackModifierLevel)
 
             if self.statusCondition == Status.BURNED:
                 modFactor *= 0.5
@@ -254,9 +254,9 @@ class Pokemon:
 
         elif stat == PokemonStat.SPECIAL_ATTACK:
             if self.specialAttackModifierLevel > 0:
-                modFactor += 0.75 * self.specialAttackModifierLevel
+                modFactor += (0.75 * self.specialAttackModifierLevel)
             elif self.specialAttackModifierLevel < 0:
-                modFactor -= 0.2 * self.specialAttackModifierLevel
+                modFactor += (0.2 * self.specialAttackModifierLevel)
 
             if self.statusCondition == Status.CURSED:
                 modFactor *= 0.5
@@ -265,17 +265,17 @@ class Pokemon:
 
         elif stat == PokemonStat.DEFENSE:
             if self.defenseModifierLevel > 0:
-                modFactor += 0.75 * self.defenseModifierLevel
+                modFactor += (0.75 * self.defenseModifierLevel)
             elif self.defenseModifierLevel < 0:
-                modFactor -= 0.2 * self.defenseModifierLevel
+                modFactor += (0.2 * self.defenseModifierLevel)
 
             return 1 + (int)(1.0/5*self.defenseStat*self.level*modFactor)
 
         elif stat == PokemonStat.SPECIAL_DEFENSE:
             if self.specialDefenseModifierLevel > 0:
-                modFactor += 0.75 * self.specialDefenseModifierLevel
+                modFactor += (0.75 * self.specialDefenseModifierLevel)
             elif self.specialDefenseModifierLevel < 0:
-                modFactor -= 0.2 * self.specialDefenseModifierLevel
+                modFactor += (0.2 * self.specialDefenseModifierLevel)
 
             return 1 + (int)(1.0/5*self.spDefenseStat*self.level*modFactor)
 
@@ -284,9 +284,9 @@ class Pokemon:
 
         elif stat == PokemonStat.SPEED:
             if self.speedModifierLevel > 0:
-                modFactor += 0.75 * self.speedModifierLevel
+                modFactor += (0.75 * self.speedModifierLevel)
             elif self.speedModifierLevel < 0:
-                modFactor -= 0.2 * self.speedModifierLevel
+                modFactor += (0.2 * self.speedModifierLevel)
 
             if self.statusCondition == Status.PARALYZED:
                 modFactor *= 0.5
@@ -405,6 +405,8 @@ class Pokemon:
         attackList = self.GetBattleAttacks()
         randomNumber = random.randint(0, len(attackList) - 1)
         randomAttack = attackList[randomNumber]
+
+        print("Opponent stats insights! Attack Modifier: %s, Special Attack Modifier: %s" % (self.attackModifierLevel, self.specialAttackModifierLevel))
 
         if (randomAttack.currentPP <= 0):
             print("%s struggles to choose an attack!")
@@ -817,6 +819,16 @@ class Pokemon:
                 multiplier = 2
 
         return multiplier
+
+
+    def ClearCombatModifiers(self):
+        self.combatModifiers.clear()
+        self.accuracyModifierLevel = 0
+        self.attackModifierLevel = 0
+        self.specialAttackModifierLevel = 0
+        self.defenseModifierLevel = 0
+        self.specialDefenseModifierLevel = 0
+        self.speedModifierLevel = 0
 
 
 if __name__ == "__main__":
