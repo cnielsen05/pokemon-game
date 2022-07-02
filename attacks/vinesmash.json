@@ -1,0 +1,9 @@
+{
+    "name": "Vine Smash",
+    "baseDmg": 80,
+    "type": "GRASS",
+    "isPhysical": true,
+    "maxPP": 15,
+    "accuracy": 100,
+    "effects": []
+}
