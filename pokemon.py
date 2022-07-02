@@ -256,7 +256,7 @@ class Pokemon:
             if self.specialAttackModifierLevel > 0:
                 modFactor += 0.75 * self.specialAttackModifierLevel
             elif self.specialAttackModifierLevel < 0:
-                modFactor -= 0.2 * self.specialAttackModiferLevel
+                modFactor -= 0.2 * self.specialAttackModifierLevel
 
             if self.statusCondition == Status.CURSED:
                 modFactor *= 0.5
@@ -267,7 +267,7 @@ class Pokemon:
             if self.defenseModifierLevel > 0:
                 modFactor += 0.75 * self.defenseModifierLevel
             elif self.defenseModifierLevel < 0:
-                modFactor -= 0.2 * self.defenseModiferLevel
+                modFactor -= 0.2 * self.defenseModifierLevel
 
             return 1 + (int)(1.0/5*self.defenseStat*self.level*modFactor)
 
@@ -275,7 +275,7 @@ class Pokemon:
             if self.specialDefenseModifierLevel > 0:
                 modFactor += 0.75 * self.specialDefenseModifierLevel
             elif self.specialDefenseModifierLevel < 0:
-                modFactor -= 0.2 * self.specialDefenseModiferLevel
+                modFactor -= 0.2 * self.specialDefenseModifierLevel
 
             return 1 + (int)(1.0/5*self.spDefenseStat*self.level*modFactor)
 
@@ -286,7 +286,7 @@ class Pokemon:
             if self.speedModifierLevel > 0:
                 modFactor += 0.75 * self.speedModifierLevel
             elif self.speedModifierLevel < 0:
-                modFactor -= 0.2 * self.speedModiferLevel
+                modFactor -= 0.2 * self.speedModifierLevel
 
             if self.statusCondition == Status.PARALYZED:
                 modFactor *= 0.5

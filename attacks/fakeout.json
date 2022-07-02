@@ -1,6 +1,6 @@
 {
     "name": "Fake Out",
-    "baseDmg": 15,
+    "baseDmg": 20,
     "type": "NORMAL",
     "isPhysical": false,
     "maxPP": 30,
@@ -10,7 +10,7 @@
             "target": "OPPONENT",
             "effectType": "ADD_COMBAT_MODIFIER",
             "effectDetail": "ACCURACY_DOWN",
-            "chance": 50
+            "chance": 35
         }
     ]
 }
