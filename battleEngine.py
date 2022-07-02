@@ -136,7 +136,7 @@ class BattleEngine:
 
         # End of battle
         for pokemon in player_pokemon:
-            pokemon.combatModifiers.clear()
+            pokemon.ClearCombatModifiers()
 
 
     def OpponentFaintIfDead(opponent: Pokemon, playerPokemon: Pokemon) -> bool:
@@ -212,19 +212,9 @@ class BattleEngine:
             return False
 
         Formatting.clearScreen()
-        counter = 0
-        for item in items:
-            identifier = chr(ord("A") + counter)
-            counter += 1
-            print("%s) %s" % (identifier, item))
+        chosenItemIndex = Item.ChooseItem(items)
 
-        player_input = input()
-        index = ord(player_input[0]) - ord("A")
-        if (index < 0 or index > len(items) - 1):
-            input("Input %s not recognized. Press ENTER to try again.")
-            return False
-
-        itemUse = items[index]
+        itemUse = items[chosenItemIndex]
         match itemUse:
             case ItemType.POTION:
                 # The Item.UsePotion(int) function returns false if the player fails to select a target.
@@ -232,12 +222,12 @@ class BattleEngine:
                 if not Item.UsePotion(30, player_pokemon):
                     return False
                 else:
-                    items.pop(index)
+                    items.pop(chosenItemIndex)
 
             case ItemType.POKEBALL:
                 if allow_pokeball:
                     caught = Item.UsePokeball(opponent, player_pokemon, ItemType.POKEBALL)
-                    items.pop(index)
+                    items.pop(chosenItemIndex)
                     if caught:
                         continueBattling = False
                         xpGain = opponent.GetExperienceValue()
@@ -255,7 +245,7 @@ class BattleEngine:
             case ItemType.GREATBALL:
                 if allow_pokeball:
                     caught = Item.UsePokeball(opponent, player_pokemon, ItemType.GREATBALL)
-                    items.pop(index)
+                    items.pop(chosenItemIndex)
                     if caught:
                         continueBattling = False
                         xpGain = opponent.GetExperienceValue()
