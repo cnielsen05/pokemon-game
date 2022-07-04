@@ -1,1 +1,126 @@
-{"Name": "Route 1", "id": "routeone", "Length": 30, "WildPokemonList": ["flokefish", "flokefish", "flokefish", "sleepoud", "sleepoud", "scorpoint", "flokefish", "stackuri", "jareanpidgey", "jareanpidgey", "jareanpidgey", "hebike", "hebike", "hebike", "hebike", "hebike", "clovney", "clovney", "stackuri", "stackuri", "stackuri"], "WildPokemonLevelRange": [1, 2], "HiddenItemList": ["POTION", "POKEFEAST", "POKEBALL"], "TrainerBattles": [null, null, null, null, null, null, null, null, null, {"Name": "Newbie Bobby", "Money": 200, "StartLine": "Check out my awesome first Pokemon!", "EndLine": "Aww man, it stopped moving. What do I do now?", "Pokemon": [{"name": "flokefish", "level": 1}]}, null, null, null, null, null, null, null, null, null, {"Name": "Enthusiastic Noob Steven", "Money": 300, "StartLine": "I've been preparing for this day my whole life! I'll show you some tips.", "EndLine": "Maybe I got a little full of myself, I'll focus on the basics and become a great trainer one day!", "Pokemon": [{"name": "clovney", "level": 2}, {"name": "hebike", "level": 1}]}, null, null, null, null, null, null, null, null, null, {"Name": "Rich Kid David", "Money": 1000, "StartLine": "My parents got me all the items I could ever need! Nobody can keep up with me!", "EndLine": "Wow, I guess being rich isn't enough by itself. I'll try harder next time!", "Pokemon": [{"name": "atsebi", "level": 1}, {"name": "leafox", "level": 1}, {"name": "nardent", "level": 1}, {"name": "jareanpidgey", "level": 1}, {"name": "clovney", "level": 1}, {"name": "implien", "level": 1}]}]}
+{
+    "Name": "Route 1",
+    "id": "routeone",
+    "Length": 30,
+    "WildPokemonList": [
+        "flokefish",
+        "flokefish",
+        "flokefish",
+        "sleepoud",
+        "sleepoud",
+        "scorpoint",
+        "flokefish",
+        "stackuri",
+        "jareanpidgey",
+        "jareanpidgey",
+        "jareanpidgey",
+        "hebike",
+        "hebike",
+        "hebike",
+        "hebike",
+        "hebike",
+        "clovney",
+        "clovney",
+        "stackuri",
+        "stackuri",
+        "stackuri"
+    ],
+    "WildPokemonLevelRange": [
+        1,
+        2
+    ],
+    "HiddenItemList": [
+        "POTION",
+        "POKEFEAST",
+        "POKEBALL"
+    ],
+    "TrainerBattles": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        {
+            "Name": "Newbie Bobby",
+            "Money": 200,
+            "StartLine": "Check out my awesome first Pokemon!",
+            "EndLine": "Aww man, it stopped moving. What do I do now?",
+            "Pokemon": [
+                {
+                    "name": "flokefish",
+                    "level": 1
+                }
+            ]
+        },
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        {
+            "Name": "Enthusiastic Noob Steven",
+            "Money": 300,
+            "StartLine": "I've been preparing for this day my whole life! I'll show you some tips.",
+            "EndLine": "Maybe I got a little full of myself, I'll focus on the basics and become a great trainer one day!",
+            "Pokemon": [
+                {
+                    "name": "clovney",
+                    "level": 2
+                },
+                {
+                    "name": "hebike",
+                    "level": 1
+                }
+            ]
+        },
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        {
+            "Name": "Rich Kid David",
+            "Money": 1000,
+            "StartLine": "My parents got me all the items I could ever need! Nobody can keep up with me!",
+            "EndLine": "Wow, I guess being rich isn't enough by itself. I'll try harder next time!",
+            "Pokemon": [
+                {
+                    "name": "atsebi",
+                    "level": 1
+                },
+                {
+                    "name": "leafox",
+                    "level": 1
+                },
+                {
+                    "name": "nardent",
+                    "level": 1
+                },
+                {
+                    "name": "jareanpidgey",
+                    "level": 1
+                },
+                {
+                    "name": "clovney",
+                    "level": 1
+                },
+                {
+                    "name": "implien",
+                    "level": 1
+                }
+            ]
+        }
+    ]
+}

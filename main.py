@@ -332,13 +332,6 @@ class Game:
         print("Rival Gary: Ugh, I would never disgrace myself like this normally... but Gramps says I have to battle you.")
         Formatting.PressEnterToContinue()
 
-        # Example new list of pokemon to battle against
-        # not_rival_pokemon = []
-        # for name in ("clovney", "sleepoud", "pidgey"):
-        #   newPokemon = Pokemon(name)
-        #   newPokemon.level = 2
-        #   not_rival_pokemon.append(newPokemon)
-        #   BattleEngine.DoTrainerBattle(self.player_pokemon, self.not_rival_pokemon, self.items, "Trainer Fakeguy", 300)
         rivalBattle = {
             "Name": "Rival Gary",
             "Money": 650,
@@ -349,7 +342,7 @@ class Game:
         for p in self.rival_pokemon:
             rivalBattle["Pokemon"].append({"name": p.name, "level": p.level})
 
-        Game.DoTrainerBattle(self.player_pokemon, self.items, rivalBattle)
+        self.DoTrainerBattle(rivalBattle)
 
         print("Rival Gary: I refuse to acknowledge this defeat. You picked a better Pokemon is all that happened here.")
         print("Rival Gary: The next time we battle, I won't go down so easily. If you underestimate me, I'll CRUSH you.")
@@ -580,7 +573,7 @@ class Game:
                 trainerBattle = trainerBattles[steps_taken - 1]
                 if not trainerBattle is None:
                     print("*You are traveling along the route (step %s of %s)" % (steps_taken, route_length)) 
-                    Game.DoTrainerBattle(self.player_pokemon, self.items, trainerBattle)
+                    self.DoTrainerBattle(trainerBattle)
                 else:
                     print("*You are traveling along the route... press ENTER to pause (step %s of %s)" % (steps_taken, route_length))
                     hadEncounter = Game.DoWildPokemonEncounterChance(wildPokemonList, trainerPokemon, trainerItems, wildPokemonLevelRange)
@@ -722,7 +715,7 @@ class Game:
         return encounterWildPokemon
 
 
-    def DoTrainerBattle(player_pokemon: List[Pokemon], items: List[ItemType], trainerBattle: object):
+    def DoTrainerBattle(self, trainerBattle: object):
         global isWalking
         global isBattling
 
@@ -739,7 +732,8 @@ class Game:
         print("You have encountered a trainer on the route who wants to battle!")
         print("%s charges toward you!" % (trainerBattle["Name"]))
         Formatting.PressEnterToContinue()
-        BattleEngine.DoTrainerBattle(player_pokemon, opp_pokemon, items, trainerBattle["Name"], trainerBattle["Money"], trainerBattle["StartLine"], trainerBattle["EndLine"])
+        BattleEngine.DoTrainerBattle(self.player_pokemon, opp_pokemon, self.items, trainerBattle["Name"], trainerBattle["Money"], trainerBattle["StartLine"], trainerBattle["EndLine"])
+        self.playerMoney += trainerBattle["Money"]
 
 
 if __name__ == "__main__":
