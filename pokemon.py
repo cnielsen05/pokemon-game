@@ -477,11 +477,13 @@ class Pokemon:
             print("It's not very effective!")
             
         defenseValue = self.GetStatValue(PokemonStat.DEFENSE) if attack.isPhysical else self.GetStatValue(PokemonStat.SPECIAL_DEFENSE)
-        damage = 2 + (int)((((attack.baseDmg * effectivenessMultiplier) + 2 ) * (attackerOffensiveStatValue * 0.75 / (5 * defenseValue))) + random.randint(0,3))
-        crit = random.randint(0,9) > 8
-        if crit:
-            damage = (int)(damage * 1.75)
-            print("CRITICAL HIT!")
+        damage = 0
+        if attack.baseDmg > 0:
+            damage = 2 + (int)((((attack.baseDmg * effectivenessMultiplier) + 2 ) * (attackerOffensiveStatValue * 0.75 / (5 * defenseValue))) + random.randint(0,3))
+            crit = random.randint(0,9) > 8
+            if crit:
+                damage = (int)(damage * 1.75)
+                print("CRITICAL HIT!")
         self.TakeDamage(damage)
         self.HandleAttackReceivedEffects(attack, attacker, damage)
 
