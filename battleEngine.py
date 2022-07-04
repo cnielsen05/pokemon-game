@@ -77,6 +77,11 @@ class BattleEngine:
         global continueBattling
 
         continueBattling = True
+        print("%s wants to battle!" % (opponent_name))
+        Formatting.PressEnterToContinue()
+        print("%s: Go %s!" % (opponent_name, opponent_pokemon[0].name))
+        print("You: %s, I choose you!" % (player_pokemon[0].name))
+        print()
         while (continueBattling):
             Formatting.clearScreen()
             if BattleEngine.OpponentFaintIfDead(opponent_pokemon[0], player_pokemon[0]):
@@ -214,8 +219,11 @@ class BattleEngine:
         Formatting.clearScreen()
         chosenItemIndex = Item.ChooseItem(items)
 
-        itemUse = items[chosenItemIndex]
-        match itemUse:
+        if chosenItemIndex is None:
+            return False
+
+        chosenItem = items[chosenItemIndex]
+        match chosenItem:
             case ItemType.POTION:
                 # The Item.UsePotion(int) function returns false if the player fails to select a target.
                 # If that happens, we should skip the rest of execution and go back to getting player input.
@@ -259,6 +267,11 @@ class BattleEngine:
                     print("You can't use this item on that Pokemon!")
                     input("*Press ENTER to continue...*")
                     Formatting.clearScreen()
+
+            case ItemType.CAMPING_KIT:
+                print("You can't use this in battle!")
+                input("*Press ENTER to continue...*")
+                Formatting.clearScreen()
 
         return True
 
@@ -342,9 +355,8 @@ class BattleEngine:
         else:
             chosen_index = ord(player_input[0]) - ord("A")
             if chosen_index == 0:
-                print("That Pokemon is already active! Please try again.")
+                print("That Pokemon is already active!")
                 input("*Press ENTER to continue*")
-                BattleEngine.SwapPokemon(pokemonList)
 
             elif chosen_index < 0 or chosen_index > 5:
                 print("Input %s is not understood. Try again.")

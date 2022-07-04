@@ -99,3 +99,4 @@ class ItemType(str, Enum):
     POKEBALL = 'POKEBALL'
     GREATBALL = 'GREATBALL'
     POKEFEAST = 'POKEFEAST'
+    CAMPING_KIT = 'CAMPING_KIT'

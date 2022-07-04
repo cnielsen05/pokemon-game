@@ -33,7 +33,7 @@ class Pokemon:
         self.battleAttacks = [BattleAttack("peck", 2), BattleAttack("tackle", 1)]
 
         if pokemon:
-            pokemonFileName = "pokemon/%s.json" % (pokemon)
+            pokemonFileName = "pokemon/%s.json" % (pokemon.replace(" ", ""))
 
             with open(pokemonFileName, 'r') as pokemonFile:
                 data = json.load(pokemonFile)
@@ -433,7 +433,7 @@ class Pokemon:
             roll = random.randint(1,100)
             if roll < 50:
                 print("%s hurts itself in its confusion!" % (self.name))
-                damage = (int)(self.CalculateMaxHp() / 7)
+                damage = (int)(self.MaxHp() / 7)
                 self.TakeDamage(damage)
                 return
 

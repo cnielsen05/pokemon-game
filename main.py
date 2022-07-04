@@ -422,8 +422,23 @@ class Game:
         hiddenItemList = [ItemType.POTION, ItemType.POKEFEAST, ItemType.POKEBALL]
 
         steps_taken = 0
+        trainerBattles = [None] * route_length
+        trainerBattles[10] = {
+            "Name": "Bug Catcher",
+            "Money": 300,
+            "Pokemon": [
+                {
+                    "name": "flokefish",
+                    "level": 1
+                },
+                {
+                    "name": "stackuri",
+                    "level": 1
+                }
+            ]
+        }
         while (steps_taken < route_length):
-            self.DoWalk(route_length, wildPokemonList, self.player_pokemon, self.items, hiddenItemList, wildPokemonLevelRange)
+            self.DoWalk(route_length, wildPokemonList, self.player_pokemon, self.items, hiddenItemList, wildPokemonLevelRange, trainerBattles)
             Formatting.clearScreen()
 
         isWalking = False
@@ -519,18 +534,58 @@ class Game:
             # Do Town
             print("You are in town. What you you like to do?")
             print()
-            options = ["PokeCenter", "PokeMart", "Continue Journey", "Save and Continue", "Save and Quit"]
+            options = ["Pokemon Center", "PokeMart", "Continue Journey", "Save and Continue", "Save and Quit"]
             player_choice_index = Formatting.GetUserChoice(options)
             choice = options[player_choice_index]
-            if choice == "PokeCenter":
-                print("All of your Pokemon have had their HP restored!")
+            if choice == "Pokemon Center":
+                if self.playerMoney > 100:
+                    print("You pay 100 Pokecoins for the services.")
+                    self.playerMoney -= 100
+                else:
+                    print("You don't have enough money to pay! This time will be on the house, try to do better out there!")
+
                 for p in self.player_pokemon:
                     p.FullHealHP()
+                    for move in p.GetBattleAttacks():
+                        move.currentPP = move.maxPP
+
+                print("All of your Pokemon have had their HP and PP restored!")
                 Formatting.PressEnterToContinue()
 
             elif choice == "PokeMart":
-                print("Sorry, no PokeMart yet!")
-                Formatting.PressEnterToContinue()
+                options = ["POTION - $50", "POKEBALL - $50", "CAMPING_KIT - $150", "BACK"]
+                done = False
+                while not done:
+                    print("You have %s Pokecoins. What would you like to buy?" % (self.playerMoney))
+                    player_choice_index = Formatting.GetUserChoice(options)
+                    if player_choice_index == 0:
+                        if self.playerMoney >= 50:
+                            print("You bought a POTION!")
+                            self.items.append(ItemType.POTION)
+                            self.playerMoney -= 50
+                        else:
+                            print("You can't afford that!")
+
+                    elif player_choice_index == 1:
+                        if self.playerMoney >= 50:
+                            print("You bought a POKEBALL!")
+                            self.items.append(ItemType.POKEBALL)
+                            self.playerMoney -= 50
+                        else:
+                            print("You can't afford that!")
+
+                    elif player_choice_index == 2:
+                        if self.playerMoney >= 150:
+                            print("You bought a CAMPING_KIT!")
+                            self.items.append(ItemType.CAMPING_KIT)
+                            self.playerMoney -= 150
+                        else:
+                            print("You can't afford that!")
+
+                    elif player_choice_index == 3:
+                        done = True
+
+                    Formatting.PressEnterToContinue()
 
             elif choice == "Continue Journey":
                 if (not self.state["route_one_complete"]):
@@ -556,7 +611,8 @@ class Game:
         trainerPokemon: List[Pokemon], 
         trainerItems: List[ItemType], 
         hiddenItems: List[ItemType], 
-        wildPokemonLevelRange: List[int]):
+        wildPokemonLevelRange: List[int],
+        trainerBattles: List[object]):
 
         global isWalking
         global steps_taken
@@ -571,10 +627,15 @@ class Game:
             if time.time() - start_time >= 1:
                 start_time = time.time()
                 steps_taken += 1
-                print("*You are traveling along the route... press ENTER to pause (step %s of %s)" % (steps_taken, route_length))
-                hadEncounter = Game.DoWildPokemonEncounterChance(wildPokemonList, trainerPokemon, trainerItems, wildPokemonLevelRange)
-                if not hadEncounter:
-                    self.FindHiddenItemChance(hiddenItems)
+                trainerBattle = trainerBattles[steps_taken]
+                if not trainerBattle is None:
+                    print("*You are traveling along the route (step %s of %s)" % (steps_taken, route_length)) 
+                    Game.DoTrainerBattle(self.player_pokemon, self.items, trainerBattle)
+                else:
+                    print("*You are traveling along the route... press ENTER to pause (step %s of %s)" % (steps_taken, route_length))
+                    hadEncounter = Game.DoWildPokemonEncounterChance(wildPokemonList, trainerPokemon, trainerItems, wildPokemonLevelRange)
+                    if not hadEncounter:
+                        self.FindHiddenItemChance(hiddenItems)
 
         userInterrupt.join()
 
@@ -611,19 +672,13 @@ class Game:
                             continue
 
                         Formatting.clearScreen()
-                        counter = 0
-                        for item in self.items:
-                            identifier = chr(ord("A") + counter)
-                            counter += 1
-                            print("%s) %s" % (identifier, item))
+                        itemIndex = Item.ChooseItem(self.items)
 
-                        player_input = input()
-                        index = ord(player_input[0]) - ord("A")
-                        if (index < 0 or index > len(self.items) - 1):
-                            input("Input %s not recognized. Press ENTER to try again.")
+                        if itemIndex is None:
+                            # Player chose BACK
                             continue
 
-                        itemToUse = self.items[index]
+                        itemToUse = self.items[itemIndex]
                         match itemToUse:
                             case ItemType.POTION:
                                 # The Item.UsePotion(int) function returns false if the player fails to select a target.
@@ -634,17 +689,36 @@ class Game:
                                     self.items.pop(index)
 
                             case ItemType.POKEBALL:
-                                print("*You roll the pokeball back and forth in your palm, imagining your next throw...*")
+                                print("*You roll the Pokeball back and forth in your palm, imagining your next throw...*")
+                            case ItemType.GREATBALL:
+                                print("*You roll the Greatball back and forth in your palm, imagining your next throw...*")
+                            case ItemType.CAMPING_KIT:
+                                print("You need to CAMP to use this.")
 
+                        Formatting.PressEnterToContinue()
                         awaitingChoice = False
 
                     case 'CAMP':
+                        try:
+                            index = self.items.index(ItemType.CAMPING_KIT)
+                            self.items.pop(index)
+                        except:
+                            print("You don't have any camping kits! Try buying one in town.")
+                            Formatting.PressEnterToContinue()
+                            continue
+
                         print("Camping!")
                         for pokemon in self.player_pokemon:
                             for move in pokemon.GetBattleAttacks():
                                 move.currentPP = move.maxPP
 
-                        print("All of your pokemon have had their PP restored!")
+                            damage = pokemon.CalculateMaxHp() - pokemon.currentHP
+                            healedAmount = 50
+                            if damage < 50:
+                                healedAmount = damage
+                            pokemon.currentHP += healedAmount
+                            print("%s healed %s HP and had its PP restored!" % (pokemon.name, healedAmount))
+
                         Formatting.PressEnterToContinue()
                         awaitingChoice = False
 
@@ -690,12 +764,32 @@ class Game:
             wildPokemon.level = wildPokemonLevelRange[levelIndex]
             wildPokemon.FullHealHP()
             print()
-            print("A wild %s has appeared!" % (wildPokemon.name))
-            Formatting.PressEnterToContinue()
+            print("A wild %s has appeared!\n\nPress ENTER to continue..." % (wildPokemon.name))
+            input()
             BattleEngine.DoWildBattle(trainerPokemon, wildPokemon, trainerItems)
             isBattling = False
 
         return encounterWildPokemon
+
+
+    def DoTrainerBattle(player_pokemon: List[Pokemon], items: List[ItemType], trainerBattle: object):
+        global isWalking
+        global isBattling
+
+        isWalking = False
+        isBattling = True
+
+        opp_pokemon = []
+        for p in trainerBattle["Pokemon"]:
+            newPoke = Pokemon(p["name"])
+            newPoke.level = p["level"]
+            newPoke.FullHealHP()
+            opp_pokemon.append(newPoke)
+
+        print("You have encountered a trainer on the route who wants to battle!")
+        print("%s charges toward you!" % (trainerBattle["Name"]))
+        Formatting.PressEnterToContinue()
+        BattleEngine.DoTrainerBattle(player_pokemon, opp_pokemon, items, trainerBattle["Name"], trainerBattle["Money"])
 
 
 if __name__ == "__main__":
