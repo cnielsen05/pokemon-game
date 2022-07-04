@@ -25,12 +25,18 @@ class Item:
                 counter += 1
                 print("%s) %s (Owned: %s)" % (identifier, item, counts[item]))
 
+            print("%s) BACK" % (chr(ord("A") + counter)))
+
             player_input = input()
             index = ord(player_input[0]) - ord("A")
 
-            if (index < 0 or index > len(unique_items) - 1):
+            if (index < 0 or index > len(unique_items)):
                 input("Input %s not recognized. Press ENTER to try again.")
                 continue
+
+            if index == len(unique_items):
+                # Player chose BACK
+                return None
 
             chosenItem = unique_items[index]
             originalIndex = 0

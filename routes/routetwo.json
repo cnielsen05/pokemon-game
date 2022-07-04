@@ -1,0 +1,144 @@
+{
+    "Name": "Route 2",
+    "id": "routetwo",
+    "Length": 50,
+    "WildPokemonList": ["geodude", "rocketgon", "geodude", "geodude", "geodude", "rockegon", "pidgey", "jareanpidgey", "jareanpidgey","jareanpidgey", "jareanpidgey", "implien", "implien"],
+    "WildPokemonLevelRange": [
+        1,
+        2,
+        3
+    ],
+    "HiddenItemList": [
+        "POTION",
+        "POKEFEAST",
+        "POKEFEAST",
+        "POKEBALL"
+    ],
+    "TrainerBattles": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        {
+            "Name": "Bird Watcher Brad",
+            "Money": 200,
+            "StartLine": "I found my Pokemon with my binoculars!",
+            "EndLine": "Your Pokemon is amazing too!",
+            "Pokemon": [
+                {
+                    "name": "jareanpidgey",
+                    "level": 3
+                }
+            ]
+        },
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        {
+            "Name": "Ghost Story Guy Greg",
+            "Money": 400,
+            "StartLine": "I love spooky stories...",
+            "EndLine": "Man, we couldn't scare you!",
+            "Pokemon": [
+                {
+                    "name": "geodude",
+                    "level": 2
+                },
+                {
+                    "name": "geodude",
+                    "level": 3
+                }
+            ]
+        },
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        {
+            "Name": "Poor Kid Pippi",
+            "Money": 10,
+            "StartLine": "I worked so hard to get this Pokemon, I hope we will be strong enough.",
+            "EndLine": "I guess we need to keep working, thank you for the battle!",
+            "Pokemon": [
+                {
+                    "name": "atsebi",
+                    "level": 5
+                }
+            ]
+        },
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        {
+            "Name": "Bug Enthusiast Barry",
+            "Money": 300,
+            "StartLine": "Do you like bugs!?",
+            "EndLine": "I LOVE BUGS!!!",
+            "Pokemon": [
+                {
+                    "name": "scorpoint",
+                    "level": 3
+                },
+                {
+                    "name": "scorstab",
+                    "level": 4
+                }
+            ]
+        },
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        {
+            "Name": "Sleepy Sally",
+            "Money": 450,
+            "StartLine": "I'm tired, maybe we should take a nap after this.",
+            "EndLine": "Aww man, we lost. That makes me even sleepier.",
+            "Pokemon": [
+                {
+                    "name": "implien",
+                    "level": 3
+                },
+                {
+                    "name": "sleepoud",
+                    "level": 5
+                },
+                {
+                    "name": "sleepoud",
+                    "level": 4
+                },
+                {
+                    "name": "sleepoud",
+                    "level": 6
+                }
+            ]
+        }
+    ]
+}
