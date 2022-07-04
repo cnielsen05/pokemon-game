@@ -12,6 +12,8 @@ from item import Item
 from pokemon import Pokemon
 from threading import Thread
 
+from route import Route
+
 # Globals for asynchronous code to share information
 isWalking = True
 isBattling = False
@@ -327,8 +329,7 @@ class Game:
         print("Professor: But, yes. Actually, I did want you to have a practice battle with this kid.")
         Formatting.PressEnterToContinue()
 
-        print("Rival Gary: Ugh, I would never give you the time of the day if it were up to me... but Gramps says I have to battle you.")
-        print("Rival Gary: Prepare to get creamed, sucker!")
+        print("Rival Gary: Ugh, I would never disgrace myself like this normally... but Gramps says I have to battle you.")
         Formatting.PressEnterToContinue()
 
         # Example new list of pokemon to battle against
@@ -338,9 +339,18 @@ class Game:
         #   newPokemon.level = 2
         #   not_rival_pokemon.append(newPokemon)
         #   BattleEngine.DoTrainerBattle(self.player_pokemon, self.not_rival_pokemon, self.items, "Trainer Fakeguy", 300)
-        BattleEngine.DoTrainerBattle(self.player_pokemon, self.rival_pokemon, self.items, "Rival Gary", 1000)
-        self.playerMoney += 1000
-        print("Rival Gary: Wait, I wasn't ready! No fair, he could never have beaten me if I was ready for him.")
+        rivalBattle = {
+            "Name": "Rival Gary",
+            "Money": 650,
+            "StartLine": "Prepare to get creamed, sucker!",
+            "EndLine": "Wait, I wasn't ready! No fair, you could never have beaten me if I was ready.",
+            "Pokemon": []
+        }
+        for p in self.rival_pokemon:
+            rivalBattle["Pokemon"].append({"name": p.name, "level": p.level})
+
+        Game.DoTrainerBattle(self.player_pokemon, self.items, rivalBattle)
+
         print("Rival Gary: I refuse to acknowledge this defeat. You picked a better Pokemon is all that happened here.")
         print("Rival Gary: The next time we battle, I won't go down so easily. If you underestimate me, I'll CRUSH you.")
         print()
@@ -386,87 +396,24 @@ class Game:
         self.SaveGame()
 
     
-    def route_one(self):
-        Formatting.clearScreen()
-        print("Starting the journey along Route 1.")
-        print()
-
+    def Do_Route(self, routeid):
         global isWalking
         global steps_taken
-        route_length = 30
-        # Define which pokemon can show up. Make more common pokemon show up more often.
-        wildPokemonList = [
-            "flokefish", 
-            "flokefish", 
-            "flokefish", 
-            "sleepoud", 
-            "sleepoud", 
-            "scorpoint", 
-            "flokefish",
-            "stackuri",
-            "jareanpidgey", 
-            "jareanpidgey", 
-            "jareanpidgey",
-            "hebike",
-            "hebike",
-            "hebike",
-            "hebike",
-            "hebike",
-            "clovney",
-            "clovney",
-            "stackuri",
-            "stackuri",
-            "stackuri"]
-        wildPokemonLevelRange = [1,2]
-
-        hiddenItemList = [ItemType.POTION, ItemType.POKEFEAST, ItemType.POKEBALL]
 
         steps_taken = 0
-        trainerBattles = [None] * route_length
-        trainerBattles[10] = {
-            "Name": "Bug Catcher",
-            "Money": 300,
-            "Pokemon": [
-                {
-                    "name": "flokefish",
-                    "level": 1
-                },
-                {
-                    "name": "stackuri",
-                    "level": 1
-                }
-            ]
-        }
-        while (steps_taken < route_length):
-            self.DoWalk(route_length, wildPokemonList, self.player_pokemon, self.items, hiddenItemList, wildPokemonLevelRange, trainerBattles)
+        route = Route(routeid)
+        Formatting.clearScreen()
+        print("Beginning your journey on %s." % (route.Name))
+        
+        while (steps_taken < route.Length):
+            self.DoWalk(route.Length, route.WildPokemonList, self.player_pokemon, self.items, route.HiddenItemList, route.WildPokemonLevelRange, route.TrainerBattles)
             Formatting.clearScreen()
 
         isWalking = False
-        print("You have reached the end of Route 1!")
-        self.state["route_one_complete"] = True
+        print("You have reached the end of %s!" % (route.Name))
         
 
-    def route_two(self):
-        global isWalking
-        global steps_taken
-
-        print("Starting route two!")
-        self.state["route_two_complete"] = False
-        route_length = 50
-        # Define which pokemon can show up. Make more common pokemon show up more often.
-        wildPokemonList = ["geodude", "rocketgon", "geodude", "geodude", "geodude", "rockegon", "pidgey", "jareanpidgey", "jareanpidgey","jareanpidgey", "jareanpidgey", "implien", "implien"]
-        wildPokemonLevelRange = [1, 2, 3]
-        hiddenItemList = [ItemType.POTION, ItemType.POKEFEAST, ItemType.POKEFEAST, ItemType.POKEBALL]
-
-        steps_taken = 0
-        while (steps_taken < route_length):
-            self.DoWalk(route_length, wildPokemonList, self.player_pokemon, self.items, hiddenItemList, wildPokemonLevelRange)
-            Formatting.clearScreen()
-                
-        isWalking = False
-        print("You have reached the end of Route 2!")
-        self.state["route_two_complete"] = True
-
+    def GrassGym(self):
         print("You: Now time for the first Gym. The Grass Gym!")
 
         input("\n*Press ENTER to continue...*")
@@ -589,10 +536,13 @@ class Game:
 
             elif choice == "Continue Journey":
                 if (not self.state["route_one_complete"]):
-                    self.route_one()
+                    self.Do_Route("routeone")
+                    self.state["route_one_complete"] = True
                 elif (not self.state["route_two_complete"]):
-                    self.route_two()
+                    self.Do_Route("routetwo")
+                    self.state["route_two_complete"] = True
                 else:
+                    self.GrassGym()
                     print("Congratulations, you've reached the end of the game! You WIN!")
                     keepPlaying = False
 
@@ -627,7 +577,7 @@ class Game:
             if time.time() - start_time >= 1:
                 start_time = time.time()
                 steps_taken += 1
-                trainerBattle = trainerBattles[steps_taken]
+                trainerBattle = trainerBattles[steps_taken - 1]
                 if not trainerBattle is None:
                     print("*You are traveling along the route (step %s of %s)" % (steps_taken, route_length)) 
                     Game.DoTrainerBattle(self.player_pokemon, self.items, trainerBattle)
@@ -789,7 +739,7 @@ class Game:
         print("You have encountered a trainer on the route who wants to battle!")
         print("%s charges toward you!" % (trainerBattle["Name"]))
         Formatting.PressEnterToContinue()
-        BattleEngine.DoTrainerBattle(player_pokemon, opp_pokemon, items, trainerBattle["Name"], trainerBattle["Money"])
+        BattleEngine.DoTrainerBattle(player_pokemon, opp_pokemon, items, trainerBattle["Name"], trainerBattle["Money"], trainerBattle["StartLine"], trainerBattle["EndLine"])
 
 
 if __name__ == "__main__":

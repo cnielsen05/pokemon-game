@@ -73,11 +73,12 @@ class BattleEngine:
             pokemon.combatModifiers.clear()
 
 
-    def DoTrainerBattle(player_pokemon: List[Pokemon], opponent_pokemon: List[Pokemon], items: List[ItemType], opponent_name: str, winningMoney: int):
+    def DoTrainerBattle(player_pokemon: List[Pokemon], opponent_pokemon: List[Pokemon], items: List[ItemType], opponent_name: str, winningMoney: int, startLine: str, endLine: str):
         global continueBattling
 
         continueBattling = True
         print("%s wants to battle!" % (opponent_name))
+        print("%s: %s" % (opponent_name, startLine))
         Formatting.PressEnterToContinue()
         print("%s: Go %s!" % (opponent_name, opponent_pokemon[0].name))
         print("You: %s, I choose you!" % (player_pokemon[0].name))
@@ -142,6 +143,8 @@ class BattleEngine:
         # End of battle
         for pokemon in player_pokemon:
             pokemon.ClearCombatModifiers()
+
+        print("%s: %s" % (opponent_name, endLine))
 
 
     def OpponentFaintIfDead(opponent: Pokemon, playerPokemon: Pokemon) -> bool:
