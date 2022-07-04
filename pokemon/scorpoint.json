@@ -9,8 +9,8 @@
     "battleType1": "FIRE",
     "battleType2": "PSYCHIC",
     "catchFactor": 0.45,
-    "evolveLevel": 0,
-    "evolutionName": "",
+    "evolveLevel": 4,
+    "evolutionName": "Scorstab",
     "battleAttacks": [
         {"Move": "Ember", "UnlockLevel": 1},
         {"Move": "Telekinesis", "UnlockLevel": 2}

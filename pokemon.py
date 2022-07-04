@@ -373,7 +373,7 @@ class Pokemon:
             self.battleType2 = data["battleType2"]
             self.catchFactor = data["catchFactor"]
             self.evolutionName = data["evolutionName"]
-            self.evolutionLevel = data["evolutionLevel"]
+            self.evolveLevel = data["evolveLevel"]
             self.battleAttacks.clear()
             for atk in data["battleAttacks"]:
                 self.battleAttacks.append(BattleAttack(atk["Move"], atk["UnlockLevel"]))
