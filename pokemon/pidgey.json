@@ -8,6 +8,7 @@
     "HPStat": 19,
     "battleType1": "FLYING",
     "battleType2": "NORMAL",
+    "catchFactor": 0.45,
     "evolveLevel": 0,
     "evolutionName": "",
     "battleAttacks": [

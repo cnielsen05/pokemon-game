@@ -1,6 +1,7 @@
 import time
 from typing import List
 from battleAttack import BattleAttack
+from engineUtilities import EngineUtilities
 from enums import BattleType, CombatModifiers, Status, PokemonStat, Targeting, EffectType
 import json
 import random
@@ -57,10 +58,10 @@ class Pokemon:
         self.statusCondition = Status.NONE
         self.combatModifiers = []
 
-        self.currentHP = self.calculateMaxHp()
+        self.currentHP = self.CalculateMaxHp()
 
 
-    def exportJson(self) -> str:
+    def ExportJson(self) -> str:
         data = {
             "name": self.name,
             "attackStat": self.attackStat,
@@ -280,7 +281,7 @@ class Pokemon:
             return 1 + (int)(1.0/5*self.spDefenseStat*self.level*modFactor)
 
         elif stat == PokemonStat.HP:
-            return self.calculateMaxHp()
+            return self.CalculateMaxHp()
 
         elif stat == PokemonStat.SPEED:
             if self.speedModifierLevel > 0:
@@ -294,7 +295,7 @@ class Pokemon:
             return 1 + (int)(1.0/5*self.speedStat*self.level*modFactor)
 
 
-    def calculateMaxHp(self) -> int:
+    def CalculateMaxHp(self) -> int:
         return 10 + (int)(self.HPStat * self.level * 3/5)
 
 
@@ -311,7 +312,7 @@ class Pokemon:
 
     def LevelUp(self):
         oldStats = {
-            "HP": self.calculateMaxHp(),
+            "HP": self.CalculateMaxHp(),
             "Attack": self.GetStatValue(PokemonStat.ATTACK),
             "Special_Attack": self.GetStatValue(PokemonStat.SPECIAL_ATTACK),
             "Defense": self.GetStatValue(PokemonStat.DEFENSE),
@@ -327,7 +328,7 @@ class Pokemon:
             self.Evolve(self.evolutionName)
 
         newStats = {
-            "HP": self.calculateMaxHp(),
+            "HP": self.CalculateMaxHp(),
             "Attack": self.GetStatValue(PokemonStat.ATTACK),
             "Special_Attack": self.GetStatValue(PokemonStat.SPECIAL_ATTACK),
             "Defense": self.GetStatValue(PokemonStat.DEFENSE),
@@ -382,13 +383,13 @@ class Pokemon:
     
     
     def FullHealHP(self):
-        self.currentHP = self.calculateMaxHp()
+        self.currentHP = self.CalculateMaxHp()
         if self.statusCondition == Status.KNOCKED_OUT:
             self.statusCondition = Status.NONE
 
 
     def HealHP(self, healAmount: int):
-        damage = self.calculateMaxHp() - self.currentHP
+        damage = self.CalculateMaxHp() - self.currentHP
         if self.statusCondition == Status.KNOCKED_OUT:
             self.statusCondition = Status.NONE
 
@@ -405,8 +406,6 @@ class Pokemon:
         attackList = self.GetBattleAttacks()
         randomNumber = random.randint(0, len(attackList) - 1)
         randomAttack = attackList[randomNumber]
-
-        print("Opponent stats insights! Attack Modifier: %s, Special Attack Modifier: %s" % (self.attackModifierLevel, self.specialAttackModifierLevel))
 
         if (randomAttack.currentPP <= 0):
             print("%s struggles to choose an attack!")
@@ -434,7 +433,7 @@ class Pokemon:
             roll = random.randint(1,100)
             if roll < 50:
                 print("%s hurts itself in its confusion!" % (self.name))
-                damage = (int)(self.calculateMaxHp() / 7)
+                damage = (int)(self.CalculateMaxHp() / 7)
                 self.TakeDamage(damage)
                 return
 
@@ -469,7 +468,7 @@ class Pokemon:
 
         attackerOffensiveStatValue = attacker.GetStatValue(PokemonStat.ATTACK) if attack.isPhysical else attacker.GetStatValue(PokemonStat.SPECIAL_ATTACK)
 
-        effectivenessMultiplier = Pokemon.CalculateDamageTypeMultiplier(self.battleType1, self.battleType2, attack.type)
+        effectivenessMultiplier = EngineUtilities.GetTypeAdvantageMultiplier(self.battleType1, self.battleType2, attack.type)
         if effectivenessMultiplier >= 2.0:
             print("It's super effective!")
         elif effectivenessMultiplier == 0:
@@ -535,7 +534,7 @@ class Pokemon:
                     print("%s moves freely, as all status effects are cleared!" % (self.name))
                     self.statusCondition = Status.NONE
                 elif effect.effectType == EffectType.HEAL:
-                    healAmount = (int)(self.calculateMaxHp() * effect.effectDetail)
+                    healAmount = (int)(self.CalculateMaxHp() * effect.effectDetail)
                     print("%s is healed for %s HP!" % (self.name, healAmount))
 
     
@@ -547,278 +546,6 @@ class Pokemon:
         else:
             self.currentHP -= damage
             print("%s took %s damage!" % (self.name, damage))
-
-
-    # This function calls the other function, and multiplies the two multipliers together to get a final product
-    def CalculateDamageTypeMultiplier(defType1: BattleType, defType2: BattleType, attackType: BattleType) -> int:
-        multiplierOne = Pokemon.CalculateDamageTypeMultiplierInner(defType1, attackType)
-        multiplierTwo = Pokemon.CalculateDamageTypeMultiplierInner(defType2, attackType)
-        return multiplierOne * multiplierTwo
-
-
-    # This function returns the multiplier for one attack type on one defense type
-    def CalculateDamageTypeMultiplierInner(defType: BattleType, attackType: BattleType) -> int:
-        multiplier = 1.0
-
-        # Damage type advantages
-        if (defType == BattleType.BUG):
-            if (attackType == BattleType.FIGHTING):
-                multiplier = 0.5
-            elif (attackType == BattleType.GROUND):
-                multiplier = 0.5
-            elif (attackType == BattleType.GRASS):
-                multiplier = 0.5
-            elif (attackType == BattleType.FLYING):
-                multiplier = 2
-            elif (attackType == BattleType.ROCK):
-                multiplier = 2
-            elif (attackType == BattleType.FIRE):
-                multiplier = 2
-        elif (defType == BattleType.DARK):
-            if (attackType == BattleType.PSYCHIC):
-                multiplier = 0
-            elif (attackType == BattleType.DARK):
-                multiplier = 0.5
-            elif (attackType == BattleType.GHOST):
-                multiplier = 0.5
-            elif (attackType == BattleType.FIGHTING):
-                multiplier = 2
-            elif (attackType == BattleType.BUG):
-                multiplier = 2
-            elif (attackType == BattleType.FAIRY):
-                multiplier = 2
-        elif (defType == BattleType.NORMAL):
-            if (attackType == BattleType.GHOST):
-                multiplier = 0
-            elif (attackType == BattleType.FIGHTING):
-                multiplier = 2
-        elif (defType == BattleType.FIGHTING):
-            if (attackType == BattleType.ROCK):
-                multiplier = 0.5
-            elif (attackType == BattleType.DARK):
-                multiplier = 0.5
-            elif (attackType == BattleType.BUG):
-                multiplier = 0.5
-            elif (attackType == BattleType.FLYING):
-                multiplier = 2
-            elif (attackType == BattleType.PSYCHIC):
-                multiplier = 2
-            elif (attackType == BattleType.FAIRY):
-                multiplier = 2
-        elif (defType == BattleType.FLYING):
-            if (attackType == BattleType.FIGHTING):
-                multiplier = 0.5
-            elif (attackType == BattleType.GRASS):
-                multiplier = 0.5
-            elif (attackType == BattleType.BUG):
-                multiplier = 0.5
-            elif (attackType == BattleType.ROCK):
-                multiplier = 2
-            elif (attackType == BattleType.ELECTRIC):
-                multiplier = 2
-            elif (attackType == BattleType.ICE):
-                multiplier = 2
-        elif (defType == BattleType.POISON):
-            if (attackType == BattleType.FIGHTING):
-                multiplier = 0.5
-            elif (attackType == BattleType.POISON):
-                multiplier = 0.5
-            elif (attackType == BattleType.BUG):
-                multiplier = 0.5
-            elif (attackType == BattleType.GRASS):
-                multiplier = 0.5
-            elif (attackType == BattleType.FAIRY):
-                multiplier = 0.5
-            elif (attackType == BattleType.GROUND):
-                multiplier = 2
-            elif (attackType == BattleType.PSYCHIC):
-                multiplier = 2
-        elif (defType == BattleType.GROUND):
-            if (attackType == BattleType.ELECTRIC):
-                multiplier = 0
-            elif (attackType == BattleType.POISON):
-                multiplier = 0.5
-            elif (attackType == BattleType.ROCK):
-                multiplier = 0.5
-            elif (attackType == BattleType.WATER):
-                multiplier = 2
-            elif (attackType == BattleType.GRASS):
-                multiplier = 2
-            elif (attackType == BattleType.ICE):
-                multiplier = 2
-        elif (defType == BattleType.ROCK):
-            if (attackType == BattleType.NORMAL):
-                multiplier = 0.5
-            elif (attackType == BattleType.FLYING):
-                multiplier = 0.5
-            elif (attackType == BattleType.POISON):
-                multiplier = 0.5
-            elif (attackType == BattleType.FIRE):
-                multiplier = 0.5
-            elif (attackType == BattleType.FIGHTING):
-                multiplier = 2
-            elif (attackType == BattleType.GROUND):
-                multiplier = 2
-            elif (attackType == BattleType.STEEL):
-                multiplier = 2
-            elif (attackType == BattleType.WATER):
-                multiplier = 2
-            elif (attackType == BattleType.GRASS):
-                multiplier = 2
-        elif (defType == BattleType.GHOST):
-            if (attackType == BattleType.NORMAL):
-                multiplier = 0
-            elif (attackType == BattleType.FIGHTING):
-                multiplier = 0
-            elif (attackType == BattleType.POISON):
-                multiplier = 0.5
-            elif (attackType == BattleType.BUG):
-                multiplier = 0.5
-            elif (attackType == BattleType.GHOST):
-                multiplier = 2
-            elif (attackType == BattleType.DARK):
-                multiplier = 2
-        elif (defType == BattleType.STEEL):
-            if (attackType == BattleType.POISON):
-                multiplier = 0
-            elif (attackType == BattleType.NORMAL):
-                multiplier = 0.5
-            elif (attackType == BattleType.FLYING):
-                multiplier = 0.5
-            elif (attackType == BattleType.ROCK):
-                multiplier = 0.5
-            elif (attackType == BattleType.BUG):
-                multiplier = 0.5
-            elif (attackType == BattleType.STEEL):
-                multiplier = 0.5
-            if (attackType == BattleType.GRASS):
-                multiplier = 0.5
-            elif (attackType == BattleType.PSYCHIC):
-                multiplier = 0.5
-            elif (attackType == BattleType.ICE):
-                multiplier = 0.5
-            elif (attackType == BattleType.DRAGON):
-                multiplier = 0.5
-            elif (attackType == BattleType.FAIRY):
-                multiplier = 0.5
-            elif (attackType == BattleType.FIGHTING):
-                multiplier = 2
-            elif (attackType == BattleType.GROUND):
-                multiplier = 2
-            elif (attackType == BattleType.FIRE):
-                multiplier = 2
-        elif (defType == BattleType.FIRE):
-            if (attackType == BattleType.BUG):
-                multiplier = 0.5
-            elif (attackType == BattleType.STEEL):
-                multiplier = 0.5
-            elif (attackType == BattleType.FIRE):
-                multiplier = 0.5
-            elif (attackType == BattleType.GRASS):
-                multiplier = 0.5
-            elif (attackType == BattleType.ICE):
-                multiplier = 0.5
-            elif (attackType == BattleType.FAIRY):
-                multiplier = 0.5
-            elif (attackType == BattleType.GROUND):
-                multiplier = 2
-            elif (attackType == BattleType.ROCK):
-                multiplier = 2
-            elif (attackType == BattleType.WATER):
-                multiplier = 2
-        elif (defType == BattleType.WATER):
-            if (attackType == BattleType.STEEL):
-                multiplier = 0.5
-            elif (attackType == BattleType.FIRE):
-                multiplier = 0.5
-            elif (attackType == BattleType.WATER):
-                multiplier = 0.5
-            elif (attackType == BattleType.ICE):
-                multiplier = 0.5
-            elif (attackType == BattleType.GRASS):
-                multiplier = 2
-            elif (attackType == BattleType.ELECTRIC):
-                multiplier = 2
-        elif (defType == BattleType.GRASS):
-            if (attackType == BattleType.GROUND):
-                multiplier = 0.5
-            elif (attackType == BattleType.WATER):
-                multiplier = 0.5
-            elif (attackType == BattleType.GRASS):
-                multiplier = 0.5
-            elif (attackType == BattleType.ELECTRIC):
-                multiplier = 0.5
-            elif (attackType == BattleType.FLYING):
-                multiplier = 2
-            elif (attackType == BattleType.POISON):
-                multiplier = 2
-            elif (attackType == BattleType.BUG):
-                multiplier = 2
-            elif (attackType == BattleType.FIRE):
-                multiplier = 2
-            elif (attackType == BattleType.ICE):
-                multiplier = 2
-        elif (defType == BattleType.ELECTRIC):
-            if (attackType == BattleType.FLYING):
-                multiplier = 0.5
-            elif (attackType == BattleType.STEEL):
-                multiplier = 0.5
-            elif (attackType == BattleType.ELECTRIC):
-                multiplier = 0.5
-            elif (attackType == BattleType.GROUND):
-                multiplier = 2
-        elif (defType == BattleType.PSYCHIC):
-            if (attackType == BattleType.FIGHTING):
-                multiplier = 0.5
-            elif (attackType == BattleType.PSYCHIC):
-                multiplier = 0.5
-            elif (attackType == BattleType.BUG):
-                multiplier = 2
-            elif (attackType == BattleType.GHOST):
-                multiplier = 2
-            elif (attackType == BattleType.DARK):
-                multiplier = 2
-        elif (defType == BattleType.ICE):
-            if (attackType == BattleType.ICE):
-                multiplier = 0.5
-            elif (attackType == BattleType.FIRE):
-                multiplier = 2
-            elif (attackType == BattleType.STEEL):
-                multiplier = 2
-            elif (attackType == BattleType.ROCK):
-                multiplier = 2
-            elif (attackType == BattleType.FIGHTING):
-                multiplier = 2
-        elif (defType == BattleType.DRAGON):
-            if (attackType == BattleType.FIRE):
-                multiplier = 0.5
-            elif (attackType == BattleType.WATER):
-                multiplier = 0.5
-            elif (attackType == BattleType.GRASS):
-                multiplier = 0.5
-            elif (attackType == BattleType.ELECTRIC):
-                multiplier = 0.5
-            elif (attackType == BattleType.ICE):
-                multiplier = 2
-            elif (attackType == BattleType.DRAGON):
-                multiplier = 2
-            elif (attackType == BattleType.FAIRY):
-                multiplier = 2
-        elif (defType == BattleType.FAIRY):
-            if (attackType == BattleType.DRAGON):
-                multiplier = 0
-            elif (attackType == BattleType.FIGHTING):
-                multiplier = 0.5
-            elif (attackType == BattleType.BUG):
-                multiplier = 0.5
-            elif (attackType == BattleType.DARK):
-                multiplier = 0.5
-            elif (attackType == BattleType.STEEL):
-                multiplier = 2
-            elif (attackType == BattleType.POISON):
-                multiplier = 2
-
-        return multiplier
 
 
     def ClearCombatModifiers(self):
@@ -834,4 +561,4 @@ class Pokemon:
 if __name__ == "__main__":
     pokemon = Pokemon()
     with open("pokemon/%s.json" % (pokemon.name.lower()), 'w') as outfile:
-        outfile.write(pokemon.exportJson())
+        outfile.write(pokemon.ExportJson())

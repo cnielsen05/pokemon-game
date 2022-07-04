@@ -28,7 +28,7 @@ class BattleEngine:
                 BattleEngine.SwapPokemon(player_pokemon)
 
             BattleEngine.AssessOpponentHealthiness(wildPokemon)
-            print("Your %s has %s/%s HP remaining." % (player_pokemon[0].name, player_pokemon[0].currentHP, player_pokemon[0].calculateMaxHp()))
+            print("Your %s has %s/%s HP remaining." % (player_pokemon[0].name, player_pokemon[0].currentHP, player_pokemon[0].CalculateMaxHp()))
             print()
             options = ["ATTACK", "ITEM", "SWAP POKEMON", "RUN", "POKEDEX"]
             userChoice = Formatting.GetUserChoice(options)
@@ -105,7 +105,7 @@ class BattleEngine:
             opponent_active_pokemon = opponent_pokemon[0]
             player_active_pokemon = player_pokemon[0]
             BattleEngine.AssessOpponentHealthiness(opponent_active_pokemon)
-            print("Your %s has %s/%s HP remaining." % (player_active_pokemon.name, player_active_pokemon.currentHP, player_active_pokemon.calculateMaxHp()))
+            print("Your %s has %s/%s HP remaining." % (player_active_pokemon.name, player_active_pokemon.currentHP, player_active_pokemon.CalculateMaxHp()))
             print()
             options = ["ATTACK", "ITEM", "SWAP POKEMON", "POKEDEX"]
             userChoice = Formatting.GetUserChoice(options)
@@ -154,7 +154,7 @@ class BattleEngine:
 
     def AssessOpponentHealthiness(wildPokemon: Pokemon):
         opponentHealthiness = "completely untouched"
-        healthPercentage = wildPokemon.currentHP / wildPokemon.calculateMaxHp()
+        healthPercentage = wildPokemon.currentHP / wildPokemon.CalculateMaxHp()
         if (healthPercentage < 0.95):
             opponentHealthiness = "a little scratched up"
         if (healthPercentage < 0.7):
@@ -330,7 +330,7 @@ class BattleEngine:
             status = p.statusCondition
             optionLetter = chr((ord("A") + optionCounter))
             statusString = "%s" % (status) if status != Status.NONE else ""
-            print("%s) %s - Level: %s, HP: %s/%s %s" % (optionLetter, p.name, p.level, p.currentHP, p.calculateMaxHp(), statusString))
+            print("%s) %s - Level: %s, HP: %s/%s %s" % (optionLetter, p.name, p.level, p.currentHP, p.CalculateMaxHp(), statusString))
             optionCounter += 1
 
         player_input = input()
@@ -377,7 +377,7 @@ class BattleEngine:
                         print("%s is asleep." % (p.name))
 
                 case Status.POISONED:
-                    dmg = 1 + (int)(p.calculateMaxHp()/20)
+                    dmg = 1 + (int)(p.CalculateMaxHp()/20)
                     print("The poison causes %s to wince. It takes %s damage." % (p.name, dmg))
                     p.TakeDamage(dmg)
 
@@ -407,7 +407,7 @@ class BattleEngine:
                         print("%s overcame the burn with sheer will power!" % (p.name))
                         p.statusCondition = Status.NONE
                     else:
-                        damage = 2 + (int)(p.calculateMaxHp() / 10)
+                        damage = 2 + (int)(p.CalculateMaxHp() / 10)
                         print("%s winces as it's burned skin throbs. It takes %s damage!" % (p.name, damage))
 
                 case Status.CURSED:
@@ -470,7 +470,7 @@ class BattleEngine:
 
     def DoAbsorb(target: Pokemon, caster: Pokemon, amount: int):
         actualHealed = amount
-        damage = caster.calculateMaxHp() - caster.currentHP
+        damage = caster.CalculateMaxHp() - caster.currentHP
         if damage < amount:
             actualHealed = damage
 
