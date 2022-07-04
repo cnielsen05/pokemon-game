@@ -1,0 +1,14 @@
+{
+    "name": "Pyrokanisis",
+    "baseDmg": 60,
+    "type": "FIRE",
+    "isPhysical": true,
+    "maxPP": 10,
+    "accuracy": 90,
+    "effects": [    {
+        "target": "OPPONENT",
+        "effectType": "ADD_STATUS_EFFECT",
+        "effectDetail": "BURNED",
+        "chance": 100
+    }]
+}

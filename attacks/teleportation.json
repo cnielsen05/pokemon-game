@@ -1,0 +1,15 @@
+{
+    "name": "Teleportation",
+    "baseDmg": 40,
+    "type": "PSYCHIC",
+    "isPhysical": false,
+    "maxPP": 30,
+    "accuracy": 80,
+    "effects": [    {
+        "target": "SELF",
+        "effectType": "ADD_COMBAT_MODIFIER",
+        "effectDetail": "SPD_UP",
+        "chance": 100
+    }
+]
+}

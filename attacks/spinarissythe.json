@@ -1,0 +1,9 @@
+{
+    "name": "Spinarissythe",
+    "baseDmg": 75,
+    "type": "PSYCHIC",
+    "isPhysical": true,
+    "maxPP": 15,
+    "accuracy": 90,
+    "effects": []
+}
