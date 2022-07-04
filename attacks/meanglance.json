@@ -1,0 +1,22 @@
+{
+    "name": "Mean Glance",
+    "baseDmg": 10,
+    "type": "DARK",
+    "isPhysical": false,
+    "maxPP": 25,
+    "accuracy": 100,
+    "effects": [
+        {
+            "target": "SELF",
+            "effectType": "ADD_COMBAT_MODIFIER",
+            "effectDetail": "DEF_UP",
+            "chance": 80
+        },
+        {
+            "target": "OPPONENT",
+            "effectType": "ADD_STATUS_EFFECT",
+            "effectDetail": "PARALYZED",
+            "chance": 80
+        }
+    ]
+}

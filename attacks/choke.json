@@ -1,0 +1,17 @@
+{
+    "name": "Choke",
+    "baseDmg": 50,
+    "type": "DARK",
+    "isPhysical": true,
+    "maxPP": 10,
+    "accuracy": 85,
+    "effects": [
+        {
+            "target": "OPPONENT",
+            "effectType": "ADD_STATUS_EFFECT",
+            "effectDetail": "PARALYZED",
+            "chance":85
+        }
+        
+    ]
+}

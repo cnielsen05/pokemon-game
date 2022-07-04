@@ -1,0 +1,16 @@
+{
+    "name": "Vine Wall",
+    "baseDmg": 40,
+    "type": "GRASS",
+    "isPhysical": true,
+    "maxPP": 20,
+    "accuracy": 90,
+    "effects": [
+        {
+            "target": "SELF",
+            "effectType": "ADD_COMBAT_MODIFIER",
+            "effectDetail": "DEF_UP",
+            "chance": 100
+        }
+    ]
+}

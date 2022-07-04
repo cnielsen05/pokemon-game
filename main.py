@@ -312,20 +312,19 @@ class Game:
 
 
         if (len(self.player_pokemon) > 0):
-            print("Professor Mulberry: Good choice, I'm sure %s will be an excellent companion on your journey!" % (self.player_pokemon[0].name))
+            print("Professor: Good choice, I'm sure %s will be an excellent companion on your journey!" % (self.player_pokemon[0].name))
 
-        print()
-        print("Professor Mulberry: You should do a practice battle before you go. Let me get my nephew in here...")
-        print("Professor Mulberry: *sucks in breath...*")
-        print("Professor Mulberry: GAAAAAAAAAAAAAAAA---")
+        print("Professor: You should do a practice battle before you go. Let me get my nephew in here...")
+        print("Professor: *sucks in breath...*")
+        print("Professor: GAAAAAAAAAAAAAAAA---")
         time.sleep(1)
-        print("Professor Mulberry: --AAAAAAAAAAAAAARRRYYYYYYYY!!!!!!!!")
+        print("Professor: --AAAAAAAAAAAAAARRRYYYYYYYY!!!!!!!!")
         print()
         Formatting.PressEnterToContinue()
         
-        print("Rival Gary: I'm here Gramps! I hope you aren't calling me to help that loser over there...")
-        print("Professor Mulberry: Gary! Haven't we warned you NOT to speak about guests that way?")
-        print("Professor Mulberry: But, yes. Actually, I did want you to have a practice battle with this kid.")
+        print("Rival Gary: I'm here gramps! I hope you aren't calling me to help that loser over there...")
+        print("Professor: Gary! What have I told you about speaking to guests that way?")
+        print("Professor: But, yes. Actually, I did want you to have a practice battle with this kid.")
         Formatting.PressEnterToContinue()
 
         print("Rival Gary: Ugh, I would never give you the time of the day if it were up to me... but Gramps says I have to battle you.")
@@ -348,12 +347,12 @@ class Game:
         print("*Gary storms off.*")
         Formatting.PressEnterToContinue()
 
-        print("Professor Mulberry: You should take some basic supplies with you. I'll give you a pokeball and a potion so you can learn how they work.")
-        print("Professor Mulberry: You will need to learn the tools of your trade well, if you are ever to become a Pokemon Master.")
+        print("Professor: You should take some basic supplies with you. I'll give you a pokeball and a potion so you can learn how they work.")
+        print("Professor: You will need to learn the tools of your trade well, if you are ever to become a Pokemon Master.")
         print()
         time.sleep(1)
-        print("You receive Potion x 5")
-        print("You receive Pokeball x 10")
+        print("*You receive Potion x 5*")
+        print("*You receive Pokeball x 10*")
         for i in range(0,5):
             self.items.append(ItemType.POTION)
         for i in range(0,10):
@@ -362,26 +361,26 @@ class Game:
         print()
         Formatting.PressEnterToContinue()
 
-        print("Professor Mulberry: You can begin your journey on Route 1 now, unless you have more questions for me?")
+        print("Professor: You can begin your journey on Route 1 now, unless you have more questions for me?")
         player_choice = input("*Ask a question? Or press ENTER to continue...*")
         if player_choice != "":
-            print("Professor Mulberry: ...")
+            print("Professor: ...")
             time.sleep(1)
-            print("Professor Mulberry: Oh! You actually want to know something from me? %s..." % (player_choice))
-            print("Professor Mulberry: Sorry to say, I'm stumped! I wasn't trained to handle this kind of thing!")
+            print("Professor: Oh! You actually want to know something from me? %s..." % (player_choice))
+            print("Professor: Sorry to say, I'm stumped! I wasn't trained to handle this kind of thing!")
             time.sleep(1)
-            print("Professor Mulberry: ...")
+            print("Professor: ...")
             time.sleep(1)
-            print("Professor Mulberry: ...")
+            print("Professor: ...")
             time.sleep(1)
-            print("Professor Mulberry: !!! Wait! I've got it! I'll give you STUFF instead! Let's call it compensation for my inadequacies.")
-            print("Professor Mulberry: Have these Greatballs, they should help you on your journey.")
+            print("Professor: !!! Wait! I've got it! I'll give you STUFF instead! Let's call it compensation for my inadequacies.")
+            print("Professor: Have these Greatballs, they should help you on your journey.")
 
             for i in range(0,5):
                 self.items.append(ItemType.GREATBALL)
 
             print()
-            print("You gain 5x Greatball!")
+            print("*You gain 5x Greatball!")
             Formatting.PressEnterToContinue()
 
         self.SaveGame()
@@ -430,7 +429,7 @@ class Game:
         isWalking = False
         print("You have reached the end of Route 1!")
         self.state["route_one_complete"] = True
-
+        
 
     def route_two(self):
         global isWalking
@@ -459,7 +458,7 @@ class Game:
         Formatting.clearScreen()
 
         print("*BOOOOOM*")
-        time.sleep(2)
+        time.sleep(1)
         print("*An explosion comes from the Grass Gym in the far distance*")
         print("You: What is happening?!")
         print("*You start running towards the explosion*")
@@ -468,7 +467,8 @@ class Game:
         Formatting.clearScreen()\
 
         #to do add more here such as Battles and towns
-        time.sleep(2)
+        
+        time.sleep(1)
         print("You finally make it to the Grass Gym door. Everyone is screaming.")
         print("*You bravely walk into the Grass Gym*")
 
@@ -482,9 +482,9 @@ class Game:
         Formatting.clearScreen()
 
         print("Grass Gym Leader: MORE")
-        time.sleep(2)
+        time.sleep(1)
         print("Grass Gym Leader: GIVE me MoRE tO KiLl")
-        time.sleep(4)
+        time.sleep(1)
         print("Grass Gym Leader: iT gIvEs ME MorE ENerGy.")
         time.sleep(1)
         print("Grass Gym Leader: GiVE ME MorE oR YoU WiLl bE mY NexT KiLl.")

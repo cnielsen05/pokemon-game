@@ -12,11 +12,15 @@
     "evolveLevel": 0,
     "evolutionName": "",
     "battleAttacks": [
-        {"Move": "Fakeout", "UnlockLevel": 7},
+        {"Move": "Vinesmash", "UnlockLevel": 7},
         {"Move": "Razorleaf", "UnlockLevel": 7},
-        {"Move": "Lowkick", "UnlockLevel": 7},
+        {"Move": "Scratch", "UnlockLevel": 7},
         {"Move": "Electroball", "UnlockLevel": 7},
+        {"Move": "Thunderwave", "UnlockLevel": 7},
         {"Move": "Absorb", "UnlockLevel": 7},
-        {"Move": "Solarbeam", "UnlockLevel": 9}
+        {"Move": "Solarbeam", "UnlockLevel": 9},
+        {"Move": "Choke", "UnlockLevel": 10},
+        {"Move": "Vinewall", "UnlockLevel": 10},
+        {"Move": "Meanglance", "UnlockLevel": 12}
     ]
 }
