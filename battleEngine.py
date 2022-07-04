@@ -33,7 +33,6 @@ class BattleEngine:
             options = ["ATTACK", "ITEM", "SWAP POKEMON", "RUN", "POKEDEX"]
             userChoice = Formatting.GetUserChoice(options)
             if userChoice < 0 or userChoice > len(options) - 1:
-                input("Input %s unrecognized. Press ENTER to try again." % (userAction))
                 continue
 
             userAction = options[userChoice]
