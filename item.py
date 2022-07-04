@@ -75,7 +75,7 @@ class Item:
             case ItemType.GREATBALL:
                 ballFactor = 1.5
 
-        odds = target.catchFactor + (target.catchFactor * ballFactor)*(1 - (target.currentHP/target.calculateMaxHp()))
+        odds = target.catchFactor + (target.catchFactor * ballFactor)*(1 - (target.currentHP/target.CalculateMaxHp()))
         if target.statusCondition != Status.NONE:
             odds *= 1.2
 
