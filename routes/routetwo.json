@@ -2,7 +2,7 @@
     "Name": "Route 2",
     "id": "routetwo",
     "Length": 50,
-    "WildPokemonList": ["geodude", "rocketgon", "geodude", "geodude", "geodude", "rockegon", "pidgey", "jareanpidgey", "jareanpidgey","jareanpidgey", "jareanpidgey", "implien", "implien"],
+    "WildPokemonList": ["geodude", "rocketgon", "geodude", "geodude", "geodude", "rocketgon", "pidgey", "jareanpidgey", "jareanpidgey","jareanpidgey", "jareanpidgey", "implien", "implien"],
     "WildPokemonLevelRange": [
         1,
         2,
