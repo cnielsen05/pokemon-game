@@ -1,0 +1,22 @@
+{
+    "name": "Scorstab",
+    "attackStat": 50,
+    "defenseStat": 20,
+    "spAttackStat": 20,
+    "spDefenseStat": 50,
+    "speedStat": 10,
+    "HPStat": 50,
+    "battleType1": "FIRE",
+    "battleType2": "PSYCHIC",
+    "catchFactor": 0.25,
+    "evolveLevel": 0,
+    "evolutionName": "",
+    "battleAttacks": [
+        {"Move": "Ember", "UnlockLevel": 4},
+        {"Move": "Telekinesis", "UnlockLevel": 4},
+        {"Move": "Teleportion", "UnlockLevel": 4},
+        {"Move": "Pyrokanisis", "UnlockLevel": 4},
+        {"Move": "Spinarissythe", "UnlockLevel": 4}
+
+    ]
+}
