@@ -1,16 +1,16 @@
 {
-    "name": "Fake Out",
-    "baseDmg": 15,
-    "type": "NORMAL",
+    "name": "Strangle Vine",
+    "baseDmg": 20,
+    "type": "GRASS",
     "isPhysical": false,
-    "maxPP": 30,
+    "maxPP": 10,
     "accuracy": 95,
     "effects": [
         {
             "target": "OPPONENT",
             "effectType": "ADD_COMBAT_MODIFIER",
-            "effectDetail": "ACCURACY_DOWN",
-            "chance": 40
+            "effectDetail": "BIND",
+            "chance": 100
         }
     ]
 }

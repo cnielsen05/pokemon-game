@@ -1,7 +1,7 @@
 {
-    "name": "Sludge",
-    "baseDmg": 50,
-    "type": "POISON",
+    "name": "Burning Venom",
+    "baseDmg": 30,
+    "type": "FIRE",
     "isPhysical": false,
     "maxPP": 15,
     "accuracy": 80,

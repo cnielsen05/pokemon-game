@@ -3,8 +3,8 @@
     "attackStat": 15,
     "defenseStat": 22,
     "spAttackStat": 28,
-    "spDefenseStat": 29,
-    "speedStat": 28,
+    "spDefenseStat": 26,
+    "speedStat": 31,
     "HPStat": 28,
     "battleType1": "GRASS",
     "battleType2": "NONE",
@@ -14,8 +14,8 @@
     "battleAttacks": [
         {"Move": "Fakeout", "UnlockLevel": 1},
         {"Move": "Cloakofthorns", "UnlockLevel": 2},
-        {"Move": "Poisonkiss", "UnlockLevel": 3},
-        {"Move": "Electroball", "UnlockLevel": 4},
+        {"Move": "Poisonivy", "UnlockLevel": 3},
+        {"Move": "Stranglevine", "UnlockLevel": 4},
         {"Move": "Absorb", "UnlockLevel": 5}
         
     ]

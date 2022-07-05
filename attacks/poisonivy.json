@@ -1,22 +1,22 @@
 {
-    "name": "Poison Kiss",
-    "baseDmg": 0,
-    "type": "POISON",
+    "name": "Poison Ivy",
+    "baseDmg": 5,
+    "type": "GRASS",
     "isPhysical": false,
     "maxPP": 30,
-    "accuracy": 100,
+    "accuracy": 70,
     "effects": [
         {
             "target": "OPPONENT",
             "effectType": "ADD_COMBAT_MODIFIER",
             "effectDetail": "ATK_DOWN_DOWN",
-            "chance": 70
+            "chance": 100
         },
         {
             "target": "OPPONENT",
             "effectType": "ADD_COMBAT_MODIFIER",
             "effectDetail": "SPATK_DOWN_DOWN",
-            "chance": 70
+            "chance": 100
         },
         {
             "target": "OPPONENT",

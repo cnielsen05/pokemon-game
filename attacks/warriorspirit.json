@@ -1,0 +1,28 @@
+{
+    "name": "Warrior Spirit",
+    "baseDmg": 0,
+    "type": "NORMAL",
+    "isPhysical": false,
+    "maxPP": 30,
+    "accuracy": 100,
+    "effects": [
+        {
+            "target": "SELF",
+            "effectType": "ADD_COMBAT_MODIFIER",
+            "effectDetail": "ATK_UP",
+            "chance": 100
+        },
+        {
+            "target": "SELF",
+            "effectType": "ADD_COMBAT_MODIFIER",
+            "effectDetail": "DEF_UP",
+            "chance": 100
+        },
+        {
+            "target": "OPPONENT",
+            "effectType": "FLINCH",
+            "effectDetail": "",
+            "chance": 30
+        }
+    ]
+}

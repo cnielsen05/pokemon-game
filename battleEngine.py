@@ -3,7 +3,7 @@ from sys import platform
 import random
 from time import sleep
 from battleAttack import BattleAttack
-from enums import BattleType, ItemType, PokemonStat, Status
+from enums import BattleType, CombatModifiers, ItemType, PokemonStat, Status
 from formatting import Formatting
 from item import Item
 from pokemon import Pokemon
@@ -391,8 +391,8 @@ class BattleEngine:
                         print("%s is asleep." % (p.name))
 
                 case Status.POISONED:
-                    dmg = 1 + (int)(p.CalculateMaxHp()/20)
-                    print("The poison causes %s to wince. It takes %s damage." % (p.name, dmg))
+                    dmg = 1 + (int)(p.CalculateMaxHp()/7)
+                    print("The poison causes %s to wince." % (p.name))
                     p.TakeDamage(dmg)
 
                 case Status.PARALYZED:
@@ -422,7 +422,8 @@ class BattleEngine:
                         p.statusCondition = Status.NONE
                     else:
                         damage = 2 + (int)(p.CalculateMaxHp() / 10)
-                        print("%s winces as it's burned skin throbs. It takes %s damage!" % (p.name, damage))
+                        print("%s winces as it's burned skin throbs." % (p.name))
+                        p.TakeDamage(damage)
 
                 case Status.CURSED:
                     if roll + p.HPStat / 4 > 100:
@@ -431,63 +432,4 @@ class BattleEngine:
                     else:
                         print("%s is trembling in fear, it can't focus!" % (p.name, damage))
 
-        input("*Press ENTER to continue...*")
-
-
-    def DoBurnChance(target: Pokemon, odds: float):
-        roll = random.randint(1,100)
-        if roll < odds * 100:
-            print("%s got burned!" % (target.name))
-            target.statusCondition = Status.BURNED
-            input("*Press ENTER to continue...*")
-
-
-    def DoSleepChance(target: Pokemon, odds: float):
-        roll = random.randint(1,100)
-        if roll < odds * 100:
-            print("%s fell asleep!" % (target.name))
-            target.statusCondition = Status.ASLEEP
-            input("*Press ENTER to continue...*")
-
-
-    def DoPoisonChance(target: Pokemon, odds: float):
-        roll = random.randint(1,100)
-        if roll < odds * 100:
-            print("%s got poisoned!" % (target.name))
-            target.statusCondition = Status.POISONED
-            input("*Press ENTER to continue...*")
-
-
-    def DoFreezeChance(target: Pokemon, odds: float):
-        roll = random.randint(1,100)
-        if roll < odds * 100:
-            print("%s is frozen solid in a block of ice!" % (target.name))
-            target.statusCondition = Status.FROZEN
-            input("*Press ENTER to continue...*")
-
-
-    def DoParalyzeChance(target: Pokemon, odds: float):
-        roll = random.randint(1,100)
-        if roll < odds * 100:
-            print("%s is moving stiffly, it's been paralyzed!" % (target.name))
-            target.statusCondition = Status.PARALYZED
-            input("*Press ENTER to continue...*")
-
-
-    def DoConfuseChance(target: Pokemon, odds: float):
-        roll = random.randint(1,100)
-        if roll < odds * 100:
-            print("%s is acting strangely, it's confused!" % (target.name))
-            target.statusCondition = Status.CONFUSED
-            input("*Press ENTER to continue...*")
-
-
-    def DoAbsorb(target: Pokemon, caster: Pokemon, amount: int):
-        actualHealed = amount
-        damage = caster.CalculateMaxHp() - caster.currentHP
-        if damage < amount:
-            actualHealed = damage
-
-        print("%s drains energy from %s! %s is healed for %s HP." % (caster.name, target.name, caster.name, actualHealed))
-        caster.HealHP(actualHealed)
         input("*Press ENTER to continue...*")

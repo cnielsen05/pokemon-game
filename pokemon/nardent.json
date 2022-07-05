@@ -14,7 +14,8 @@
     "battleAttacks": [
         {"Move": "Tackle", "UnlockLevel": 1},
         {"Move": "Watergun", "UnlockLevel": 2},
-        {"Move": "Irontail", "UnlockLevel": 3},
-        {"Move": "Dazzlinglight", "UnlockLevel": 4}
+        {"Move": "Warriorspirit", "UnlockLevel": 3},
+        {"Move": "Spearstrike", "UnlockLevel": 4},
+        {"Move": "Surf", "UnlockLevel": 5}
     ]
 }

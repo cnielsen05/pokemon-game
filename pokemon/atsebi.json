@@ -13,9 +13,9 @@
     "evolutionName": "Kindon",
     "battleAttacks": [
         {"Move": "Tackle", "UnlockLevel": 1},
-        {"Move": "Ember", "UnlockLevel": 3},
-        {"Move": "Sludge", "UnlockLevel": 3},
-        {"Move": "Bite", "UnlockLevel": 4}
-        
+        {"Move": "Ember", "UnlockLevel": 2},
+        {"Move": "BurningVenom", "UnlockLevel": 3},
+        {"Move": "Bite", "UnlockLevel": 4},
+        {"Move": "Flamethrower", "UnlockLevel": 5}
     ]
 }

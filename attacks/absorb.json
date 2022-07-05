@@ -3,7 +3,7 @@
     "baseDmg": 50,
     "type": "GRASS",
     "isPhysical": false,
-    "maxPP": 20,
+    "maxPP": 5,
     "accuracy": 80,
     "effects": [
         {

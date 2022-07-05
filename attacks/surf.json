@@ -1,9 +1,9 @@
 {
-    "name": "Water Gun",
-    "baseDmg": 30,
+    "name": "Surf",
+    "baseDmg": 50,
     "type": "WATER",
     "isPhysical": true,
-    "maxPP": 20,
+    "maxPP": 15,
     "accuracy": 95,
     "effects": []
 }

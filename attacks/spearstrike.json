@@ -1,0 +1,9 @@
+{
+    "name": "Spear Strike",
+    "baseDmg": 50,
+    "type": "NORMAL",
+    "isPhysical": true,
+    "maxPP": 15,
+    "accuracy": 90,
+    "effects": []
+}

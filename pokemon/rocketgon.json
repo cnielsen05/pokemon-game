@@ -8,7 +8,7 @@
     "HPStat": 30,
     "battleType1": "DRAGON",
     "battleType2": "FIRE",
-    "catchFactor": 0.45,
+    "catchFactor": 0.35,
     "evolveLevel": 0,
     "evolutionName": "",
     "battleAttacks": [

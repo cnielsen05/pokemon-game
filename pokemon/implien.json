@@ -8,7 +8,7 @@
     "HPStat": 20,
     "battleType1": "FIRE",
     "battleType2": "PSYCHIC",
-    "catchFactor": 0.45,
+    "catchFactor": 0.35,
     "evolveLevel": 0,
     "evolutionName": "",
     "battleAttacks": [

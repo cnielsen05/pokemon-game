@@ -189,6 +189,15 @@ class Pokemon:
             if not alreadyCharged:
                 self.combatModifiers.append(effect)
 
+        elif (effect == CombatModifiers.BIND):
+            alreadyBound = False
+            for mod in self.combatModifiers:
+                if mod == CombatModifiers.BIND:
+                    alreadyBound = True
+
+            if not alreadyBound:
+                self.combatModifiers.append(effect)
+
         # Ensure combat modifiers all remain in the -4 to +4 range
         # Accuracy
         if self.accuracyModifierLevel < -4:
@@ -421,6 +430,20 @@ class Pokemon:
             self.isFlinched = False
             return
 
+        # Skip action if bound
+        try:
+            bound_index = self.combatModifiers.index(CombatModifiers.BIND)
+            roll = random.randint(1,100)
+            if roll < 66:
+                print("%s is bound and cannot move!" % (self.name))
+                return
+            else:
+                print("%s breaks out of the bind!" % (self.name))
+                self.combatModifiers.pop(bound_index)
+                self.combatModifiers.append(CombatModifiers.FREED)
+        except:
+            pass
+
         attack = self.GetBattleAttacks()[attackIndex]
         attack.currentPP -= 1
 
@@ -480,7 +503,7 @@ class Pokemon:
         damage = 0
         if attack.baseDmg > 0:
             damage = 2 + (int)((((attack.baseDmg * effectivenessMultiplier) + 2 ) * (attackerOffensiveStatValue * 0.75 / (5 * defenseValue))) + random.randint(0,3))
-            crit = random.randint(0,9) > 8
+            crit = random.randint(1,20) > 19
             if crit:
                 damage = (int)(damage * 1.75)
                 print("CRITICAL HIT!")
@@ -493,8 +516,23 @@ class Pokemon:
             if effect.target == Targeting.OPPONENT:
                 if effect.effectType == EffectType.ADD_COMBAT_MODIFIER:
                     roll = random.randint(1,100)
-                    if roll < effect.chance:
-                        self.AddCombatModifier(effect.effectDetail)
+                    if effect.effectDetail == CombatModifiers.BIND:
+                        freed_index = -1
+                        try:
+                            freed_index = self.combatModifiers.index(CombatModifiers.FREED)
+                            roll += 25
+                        except:
+                            pass
+                        if roll < effect.chance * 100:
+                            print("%s has been bound!" % (self.name))
+                            self.AddCombatModifier(CombatModifiers.BIND)
+                        
+                        if freed_index >= 0:
+                            self.combatModifiers.pop(freed_index)
+                    else:
+                        if roll < effect.chance:
+                            self.AddCombatModifier(effect.effectDetail)
+
                 elif effect.effectType == EffectType.ADD_STATUS_EFFECT:
                     roll = random.randint(1,100)
                     if roll < effect.chance:

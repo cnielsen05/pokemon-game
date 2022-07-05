@@ -1,16 +1,16 @@
 {
-    "name": "Ember",
-    "baseDmg": 30,
+    "name": "Flamethrower",
+    "baseDmg": 40,
     "type": "FIRE",
     "isPhysical": false,
-    "maxPP": 20,
-    "accuracy": 85,
+    "maxPP": 10,
+    "accuracy": 95,
     "effects": [
         {
             "target": "OPPONENT",
             "effectType": "ADD_STATUS_EFFECT",
             "effectDetail": "BURNED",
-            "chance": 50
+            "chance": 70
         }
     ]
 }

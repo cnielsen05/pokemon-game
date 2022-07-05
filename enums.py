@@ -57,6 +57,8 @@ class EffectType(str, Enum):
 
 
 class CombatModifiers(str, Enum):
+    BIND = 'BIND'
+    FREED = 'FREED'
     CHARGED_UP = 'CHARGED_UP'
     ACCURACY_DOWN = 'ACCURACY_DOWN'
     ACCURACY_DOWN_DOWN = 'ACCURACY_DOWN_DOWN'
