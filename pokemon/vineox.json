@@ -17,7 +17,7 @@
         {"Move": "Poisonivy", "UnlockLevel": 7},
         {"Move": "Stranglevine", "UnlockLevel": 7},
         {"Move": "Absorb", "UnlockLevel": 7},
-        {"Move": "Mindchoke", "UnlockLevel": 10},
+        {"Move": "Chokingvines", "UnlockLevel": 10},
         {"Move": "Vinewall", "UnlockLevel": 12},
         {"Move": "Meanglance", "UnlockLevel": 14},
         {"Move": "Solarbeam", "UnlockLevel": 20}
