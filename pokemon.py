@@ -314,9 +314,15 @@ class Pokemon:
 
     def GainExperience(self, xp: int):
         self.XP += xp
-        while self.XP >= (int)((1 + self.level / 5) * 450 + 2 * self.level):
+        nextLevelXP = self.CalculateNextLevelExperience()
+        while self.XP >= nextLevelXP:
             self.LevelUp()
-            self.XP -= (int)((1 + self.level / 5) * 450 + 2 * self.level)
+            self.XP -= nextLevelXP
+            nextLevelXP = self.CalculateNextLevelExperience()
+
+
+    def CalculateNextLevelExperience(self):
+        return (int)((1 + self.level / 5) * 300 + (int)(self.level/3) * self.GetExperienceValue())
 
 
     def LevelUp(self):

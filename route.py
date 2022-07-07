@@ -109,6 +109,7 @@ class Route:
                 self.WildPokemonLevelRange = data["WildPokemonLevelRange"]
                 self.HiddenItemList = data["HiddenItemList"]
                 self.TrainerBattles = data["TrainerBattles"]
+                self.Length = data["Length"]
 
 
     def ExportJson(self) -> str:

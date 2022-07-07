@@ -1,0 +1,22 @@
+{
+    "name": "Mind Choke",
+    "baseDmg": 50,
+    "type": "PSYCHIC",
+    "isPhysical": false,
+    "maxPP": 5,
+    "accuracy": 85,
+    "effects": [
+        {
+            "target": "OPPONENT",
+            "effectType": "ADD_STATUS_EFFECT",
+            "effectDetail": "CURSED",
+            "chance":100
+        },
+        {
+            "target": "OPPONENT",
+            "effectType": "FLINCH",
+            "effectDetail": "",
+            "chance": 40
+        }
+    ]
+}

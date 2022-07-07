@@ -127,7 +127,7 @@ class Game:
         answered_mom = False
         while (not answered_mom):
             Formatting.clearScreen()
-            print("*You sit alone in your room, quiet save the rumbling from an old television set in the corner.*")
+            print("*You sit alone in your room, mostly quiet except for the rumbling from an old television set in the corner.*")
             print()
             print("Professor Mulberry: Hello, and welcome to the world of Pokemon. I am Professor Mulberry and you are in the great Jarea region.")
             print("Professor Mulberry: I am hiring trainers in this region for...RESEARCH! I am getting too old to do it myself, so now... LET'S START YOUR JOURNEY!")
@@ -143,16 +143,17 @@ class Game:
             player_choice_index = Formatting.GetUserChoice(options)
 
             if player_choice_index == 0:
-                print("Enraged Mom: YOU DO NOT TALK TO ME LIKE THAT NOW GO TO BED! TOMORROW IS YOUR BIRTHDAY AND YOU WILL NEED ALL YOUR ENERGY FOR YOUR POKEMON ADVENTURE!!!")
+                print("Enraged Mom: YOU DO NOT TALK TO ME LIKE THAT! NOW GO TO BED! TOMORROW IS YOUR BIRTHDAY AND YOU WILL NEED ALL YOUR ENERGY FOR YOUR POKEMON ADVENTURE!!!")
                 print("*You walk sadly to your room and cry yourself to sleep.*")
                 answered_mom = True
             elif player_choice_index == 1:
+                for i in range(10):
+                    self.items.append(ItemType.POKEBALL)
                 print("Mom: Thank you for being such a responsible child, I'm so proud of you!")
-                self.items.append(ItemType.POKEBALL)
-                self.items.append(ItemType.POKEBALL)
-                self.items.append(ItemType.POKEBALL)
                 print("Mom: That reminds me, you should take these to help you on your journey!")
-                print("*You have gained Pokeball x3*")
+                print()
+                print("You have gained Pokeball x 10.")
+                print()
                 print("Mom: NOW, GO TO BED!")
                 print("*You scamper quickly to your bed and fall fast asleep.*")
                 answered_mom = True
@@ -161,52 +162,47 @@ class Game:
         Formatting.PressEnterToContinue()
         time.sleep(1)
         print("*As you drift off to sleep, you have an uneasy feeling...*")
-        time.sleep(1)
-        print("*You toss and turn with nightmares of sleeping in and missing out on starting your Pokemon journey.*")
         Formatting.PressEnterToContinue()
         print("*You start dreaming, a nightmare...*")
         time.sleep(2)
         Formatting.clearScreen()
         print("*You feel as if you've woken up, but you can't move.*")
-        time.sleep(3)
-        print("*You feel a deep fear, chilling you deep into your core. Nearby, a crunching and slurping sound creeps you out.*")
         time.sleep(2)
-        print("*You try to run, but your arms and legs are paralyzed. You hear a sound like a cross betwee a growl and satisfied sigh.*")
-        time.sleep(1)
+        print("*Dread begins to set over you. A knot forms in your stomach, and you feel like you can't breathe. Nearby, you hear a mix of crunching and squelching sounds.*")
+        time.sleep(2)
+        print("*You try to run, but your body is paralyzed. You hear something pacing around you, breathing hungrily.*")
+        time.sleep(2)
         print("*In an instant, a demonic apparition is above you; it's red eyes burn into your own and you begin to cry. You feel yourself begin to pee.*")
-        time.sleep(0.5)
-        print("*The demon screams at you.*")
-        time.sleep(0.25)
-        print("Demon: GiVE mE yOuR SOOooOOuuUUlLLL!!!!!")
-        print("*You scream*")
-        print("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH!!!!!!!!!!")
         time.sleep(2)
-        Formatting.clearScreen()
+        print("*The demon screams at you.*")
+        time.sleep(2)
+        print("Demon: GiVE mE yOuR SOOooOOuuUUlLLL!!!!!")
+        Formatting.PressEnterToContinue()
         
-        print("*The sun breaks through your curtains assaults your eyelids. Groggily, you recall something sinister but it fades as your reality becomes crisp around you. You wake up.*")
+        print("*The sun breaks through your curtains and assaults your eyelids. Groggily, you recall something sinister as reality crispens around you and memories of your dream fade away like morning fog. You are awake now.*")
         Formatting.PressEnterToContinue()
 
-        print("*Before you can move, your Mom is in your doorway again.*")
+        print("*Before you can move, Mom is in your doorway again.*")
         print()
-        print("Mom: Finally, I was starting to wonder if you were ever going to get up today sleepyhead.")
+        print("Mom: Finally, I was starting to wonder if you were ever going to get up today, sleepyhead.")
         print("You: What time is it?")
-        print("Mom: Just after 10.")
+        print("Mom: Just after 10. Would you like some breakfast?")
         print("You: WHAT! After 10!? I'm late!")
         Formatting.PressEnterToContinue()
 
-        print("Mom: I've never seen you move this fast, late for what?")
-        print("You: Today is the first day for new Pokemon trainers! I need to head to Professor Mulberry's lab to get my first Pokemon!")
+        print("Mom: Late? For what? I've never seen you move this fast.")
+        print("You: I need to get to Professor Mulberry's lab to get my first Pokemon!")
         print("Mom: Oh that, of course!")
         print("Mom: In that case, you'll need...")
         print()
-        print("*You fall down the stairs*")
+        print("*You ignore her and bolt out the door, promptly falling down the stairs with your pants half on.*")
         time.sleep(1)
         Formatting.PressEnterToContinue()
 
         print("You: I'm okay!")
-        print("*You quickly pull on clothes and run out the door before your mom can finish her sentence...*")
-        print("Mom: ...to go quickly... Maybe not *that* quickly, though. It doesn't start for another hour.")
-        print("Mom: What are you supposed to do now, sit around longer with an empty stomach? That kid really needs to think before acting.")
+        print("*You quickly pull on the rest of your clothes and run out the door before your mom can finish her sentence...*")
+        print("Mom: *Sigh*. And just like that, kids are gone. The Pokemon thing doesn't even start until 11:30, what's the rush?")
+        print("Mom: That kid really needs to think before acting.")
         Formatting.PressEnterToContinue()
 
         print("At the door of Professor Mulberry's lab. 10:29 AM")
@@ -220,7 +216,7 @@ class Game:
         print("Rival kid: What is all that racket!")
         print("Rival kid: Of course, it's the loser!")
         print("Rival kid: What are you doing here, loser?")
-        print("You: You don't need to call me names. Better hurry up and come out or you won't get a Pokemon until next year.")
+        print("You: You don't need to call me names. Obviously I'm here to get my first Pokemon! Aren't you starting your journey this year too?")
         Formatting.PressEnterToContinue()
 
         print("Rival kid: Wait... hurry? You idiot, do you even know what time it is? Gramps isn't giving out any Pokemon until 11:30, that's not for another hour you idiot!")
@@ -248,11 +244,13 @@ class Game:
             time.sleep(1)
             print("Rival: Wait, you aren't going to insult me back?")
             print("Rival: That makes me feel weird for being mean to you. No way I'm going to apologize to you, so here, take these I guess...")
-            print("Rival kid: My name's Gary, by the way. Professor Mulberry is my grandpa. I'm starting my Pokemon journey today, just like you!")
-            print("Rival Gary: I'm going to be the greatest Pokemon master of all time! I might end up facing you in the Pokemon League, so that makes us rivals.")
             print()
-            print("You have acquired Greatball x 5")
-            for i in range(1,6):
+            print("*You have acquired Greatball x 5*")
+            print()
+            print("Rival kid: I'm Gary, by the way. I've seen you around town before, Professor Mulberry is my grandpa. I can't wait to start my Pokemon journey!")
+            print("Rival Gary: I'm determined to become greatest Pokemon master ever! I might end up facing you in the Pokemon League, so that makes us rivals.")
+            
+            for i in range(5):
                 self.items.append(ItemType.GREATBALL)
 
             print("*Gary slams the door shut.*")
@@ -356,9 +354,9 @@ class Game:
         time.sleep(1)
         print("*You receive Potion x 5*")
         print("*You receive Pokeball x 10*")
-        for i in range(0,5):
+        for i in range(5):
             self.items.append(ItemType.POTION)
-        for i in range(0,10):
+        for i in range(10):
             self.items.append(ItemType.POKEBALL)
 
         print()
@@ -379,7 +377,7 @@ class Game:
             print("Professor: !!! Wait! I've got it! I'll give you STUFF instead! Let's call it compensation for my inadequacies.")
             print("Professor: Have these Greatballs, they should help you on your journey.")
 
-            for i in range(0,5):
+            for i in range(5):
                 self.items.append(ItemType.GREATBALL)
 
             print()
@@ -729,8 +727,7 @@ class Game:
             newPoke.FullHealHP()
             opp_pokemon.append(newPoke)
 
-        print("You have encountered a trainer on the route who wants to battle!")
-        print("%s charges toward you!" % (trainerBattle["Name"]))
+        print("%s wants to battle!" % (trainerBattle["Name"]))
         Formatting.PressEnterToContinue()
         BattleEngine.DoTrainerBattle(self.player_pokemon, opp_pokemon, self.items, trainerBattle["Name"], trainerBattle["Money"], trainerBattle["StartLine"], trainerBattle["EndLine"])
         self.playerMoney += trainerBattle["Money"]

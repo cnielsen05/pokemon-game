@@ -1,9 +1,9 @@
 {
     "name": "Mean Glance",
-    "baseDmg": 10,
+    "baseDmg": 30,
     "type": "DARK",
     "isPhysical": false,
-    "maxPP": 25,
+    "maxPP": 10,
     "accuracy": 100,
     "effects": [
         {

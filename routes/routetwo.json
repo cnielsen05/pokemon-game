@@ -4,15 +4,14 @@
     "Length": 50,
     "WildPokemonList": ["geodude", "rocketgon", "geodude", "geodude", "geodude", "rocketgon", "pidgey", "jareanpidgey", "jareanpidgey","jareanpidgey", "jareanpidgey", "implien", "implien"],
     "WildPokemonLevelRange": [
-        1,
+        2,
         2,
         3
     ],
     "HiddenItemList": [
-        "POTION",
+        "SUPER_POTION",
         "POKEFEAST",
-        "POKEFEAST",
-        "POKEBALL"
+        "GREATBALL"
     ],
     "TrainerBattles": [
         null,

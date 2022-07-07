@@ -20,15 +20,16 @@ class BattleEngine:
         continueBattling = True
         while (continueBattling):
             Formatting.clearScreen()
-            if BattleEngine.OpponentFaintIfDead(wildPokemon, player_pokemon[0]):
+            player_active_pokemon = player_pokemon[0]
+            if BattleEngine.OpponentFaintIfDead(wildPokemon, player_pokemon):
                 continueBattling = False
                 continue
 
-            if (player_pokemon[0].currentHP <= 0):
+            if (player_active_pokemon.currentHP <= 0):
                 BattleEngine.SwapPokemon(player_pokemon)
 
             BattleEngine.AssessOpponentHealthiness(wildPokemon)
-            print("Your %s has %s/%s HP remaining." % (player_pokemon[0].name, player_pokemon[0].currentHP, player_pokemon[0].CalculateMaxHp()))
+            print("Your %s has %s/%s HP remaining." % (player_active_pokemon.name, player_active_pokemon.currentHP, player_active_pokemon.CalculateMaxHp()))
             print()
             options = ["ATTACK", "ITEM", "SWAP POKEMON", "RUN", "POKEDEX"]
             userChoice = Formatting.GetUserChoice(options)
@@ -38,34 +39,34 @@ class BattleEngine:
             userAction = options[userChoice]
                 
             if (userAction == "ATTACK"):
-                if not BattleEngine.DoAttackMenu(player_pokemon[0], wildPokemon):
+                if not BattleEngine.DoAttackMenu(player_active_pokemon, wildPokemon):
                     continue
 
             elif (userAction == "ITEM"):
                 if not BattleEngine.DoItemMenu(items, player_pokemon, wildPokemon, allow_pokeball=True):
                     continue
                 else:
-                    wildPokemon.RandomAttack(player_pokemon[0])
+                    wildPokemon.RandomAttack(player_active_pokemon)
 
             elif (userAction == "SWAP POKEMON"):
                 BattleEngine.SwapPokemon(player_pokemon)
-                wildPokemon.RandomAttack(player_pokemon[0])
+                wildPokemon.RandomAttack(player_active_pokemon)
 
             elif (userAction == "RUN"):
-                continueBattling = BattleEngine.TryToRun(player_pokemon[0], wildPokemon)
+                continueBattling = BattleEngine.TryToRun(player_active_pokemon, wildPokemon)
 
                 # Get hit if they don't escape
                 if continueBattling:
-                    wildPokemon.RandomAttack(player_pokemon[0])
+                    wildPokemon.RandomAttack(player_active_pokemon)
 
             elif (userAction == "POKEDEX"):
                 BattleEngine.UsePokedex(wildPokemon)
                 roll = random.randint(1,100)
-                if roll < 20 and wildPokemon.GetStatValue(PokemonStat.SPEED) > player_pokemon[0].GetStatValue(PokemonStat.SPEED):
+                if roll < 20 and wildPokemon.GetStatValue(PokemonStat.SPEED) > player_active_pokemon.GetStatValue(PokemonStat.SPEED):
                     print("The wild %s attacks suddenly!")
-                    wildPokemon.RandomAttack(player_pokemon[0])
+                    wildPokemon.RandomAttack(player_active_pokemon)
 
-            BattleEngine.ProcessEndOfRoundStatuses(wildPokemon, player_pokemon[0])
+            BattleEngine.ProcessEndOfRoundStatuses(wildPokemon, player_active_pokemon)
 
         # End of battle
         for pokemon in player_pokemon:
@@ -84,7 +85,7 @@ class BattleEngine:
         print()
         while (continueBattling):
             Formatting.clearScreen()
-            if BattleEngine.OpponentFaintIfDead(opponent_pokemon[0], player_pokemon[0]):
+            if BattleEngine.OpponentFaintIfDead(opponent_pokemon[0], player_pokemon):
                 nextPokemonIndex = -1
                 countingIndex = 0
                 for nextPokemon in opponent_pokemon:
@@ -124,20 +125,20 @@ class BattleEngine:
                     continue
 
             elif (userAction == "ITEM"):
-                if not BattleEngine.DoItemMenu(items, player_pokemon, allow_pokeball = False):
+                if not BattleEngine.DoItemMenu(items, player_pokemon, opponent_active_pokemon, allow_pokeball = False):
                     continue
                 else:
-                    opponent_active_pokemon.RandomAttack(player_pokemon)
+                    opponent_active_pokemon.RandomAttack(player_active_pokemon)
 
             elif (userAction == "SWAP POKEMON"):
                 BattleEngine.SwapPokemon(player_pokemon)
-                opponent_active_pokemon.RandomAttack(player_pokemon)
+                opponent_active_pokemon.RandomAttack(player_active_pokemon)
 
             elif (userAction == "POKEDEX"):
                 print("%s: It seems like you've never seen a %s before? I'll give you a moment to prepare yourself." % (opponent_name, opponent_active_pokemon.name))
                 BattleEngine.UsePokedex(opponent_active_pokemon)
 
-            BattleEngine.ProcessEndOfRoundStatuses(opponent_active_pokemon, player_pokemon[0])
+            BattleEngine.ProcessEndOfRoundStatuses(opponent_active_pokemon, player_active_pokemon)
 
         # End of battle
         for pokemon in player_pokemon:
@@ -146,13 +147,15 @@ class BattleEngine:
         print("%s: %s" % (opponent_name, endLine))
 
 
-    def OpponentFaintIfDead(opponent: Pokemon, playerPokemon: Pokemon) -> bool:
+    def OpponentFaintIfDead(opponent: Pokemon, playerPokemon: List[Pokemon]) -> bool:
         if (opponent.currentHP <= 0):
             xpGain = opponent.GetExperienceValue()
             print("%s has fainted." % (opponent.name))
             print()
-            print("%s has gained %s XP!" % (playerPokemon.name, xpGain))
-            playerPokemon.GainExperience(xpGain)
+            print("%s XP has been split among your Pokemon!" % (xpGain))
+            xpShare = (int)(xpGain / len(playerPokemon) - 1)
+            for p in playerPokemon:
+                p.GainExperience(xpShare)
             input("*Press ENTER to continue*")
             Formatting.clearScreen()
             return True
@@ -234,6 +237,14 @@ class BattleEngine:
                 else:
                     items.pop(chosenItemIndex)
 
+            case ItemType.SUPER_POTION:
+                # The Item.UsePotion(int) function returns false if the player fails to select a target.
+                # If that happens, we should skip the rest of execution and go back to getting player input.
+                if not Item.UsePotion(60, player_pokemon):
+                    return False
+                else:
+                    items.pop(chosenItemIndex)
+
             case ItemType.POKEBALL:
                 if allow_pokeball:
                     caught = Item.UsePokeball(opponent, player_pokemon, ItemType.POKEBALL)
@@ -242,8 +253,10 @@ class BattleEngine:
                         continueBattling = False
                         xpGain = opponent.GetExperienceValue()
                         print()
-                        print("%s has gained %s XP!" % (player_pokemon[0].name, xpGain))
-                        player_pokemon[0].GainExperience(xpGain)
+                        print("%s XP has been split among your Pokemon!" % (xpGain))
+                        xpShare = (int)(xpGain / len(player_pokemon) - 1)
+                        for p in player_pokemon:
+                            p.GainExperience(xpShare)
                         input("*Press ENTER to continue*")
                         Formatting.clearScreen()
                         return False
@@ -260,8 +273,10 @@ class BattleEngine:
                         continueBattling = False
                         xpGain = opponent.GetExperienceValue()
                         print()
-                        print("%s has gained %s XP!" % (player_pokemon[0].name, xpGain))
-                        player_pokemon[0].GainExperience(xpGain)
+                        print("%s XP has been split among your Pokemon!" % (xpGain))
+                        xpShare = (int)(xpGain / len(player_pokemon) - 1)
+                        for p in player_pokemon:
+                            p.GainExperience(xpShare)
                         input("*Press ENTER to continue*")
                         Formatting.clearScreen()
                         return False

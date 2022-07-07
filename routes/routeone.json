@@ -27,12 +27,12 @@
     ],
     "WildPokemonLevelRange": [
         1,
+        2,
         2
     ],
     "HiddenItemList": [
-        "POTION",
-        "POKEFEAST",
-        "POKEBALL"
+        "SUPER_POTION",
+        "GREATBALL"
     ],
     "TrainerBattles": [
         null,

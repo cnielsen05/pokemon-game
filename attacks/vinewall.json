@@ -1,10 +1,10 @@
 {
     "name": "Vine Wall",
-    "baseDmg": 40,
+    "baseDmg": 50,
     "type": "GRASS",
     "isPhysical": true,
     "maxPP": 20,
-    "accuracy": 90,
+    "accuracy": 95,
     "effects": [
         {
             "target": "SELF",
