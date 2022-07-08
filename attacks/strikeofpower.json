@@ -1,0 +1,11 @@
+{
+    "name": "Strike Of Power",
+    "baseDmg": 90,
+    "type": "ELECTRIC",
+    "isPhysical": true,
+    "maxPP": 20,
+    "accuracy": 95,
+    "effects": [
+        
+    ]
+}

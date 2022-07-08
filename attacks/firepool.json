@@ -1,0 +1,16 @@
+{
+    "name": "Fire Pool",
+    "baseDmg": 70,
+    "type": "FIRE",
+    "isPhysical": true,
+    "maxPP": 10,
+    "accuracy": 95,
+    "effects": [
+        {
+            "target": "OPPONENT",
+            "effectType": "ADD_STATUS_EFFECT",
+            "effectDetail": "BURNED",
+            "chance": 70
+        }
+    ]
+}

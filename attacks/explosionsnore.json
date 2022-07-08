@@ -1,0 +1,16 @@
+{
+    "name": "Explosion Snore",
+    "baseDmg": 25,
+    "type": "FIRE",
+    "isPhysical": true,
+    "maxPP": 15,
+    "accuracy": 80,
+    "effects": [
+        {
+            "target": "OPPONENT",
+            "effectType": "ADD_STATUS_EFFECT",
+            "effectDetail": "BURNED",
+            "chance": 100
+        }
+    ]
+}

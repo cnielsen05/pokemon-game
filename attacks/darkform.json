@@ -1,0 +1,34 @@
+{
+    "name": "Dark Form",
+    "baseDmg": 0,
+    "type": "DARK",
+    "isPhysical": false,
+    "maxPP": 15,
+    "accuracy": 95,
+    "effects": [
+        {
+            "target": "SELF",
+            "effectType": "ADD_COMBAT_MODIFIER",
+            "effectDetail": "SPATK_UP",
+            "chance": 70
+        },
+        {
+            "target": "SELF",
+            "effectType": "ADD_COMBAT_MODIFIER",
+            "effectDetail": "SPDEF_UP",
+            "chance": 70
+        },
+        {
+            "target": "OPPONENT",
+            "effectType": "ADD_COMBAT_MODIFIER",
+            "effectDetail": "ATK_DOWN",
+            "chance": 70
+        },
+        {
+            "target": "OPPONENT",
+            "effectType": "ADD_COMBAT_MODIFIER",
+            "effectDetail": "DEF_DOWN",
+            "chance": 70
+        }
+    ]
+}

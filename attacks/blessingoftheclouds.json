@@ -1,0 +1,23 @@
+{
+    "name": "Blessing Of The Clouds",
+    "baseDmg": 0,
+    "type": "FLYING",
+    "isPhysical": true,
+    "maxPP": 10,
+    "accuracy": 100,
+    "effects": [
+        {
+            "target": "SELF",
+            "effectType": "ADD_COMBAT_MODIFIER",
+            "effectDetail": "SPATK_UP",
+            "chance": 100
+        },
+
+        {
+            "target": "SELF",
+            "effectType": "ADD_COMBAT_MODIFIER",
+            "effectDetail": "SPDEF_UP",
+            "chance": 100
+        }
+    ]
+}

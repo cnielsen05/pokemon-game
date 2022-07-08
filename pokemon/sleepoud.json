@@ -9,10 +9,12 @@
     "battleType1": "FLYING",
     "battleType2": "WATER",
     "catchFactor": 0.35,
-    "evolveLevel": 0,
-    "evolutionName": "",
+    "evolveLevel": 6,
+    "evolutionName": "Clouboom",
     "battleAttacks": [
         {"Move": "Bubble", "UnlockLevel": 1},
-        {"Move": "Puffpistol", "UnlockLevel": 2}
+        {"Move": "Puffpistol", "UnlockLevel": 2},
+        {"Move": "Acidrain", "UnlockLevel": 4},
+        {"Move": "Explosionsnore", "UnlockLevel": 5}
     ]
 }

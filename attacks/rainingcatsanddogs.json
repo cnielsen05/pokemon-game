@@ -1,0 +1,16 @@
+{
+    "name": "Raining Cats And Dogs!",
+    "baseDmg": 60,
+    "type": "WATER",
+    "isPhysical": true,
+    "maxPP": 25,
+    "accuracy": 95,
+    "effects": [
+        {
+            "target": "OPPONENT",
+            "effectType": "ADD_COMBAT_MODIFIER",
+            "effectDetail": "HP_DOWN",
+            "chance": 60
+        }
+    ]
+}

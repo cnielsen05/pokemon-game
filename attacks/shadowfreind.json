@@ -1,0 +1,11 @@
+{
+    "name": "Shadow Friend",
+    "baseDmg": 95,
+    "type": "FIRE",
+    "isPhysical": true,
+    "maxPP": 30,
+    "accuracy": 95,
+    "effects": [
+        
+    ]
+}

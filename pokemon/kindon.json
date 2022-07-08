@@ -1,11 +1,11 @@
 {
     "name": "Kindon",
-    "attackStat": 30,
-    "defenseStat": 25,
-    "spAttackStat": 45,
-    "spDefenseStat": 30,
-    "speedStat": 20,
-    "HPStat": 50,
+    "attackStat": 29,
+    "defenseStat": 27,
+    "spAttackStat": 44,
+    "spDefenseStat": 27,
+    "speedStat": 40,
+    "HPStat": 42,
     "battleType1": "FIRE",
     "battleType2": "NONE",
     "catchFactor": 0.01,
@@ -14,8 +14,13 @@
     "battleAttacks": [
         {"Move": "Tackle", "UnlockLevel": 7},
         {"Move": "Ember", "UnlockLevel": 7},
-        {"Move": "Sludge", "UnlockLevel": 7},
+        {"Move": "BurningVenom", "UnlockLevel": 7},
         {"Move": "Bite", "UnlockLevel": 7},
-        {"Move": "Fireblast", "UnlockLevel": 9}
+        {"Move": "Flamethrower", "UnlockLevel": 7},
+        {"Move": "Firepool", "UnlockLevel": 8},
+        {"Move": "Shadowfreind", "UnlockLevel": 9},
+        {"Move": "Darkform", "UnlockLevel": 10},
+        {"Move": "Danceofdarkness", "UnlockLevel": 11},
+        {"Move": "Fireblast", "UnlockLevel": 11}
     ]
 }

@@ -1,0 +1,11 @@
+{
+    "name": "Fluffy Boom",
+    "baseDmg": 80,
+    "type": "FLYING",
+    "isPhysical": false,
+    "maxPP": 20,
+    "accuracy": 95,
+    "effects": [
+       
+    ]
+}

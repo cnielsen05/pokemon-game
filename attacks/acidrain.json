@@ -1,0 +1,16 @@
+{
+    "name": "Acid Rain",
+    "baseDmg": 10,
+    "type": "POISON",
+    "isPhysical": true,
+    "maxPP": 20,
+    "accuracy": 95,
+    "effects": [
+        {
+            "target": "OPPONENT",
+            "effectType": "ADD_STATUS_EFFECT",
+            "effectDetail": "BURNED",
+            "chance": 60
+        }
+    ]
+}

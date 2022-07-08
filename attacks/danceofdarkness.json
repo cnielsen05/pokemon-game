@@ -1,0 +1,16 @@
+{
+    "name": "Demons Slash",
+    "baseDmg": 80,
+    "type": "DARK",
+    "isPhysical": false,
+    "maxPP": 25,
+    "accuracy": 95,
+    "effects": [
+        {
+            "target": "SELF",
+            "effectType": "ADD_STATUS_EFFECT",
+            "effectDetail": "CURSED",
+            "chance": 70
+        }
+    ]
+}

@@ -1,0 +1,25 @@
+{
+    "name": "Clouboom",
+    "attackStat": 13,
+    "defenseStat": 15,
+    "spAttackStat": 37,
+    "spDefenseStat": 35,
+    "speedStat": 23,
+    "HPStat": 27,
+    "battleType1": "FLYING",
+    "battleType2": "WATER",
+    "catchFactor": 0.35,
+    "evolveLevel": 0,
+    "evolutionName": "",
+    "battleAttacks": [
+        {"Move": "Bubble", "UnlockLevel": 6},
+        {"Move": "Puffpistol", "UnlockLevel": 6},
+        {"Move": "Acidrain", "UnlockLevel": 6},
+        {"Move": "Explosionsnore", "UnlockLevel": 6},
+        {"Move": "Strikeofpower", "UnlockLevel": 6},
+        {"Move": "Ploof", "UnlockLevel": 6},
+        {"Move": "Fluffyexplosion", "UnlockLevel": 6},
+        {"Move": "Rainingcatsanddogs", "UnlockLevel": 6},
+        {"Move": "Blessingoftheclouds", "UnlockLevel": 6}
+    ]
+}

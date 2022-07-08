@@ -1,0 +1,16 @@
+{
+    "name": "Ploof",
+    "baseDmg": 10,
+    "type": "FLYING",
+    "isPhysical": false,
+    "maxPP": 50,
+    "accuracy": 95,
+    "effects": [
+        {
+            "target": "OPPONENT",
+            "effectType": "ADD_COMBAT_MODIFIER",
+            "effectDetail": "SPDEF_UP",
+            "chance": 100
+        }
+    ]
+}
