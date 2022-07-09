@@ -1,18 +1,15 @@
 from PIL import Image
-from sys import platform
 import random
-from time import sleep
-from battleAttack import BattleAttack
-from enums import BattleType, CombatModifiers, ItemType, PokemonStat, Status
-from formatting import Formatting
-from item import Item
-from pokemon import Pokemon
-from typing import List
+import time
+from common.enums import BattleType, ItemType, PokemonStat, Status
+from common.formatting import Formatting
+from models.item import Item
+from models.pokemon import Pokemon
+from typing import List, Tuple
 
 continueBattling = False
 
 class BattleEngine:
-    # def __init__(self):
 
     def DoWildBattle(player_pokemon: List[Pokemon], wildPokemon: Pokemon, items: List[ItemType]):
         global continueBattling
@@ -20,53 +17,32 @@ class BattleEngine:
         continueBattling = True
         while (continueBattling):
             Formatting.clearScreen()
-            player_active_pokemon = player_pokemon[0]
-            if BattleEngine.OpponentFaintIfDead(wildPokemon, player_pokemon):
+            if BattleEngine.CheckIfOpponentPokemonFainted(wildPokemon, player_pokemon):
                 continueBattling = False
                 continue
 
-            if (player_active_pokemon.currentHP <= 0):
-                BattleEngine.SwapPokemon(player_pokemon)
+            if (player_pokemon[0].currentHP <= 0):
+                swapped = False
+                while not swapped:
+                    swapped = BattleEngine.SwapPokemon(player_pokemon)
 
-            BattleEngine.AssessOpponentHealthiness(wildPokemon)
-            print("Your %s has %s/%s HP remaining." % (player_active_pokemon.name, player_active_pokemon.currentHP, player_active_pokemon.CalculateMaxHp()))
+            player_active_pokemon = player_pokemon[0]
+            BattleEngine.AssessPokemonHealth(wildPokemon)
+            print("Your %s" % (player_active_pokemon.GetHPString()))
             print()
             options = ["ATTACK", "ITEM", "SWAP POKEMON", "RUN", "POKEDEX"]
-            userChoice = Formatting.GetUserChoice(options)
+            userChoice = Formatting.GetUserChoice(options, noBack=True)
             if userChoice < 0 or userChoice > len(options) - 1:
                 continue
 
             userAction = options[userChoice]
                 
-            if (userAction == "ATTACK"):
-                if not BattleEngine.DoAttackMenu(player_active_pokemon, wildPokemon):
-                    continue
-
-            elif (userAction == "ITEM"):
-                if not BattleEngine.DoItemMenu(items, player_pokemon, wildPokemon, allow_pokeball=True):
-                    continue
-                else:
-                    wildPokemon.RandomAttack(player_active_pokemon)
-
-            elif (userAction == "SWAP POKEMON"):
-                BattleEngine.SwapPokemon(player_pokemon)
-                wildPokemon.RandomAttack(player_active_pokemon)
-
-            elif (userAction == "RUN"):
-                continueBattling = BattleEngine.TryToRun(player_active_pokemon, wildPokemon)
-
-                # Get hit if they don't escape
-                if continueBattling:
-                    wildPokemon.RandomAttack(player_active_pokemon)
-
-            elif (userAction == "POKEDEX"):
-                BattleEngine.UsePokedex(wildPokemon)
-                roll = random.randint(1,100)
-                if roll < 20 and wildPokemon.GetStatValue(PokemonStat.SPEED) > player_active_pokemon.GetStatValue(PokemonStat.SPEED):
-                    print("The wild %s attacks suddenly!")
-                    wildPokemon.RandomAttack(player_active_pokemon)
+            tookAction = BattleEngine.PerformPlayerInputChoice(userAction, player_pokemon, wildPokemon, items)
+            if not tookAction:
+                continue
 
             BattleEngine.ProcessEndOfRoundStatuses(wildPokemon, player_active_pokemon)
+            Formatting.PressEnterToContinue()
 
         # End of battle
         for pokemon in player_pokemon:
@@ -85,7 +61,7 @@ class BattleEngine:
         print()
         while (continueBattling):
             Formatting.clearScreen()
-            if BattleEngine.OpponentFaintIfDead(opponent_pokemon[0], player_pokemon):
+            if BattleEngine.CheckIfOpponentPokemonFainted(opponent_pokemon[0], player_pokemon):
                 nextPokemonIndex = -1
                 countingIndex = 0
                 for nextPokemon in opponent_pokemon:
@@ -106,39 +82,27 @@ class BattleEngine:
                     opponent_pokemon[0], opponent_pokemon[nextPokemonIndex] = opponent_pokemon[nextPokemonIndex], opponent_pokemon[0]
 
             if (player_pokemon[0].currentHP <= 0):
-                BattleEngine.SwapPokemon(player_pokemon)
+                swapped = False
+                while not swapped:
+                    swapped = BattleEngine.SwapPokemon(player_pokemon)
 
             opponent_active_pokemon = opponent_pokemon[0]
             player_active_pokemon = player_pokemon[0]
-            BattleEngine.AssessOpponentHealthiness(opponent_active_pokemon)
-            print("Your %s has %s/%s HP remaining." % (player_active_pokemon.name, player_active_pokemon.currentHP, player_active_pokemon.CalculateMaxHp()))
+            BattleEngine.AssessPokemonHealth(opponent_active_pokemon)
+            print("Your %s" % (player_active_pokemon.GetHPString()))
             print()
             options = ["ATTACK", "ITEM", "SWAP POKEMON", "POKEDEX"]
-            userChoice = Formatting.GetUserChoice(options)
+            userChoice = Formatting.GetUserChoice(options, noBack=True)
             if userChoice < 0 or userChoice > len(options) - 1:
                 continue
 
             userAction = options[userChoice]
-                
-            if (userAction == "ATTACK"):
-                if not BattleEngine.DoAttackMenu(player_active_pokemon, opponent_active_pokemon):
-                    continue
-
-            elif (userAction == "ITEM"):
-                if not BattleEngine.DoItemMenu(items, player_pokemon, opponent_active_pokemon, allow_pokeball = False):
-                    continue
-                else:
-                    opponent_active_pokemon.RandomAttack(player_active_pokemon)
-
-            elif (userAction == "SWAP POKEMON"):
-                BattleEngine.SwapPokemon(player_pokemon)
-                opponent_active_pokemon.RandomAttack(player_active_pokemon)
-
-            elif (userAction == "POKEDEX"):
-                print("%s: It seems like you've never seen a %s before? I'll give you a moment to prepare yourself." % (opponent_name, opponent_active_pokemon.name))
-                BattleEngine.UsePokedex(opponent_active_pokemon)
+            tookAction = BattleEngine.PerformPlayerInputChoice(userAction, player_pokemon, opponent_active_pokemon, items)
+            if not tookAction:
+                continue
 
             BattleEngine.ProcessEndOfRoundStatuses(opponent_active_pokemon, player_active_pokemon)
+            Formatting.PressEnterToContinue()
 
         # End of battle
         for pokemon in player_pokemon:
@@ -147,24 +111,68 @@ class BattleEngine:
         print("%s: %s" % (opponent_name, endLine))
 
 
-    def OpponentFaintIfDead(opponent: Pokemon, playerPokemon: List[Pokemon]) -> bool:
+    def PerformPlayerInputChoice(userAction: str, player_pokemon: List[Pokemon], wildPokemon: Pokemon, items: List[str]) -> bool:
+        global continueBattling
+
+        tookAction = True
+        player_active_pokemon = player_pokemon[0]
+        if (userAction == "ATTACK"):
+            tookAction = BattleEngine.DoAttackMenu(player_active_pokemon, wildPokemon)
+
+        elif (userAction == "ITEM"):
+            if not BattleEngine.DoItemMenu(items, player_pokemon, wildPokemon, allow_pokeball=True):
+                tookAction = False
+            else:
+                wildPokemon.RandomAttack(player_active_pokemon)
+
+        elif (userAction == "SWAP POKEMON"):
+            swapped = BattleEngine.SwapPokemon(player_pokemon)
+            if not swapped:
+                tookAction = False
+            else:
+                wildPokemon.RandomAttack(player_pokemon[0])
+
+        elif (userAction == "RUN"):
+            continueBattling = BattleEngine.TryToRun(player_active_pokemon, wildPokemon)
+
+            # Get hit if they don't escape
+            if continueBattling:
+                wildPokemon.RandomAttack(player_active_pokemon)
+
+        elif (userAction == "POKEDEX"):
+            BattleEngine.UsePokedex(wildPokemon)
+        
+        else:
+            tookAction = False
+
+        return tookAction
+
+
+    def CheckIfOpponentPokemonFainted(opponent: Pokemon, playerPokemon: List[Pokemon]) -> bool:
         if (opponent.currentHP <= 0):
             xpGain = opponent.GetExperienceValue()
             print("%s has fainted." % (opponent.name))
             print()
             print("%s XP has been split among your Pokemon!" % (xpGain))
-            xpShare = (int)(xpGain / len(playerPokemon) - 1)
+
+            consciousPokemon = []
             for p in playerPokemon:
+                if p.statusCondition != Status.KNOCKED_OUT:
+                    consciousPokemon.append(p)
+
+            xpShare = (int)(xpGain / len(consciousPokemon))
+            for p in consciousPokemon:
                 p.GainExperience(xpShare)
             input("*Press ENTER to continue*")
             Formatting.clearScreen()
             return True
+
         return False
 
 
-    def AssessOpponentHealthiness(wildPokemon: Pokemon):
+    def AssessPokemonHealth(poke: Pokemon):
         opponentHealthiness = "completely untouched"
-        healthPercentage = wildPokemon.currentHP / wildPokemon.CalculateMaxHp()
+        healthPercentage = poke.currentHP / poke.CalculateMaxHp()
         if (healthPercentage < 0.95):
             opponentHealthiness = "a little scratched up"
         if (healthPercentage < 0.7):
@@ -175,7 +183,7 @@ class BattleEngine:
             opponentHealthiness = "pretty beat up"
         if (healthPercentage < 0.1):
             opponentHealthiness = "like it is about to faint"
-        print("The opposing %s looks %s." % (wildPokemon.name, opponentHealthiness))
+        print("The opposing %s looks %s." % (poke.name, opponentHealthiness))
 
 
     def DoAttackMenu(player_pokemon: Pokemon, opponent: Pokemon) -> bool:
@@ -187,7 +195,10 @@ class BattleEngine:
             attackNames.append("[%s] %s (%s/%s)" % (attack.type, attack.name, attack.currentPP, attack.maxPP))
 
         attackIndex = Formatting.GetUserChoice(attackNames)
-        if attackIndex < 0 or attackIndex > len(attacks) - 1:
+        if attackIndex == -2:
+            # User chose BACK
+            return False
+        if attackIndex == -1 or attackIndex > len(attacks) - 1:
             input("Input not recognized. Press ENTER to try again.")
             return False
 
@@ -296,11 +307,11 @@ class BattleEngine:
     def UsePokedex(opponent: Pokemon):
         print("You pull out your Pokedex and point it at the %s..." % (opponent.name))
         print("*Analyzing...*")
-        sleep(1)
+        time.sleep(1)
         print("...")
-        sleep(1)
+        time.sleep(1)
         print("*BEEP*")
-        sleep(1)
+        time.sleep(1)
         print("...")
         typePhrase = "%s" % (opponent.battleType1)
         if opponent.battleType2 != BattleType.NONE:
@@ -319,14 +330,14 @@ class BattleEngine:
     def TryToRun(trainerPokemon: Pokemon, wildPokemon: Pokemon) -> bool:
         print("You try to run...")
         escapeFailed = False
-        odds = (int)((trainerPokemon.GetStatValue(PokemonStat.SPEED) * 2) / (wildPokemon.GetStatValue(PokemonStat.SPEED) / 2)) * 15
+        odds = (int)(trainerPokemon.GetStatValue(PokemonStat.SPEED) / wildPokemon.GetStatValue(PokemonStat.SPEED) * 50)
         escapeFailed = random.randint(1,100) > odds
 
         if escapeFailed:
             print("the wild %s blocks your path!" % (wildPokemon.name))
         else:
             print("SUCCESS!")
-            input("*Press ENTER to continue*")
+            print()
 
         return escapeFailed
 
@@ -341,7 +352,7 @@ class BattleEngine:
             return False
 
 
-    def SwapPokemon(pokemonList: List[Pokemon]):
+    def SwapPokemon(pokemonList: List[Pokemon]) -> bool:
         allDefeated = True
         for p in pokemonList:
             if p.currentHP > 0:
@@ -355,39 +366,39 @@ class BattleEngine:
 
         Formatting.clearScreen()
         print("Choose which Pokemon to send out next:")
+        options = []
         optionCounter = 0
         for p in pokemonList:
             status = p.statusCondition
-            optionLetter = chr((ord("A") + optionCounter))
             statusString = "%s" % (status) if status != Status.NONE else ""
-            print("%s) %s - Level: %s, HP: %s/%s %s" % (optionLetter, p.name, p.level, p.currentHP, p.CalculateMaxHp(), statusString))
+            options.append("%s - Level: %s, HP: %s/%s %s" % (p.name, p.level, p.currentHP, p.CalculateMaxHp(), statusString))
             optionCounter += 1
 
-        player_input = input()
-        if len(player_input) > 1:
+        chosenIndex = Formatting.GetUserChoice(options)
+        if chosenIndex == -2:
+            # User chose BACK
+            return False
+
+        elif chosenIndex == -1 or chosenIndex > len(options) - 1:
             print("Input %s is not understood. Try again.")
             input("*Press ENTER to continue*")
             BattleEngine.SwapPokemon(pokemonList)
 
         else:
-            chosen_index = ord(player_input[0]) - ord("A")
-            if chosen_index == 0:
+            if chosenIndex == 0:
                 print("That Pokemon is already active!")
                 input("*Press ENTER to continue*")
+                return False
 
-            elif chosen_index < 0 or chosen_index > 5:
-                print("Input %s is not understood. Try again.")
-                input("*Press ENTER to continue*")
-                BattleEngine.SwapPokemon(pokemonList)
-
-            elif pokemonList[chosen_index].currentHP <= 0:
-                print("%s is knocked out! Choose another Pokemon!" % (pokemonList[chosen_index].name))
+            elif pokemonList[chosenIndex].currentHP <= 0:
+                print("%s is knocked out! Choose another Pokemon!" % (pokemonList[chosenIndex].name))
                 input("*Press ENTER to continue*")
                 BattleEngine.SwapPokemon(pokemonList)
 
             else:
-                print("You: %s, return! I choose you, %s!" % (pokemonList[0].name, pokemonList[chosen_index].name))
-                pokemonList[0], pokemonList[chosen_index] = pokemonList[chosen_index], pokemonList[0]
+                print("You: %s, return! I choose you, %s!" % (pokemonList[0].name, pokemonList[chosenIndex].name))
+                pokemonList[0], pokemonList[chosenIndex] = pokemonList[chosenIndex], pokemonList[0]
+                return True
 
 
     def ProcessEndOfRoundStatuses(opponent: Pokemon, player_pokemon: Pokemon):
@@ -446,5 +457,3 @@ class BattleEngine:
                         p.statusCondition = Status.NONE
                     else:
                         print("%s is trembling in fear, it can't focus!" % (p.name, damage))
-
-        input("*Press ENTER to continue...*")

@@ -1,9 +1,9 @@
 import random
 from time import sleep
 from typing import List
-from enums import ItemType, Status
-from formatting import Formatting
-from pokemon import Pokemon
+from common.enums import ItemType, Status
+from common.formatting import Formatting
+from models.pokemon import Pokemon
 
 class Item:
     def ChooseItem(items: List[ItemType]) -> ItemType:
@@ -11,6 +11,7 @@ class Item:
         while (notChosen):
             unique_items = []
             counts = {}
+            player_options = []
             for item in items:
                 try:
                     unique_items.index(item)
@@ -23,18 +24,15 @@ class Item:
             for item in unique_items:
                 identifier = chr(ord("A") + counter)
                 counter += 1
-                print("%s) %s (Owned: %s)" % (identifier, item, counts[item]))
+                player_options.append("%s) %s (Owned: %s)" % (identifier, item, counts[item]))
 
-            print("%s) BACK" % (chr(ord("A") + counter)))
+            index = Formatting.GetUserChoice(player_options)
 
-            player_input = input()
-            index = ord(player_input[0]) - ord("A")
-
-            if (index < 0 or index > len(unique_items)):
+            if (index == -1 or index > len(unique_items)):
                 input("Input %s not recognized. Press ENTER to try again.")
                 continue
 
-            if index == len(unique_items):
+            if index == -2 :
                 # Player chose BACK
                 return None
 
@@ -50,19 +48,17 @@ class Item:
             return originalIndex
 
 
-
     def UsePotion(healAmount: int, player_pokemon: List[Pokemon]) -> bool:
         print("Which Pokemon will you use the potion on?")
         counter = 0
+        options = []
         for pokemon in player_pokemon:
             identifier = chr(ord("A") + counter)
             counter += 1
-            print("%s) %s" % (identifier, pokemon.name))
+            options.append("%s) %s" % (identifier, pokemon.name))
 
-        player_input = input()
-        index = ord(player_input[0]) - ord("A")
+        index = Formatting.GetUserChoice(options)
         if (index < 0 or index > len(player_pokemon) - 1):
-            input("Input %s not recognized. Press ENTER to try again.")
             return False
 
         chosen_pokemon = player_pokemon[index]

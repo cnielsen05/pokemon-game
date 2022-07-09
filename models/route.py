@@ -1,5 +1,5 @@
 import json
-from enums import ItemType
+from common.enums import ItemType
 
 
 class Route:

@@ -1,4 +1,4 @@
-from enums import BattleType, CombatModifiers, EffectType, Targeting
+from common.enums import BattleType, CombatModifiers, EffectType, Targeting
 import json
 
 class BattleAttack:

@@ -102,3 +102,11 @@ class ItemType(str, Enum):
     GREATBALL = 'GREATBALL'
     POKEFEAST = 'POKEFEAST'
     CAMPING_KIT = 'CAMPING_KIT'
+
+
+class MenuState(str, Enum):
+    NONE = 'NONE'
+    IS_WALKING = 'IS_WALKING'
+    IS_BATTLING = 'IS_BATTLING'
+    IS_CAMPING = 'IS_CAMPING'
+    IS_IN_TOWN = 'IS_IN_TOWN'

@@ -1,6 +1,6 @@
 
 
-from enums import BattleType
+from common.enums import BattleType
 
 
 class EngineUtilities:

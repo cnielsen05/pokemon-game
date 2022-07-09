@@ -18,8 +18,10 @@ class Formatting:
         Formatting.clearScreen()    
 
 
-    def GetUserChoice(options: List[str]) -> int:
+    def GetUserChoice(options: List[str], noBack: bool = False) -> int:
         counter = 0
+        if not noBack:
+            options.append("BACK")
         for option in options:
             identifier = chr(ord("A") + counter)
             counter += 1
@@ -30,7 +32,11 @@ class Formatting:
 
         try:
             userChoice = ord(userAction[0]) - ord("A")
-            return userChoice
+            if userChoice == len(options) - 1 and not noBack:
+                # Return -2 when the user chooses BACK so the caller doesn't try to dereference something from the options list passed in
+                return -2
+            else:
+                return userChoice
         except:
             input("Input %s unrecognized. Press ENTER to try again." % (userAction))
             return -1

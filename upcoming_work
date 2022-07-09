@@ -1,5 +1,1 @@
 - Refactor code to be more organized and commented
-- Fix bug when a pokemon gets KO'ed and has an extra attack/gets hit again
-- Fix bug so knocked out Pokemon don't share the xp
-- Make leveling up not do a full heal, but heal the amount of HP you gain
-- Ensure you don't *usually* get attacked using the Pokedex

@@ -1,8 +1,8 @@
 import time
 from typing import List
-from battleAttack import BattleAttack
-from engineUtilities import EngineUtilities
-from enums import BattleType, CombatModifiers, Status, PokemonStat, Targeting, EffectType
+from models.battleAttack import BattleAttack
+from common.engineUtilities import EngineUtilities
+from common.enums import BattleType, CombatModifiers, Status, PokemonStat, Targeting, EffectType
 import json
 import random
 
@@ -354,10 +354,11 @@ class Pokemon:
         newMoves = self.GetBattleAttacks()
 
         print("%s has grown to level %s!" % (self.name, self.level))
-        self.FullHealHP()
+        self.currentHP += newStats[key] - oldStats[key]
+
         for key in oldStats:
             if newStats[key] > oldStats[key]:
-                print("%s has gained %s %s!" % (self.name, newStats[key] - oldStats[key], key))
+                print("%s has gained %s %s!" % (self.name, newStats[key] - oldStats[key], key))    
 
         if len(newMoves) > len(oldMoves):
             i = len(oldMoves)
@@ -365,6 +366,7 @@ class Pokemon:
                 print()
                 print("%s has learned %s!" % (self.name, newMoves[i].name))
                 i += 1
+        print()
 
 
     def Evolve(self, newPokemon: str):
@@ -394,13 +396,18 @@ class Pokemon:
                 self.battleAttacks.append(BattleAttack(atk["Move"], atk["UnlockLevel"]))
 
         newName = self.name
-        print("%s has evolved into %s!" % (oldName, newName))
+        print("Congratulations! %s has evolved into %s!" % (oldName, newName))
     
     
     def FullHealHP(self):
         self.currentHP = self.CalculateMaxHp()
         if self.statusCondition == Status.KNOCKED_OUT:
             self.statusCondition = Status.NONE
+
+
+    def RestoreAllPP(self):
+        for move in self.GetBattleAttacks():
+            move.currentPP = move.maxPP
 
 
     def HealHP(self, healAmount: int):
@@ -602,6 +609,10 @@ class Pokemon:
         self.defenseModifierLevel = 0
         self.specialDefenseModifierLevel = 0
         self.speedModifierLevel = 0
+
+
+    def GetHPString(self):
+        return "%s has %s/%s HP." % (self.name, self.currentHP, self.CalculateMaxHp())
 
 
 if __name__ == "__main__":
