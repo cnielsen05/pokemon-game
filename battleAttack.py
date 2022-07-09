@@ -14,7 +14,7 @@ class BattleAttack:
         self.effects = [MoveEffect()]
         
         if attackname:
-            attackFileName = "attacks/%s.json" % (attackname.lower())
+            attackFileName = "data/attacks/%s.json" % (attackname.lower())
 
             with open(attackFileName, 'r') as attackFile:
                 data = json.load(attackFile)
@@ -69,5 +69,5 @@ class MoveEffect():
 
 if __name__ == "__main__":
     tackle = BattleAttack()
-    with open("attacks/tackle.json", 'w') as outfile:
+    with open("data/attacks/tackle.json", 'w') as outfile:
         outfile.write(tackle.exportJson())

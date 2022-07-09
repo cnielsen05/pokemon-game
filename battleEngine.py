@@ -309,7 +309,7 @@ class BattleEngine:
         print("%s, a %s type. This one appears to be level %s." % (opponent.name, typePhrase, opponent.level))
         print()
         try:
-            pokemonimg = "images/%s.jpg" % (opponent.name)
+            pokemonimg = "data/images/%s.jpg" % (opponent.name)
             img = Image.open(pokemonimg)
             img.show()
         except:

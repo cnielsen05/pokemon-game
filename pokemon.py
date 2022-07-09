@@ -33,7 +33,7 @@ class Pokemon:
         self.battleAttacks = [BattleAttack("peck", 2), BattleAttack("tackle", 1)]
 
         if pokemon:
-            pokemonFileName = "pokemon/%s.json" % (pokemon.replace(" ", ""))
+            pokemonFileName = "data/pokemon/%s.json" % (pokemon.replace(" ", ""))
 
             with open(pokemonFileName, 'r') as pokemonFile:
                 data = json.load(pokemonFile)
@@ -372,7 +372,7 @@ class Pokemon:
         time.sleep(2)
         print("...")
         time.sleep(2)
-        pokemonFileName = "pokemon/%s.json" % (newPokemon)
+        pokemonFileName = "data/pokemon/%s.json" % (newPokemon)
         oldName = self.name
 
         with open(pokemonFileName, 'r') as pokemonFile:
@@ -606,5 +606,5 @@ class Pokemon:
 
 if __name__ == "__main__":
     pokemon = Pokemon()
-    with open("pokemon/%s.json" % (pokemon.name.lower()), 'w') as outfile:
+    with open("data/pokemon/%s.json" % (pokemon.name.lower()), 'w') as outfile:
         outfile.write(pokemon.ExportJson())

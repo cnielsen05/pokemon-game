@@ -99,7 +99,7 @@ class Route:
         }
 
         if id is not None:
-            routeFileName = "routes/%s.json" % (id)
+            routeFileName = "data/routes/%s.json" % (id)
 
             with open(routeFileName, 'r') as routeFile:
                 data = json.load(routeFile)
@@ -128,5 +128,5 @@ class Route:
 
 if __name__ == "__main__":
     route = Route()
-    with open("routes/%s.json" % (route.id), 'w') as outfile:
+    with open("data/routes/%s.json" % (route.id), 'w') as outfile:
         outfile.write(route.ExportJson())

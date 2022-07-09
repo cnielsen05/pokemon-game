@@ -40,7 +40,7 @@ class Game:
 
         if savedProfile:
             self.profile = savedProfile
-            savedFile = "%s/savedgames/%s" % (os.getcwd(), savedProfile)
+            savedFile = "%s/data/savedgames/%s" % (os.getcwd(), savedProfile)
             with open(savedFile, 'r') as playerProfile:
                 data = json.load(playerProfile)
                 self.player_pokemon = []
