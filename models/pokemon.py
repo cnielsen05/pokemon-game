@@ -305,7 +305,7 @@ class Pokemon:
 
 
     def CalculateMaxHp(self) -> int:
-        return 10 + (int)(self.HPStat * self.level * 3/5)
+        return self.HPStat + (int)(self.HPStat * self.level / 5.0)
 
 
     def GetExperienceValue(self) -> int:
@@ -354,7 +354,7 @@ class Pokemon:
         newMoves = self.GetBattleAttacks()
 
         print("%s has grown to level %s!" % (self.name, self.level))
-        self.currentHP += newStats[key] - oldStats[key]
+        self.currentHP += newStats["HP"] - oldStats["HP"]
 
         for key in oldStats:
             if newStats[key] > oldStats[key]:
@@ -515,7 +515,7 @@ class Pokemon:
         defenseValue = self.GetStatValue(PokemonStat.DEFENSE) if attack.isPhysical else self.GetStatValue(PokemonStat.SPECIAL_DEFENSE)
         damage = 0
         if attack.baseDmg > 0:
-            damage = 2 + (int)((((attack.baseDmg * effectivenessMultiplier) + 2 ) * (attackerOffensiveStatValue * 0.75 / (5 * defenseValue))) + random.randint(0,3))
+            damage = 2 + (int) ((attack.baseDmg + random.randint(0,3)) * effectivenessMultiplier * (attackerOffensiveStatValue / (attackerOffensiveStatValue + defenseValue)))
             crit = random.randint(1,20) > 19
             if crit:
                 damage = (int)(damage * 1.75)

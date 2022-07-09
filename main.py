@@ -126,7 +126,7 @@ class Game:
         for p in self.rival_pokemon:
             data["rival_pokemon"].append({"name": p.name, "level": p.level})
         
-        directory = os.getcwd() + "/savedgames"
+        directory = os.getcwd() + "/data/savedgames"
 
         with open("%s/%s" % (directory, self.profile.lower()), 'w') as outfile:
             outfile.write(json.dumps(data))
@@ -185,7 +185,7 @@ class Game:
             else:
                 # User interrupted the walking
                 return steps_taken
-                
+
         return steps_taken
 
 
@@ -455,7 +455,7 @@ class Game:
                 "Yes, mom."]
 
             print("Mom: Stop watching TV, it's late. NOW RUN OFF TO BED!")
-            player_choice_index = Formatting.GetUserChoice(options)
+            player_choice_index = Formatting.GetUserChoice(options, noBack=True)
 
             if player_choice_index == 0:
                 print("Enraged Mom: YOU DO NOT TALK TO ME LIKE THAT! NOW GO TO BED! TOMORROW IS YOUR BIRTHDAY AND YOU WILL NEED ALL YOUR ENERGY FOR YOUR POKEMON ADVENTURE!!!")
@@ -543,7 +543,7 @@ class Game:
             "You're no genius yourself. I should fight you here and now for talking to me that way.", 
             "Oh man, is it really not starting for another hour? I guess this one is my mistake." ]
 
-        player_choice_index = Formatting.GetUserChoice(options)
+        player_choice_index = Formatting.GetUserChoice(options, noBack=True)
 
         if player_choice_index == 0:
             print("You: You're no genius yourself. I should fight you here and now for talking to me that way.")
@@ -580,26 +580,30 @@ class Game:
         print("Professor Mulberry: Let me tell you about each of the starting Pokemon you can choose from today.")
         Formatting.PressEnterToContinue()
 
-        print("Professor Mulberry: First up is Atsebi, the Fire Snake Pokemon!")
-        print("Professor Mulberry: Atsebi specializes in high speed and special attack damage.")
-        print("Professor Mulberry: If you like you to strike first and strike hard, Atsebi may be the Pokemon for you!")
-        Formatting.PressEnterToContinue()
-
-        print("Professor Mulberry: Next up is Nardent, the Narwhal Warrior Pokemon.")
-        print("Professor Mulberry: Nardent excels at physical offense and defense, and is quite durable.")
-        print("Professor Mulberry: If you like a balanced approach that combines offense and defense, Nardent may be for you.")
-        Formatting.PressEnterToContinue()
-
-        print("Professor Mulberry: Finally we have Leafox, the Forest Spirit Pokemon.")
-        print("Professor Mulberry: Leafox is clever and fast, a master of manipulation and deceit.")
-        print("Professor Mulberry: If you like to outwit your opponent, you should give Leafox a try!")
-        Formatting.PressEnterToContinue()
-
         while (not self.state["choose_starter_complete"]):
+            print("Professor Mulberry: First up is Atsebi, the Fire Snake Pokemon!")
+            print("Professor Mulberry: Atsebi specializes in high speed and special attack damage.")
+            print("Professor Mulberry: If you like you to strike first and strike hard, Atsebi may be the Pokemon for you!")
+            Formatting.PressEnterToContinue()
+
+            print("Professor Mulberry: Next up is Nardent, the Narwhal Warrior Pokemon.")
+            print("Professor Mulberry: Nardent excels at physical offense and defense, and is quite durable.")
+            print("Professor Mulberry: If you like a balanced approach that combines offense and defense, Nardent may be for you.")
+            Formatting.PressEnterToContinue()
+
+            print("Professor Mulberry: Finally we have Leafox, the Forest Spirit Pokemon.")
+            print("Professor Mulberry: Leafox is clever and fast, a master of manipulation and deceit.")
+            print("Professor Mulberry: If you like to outwit your opponent, you should give Leafox a try!")
+            Formatting.PressEnterToContinue()
+
             Formatting.clearScreen()
             options = ["Atsebi", "Nardent", "Leafox"]
             print("Choose your starter:")
             starter_index = Formatting.GetUserChoice(options)
+            if starter_index == -2:
+                # User chose BACK, replay the descriptions
+                continue
+
             starter_choice = options[starter_index]
             rival_choice = None
 

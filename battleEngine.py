@@ -53,7 +53,6 @@ class BattleEngine:
         global continueBattling
 
         continueBattling = True
-        print("%s wants to battle!" % (opponent_name))
         print("%s: %s" % (opponent_name, startLine))
         Formatting.PressEnterToContinue()
         print("%s: Go %s!" % (opponent_name, opponent_pokemon[0].name))
