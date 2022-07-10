@@ -1,6 +1,6 @@
 {
     "name": "Cloak of Thorns",
-    "baseDmg": 30,
+    "baseDmg": 25,
     "type": "GRASS",
     "isPhysical": false,
     "maxPP": 20,

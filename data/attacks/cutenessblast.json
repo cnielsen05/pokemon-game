@@ -1,6 +1,6 @@
 {
     "name": "Cuteness Blast",
-    "baseDmg": 45,
+    "baseDmg": 25,
     "type": "FAIRY",
     "isPhysical": false,
     "maxPP": 25,

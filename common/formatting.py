@@ -20,7 +20,7 @@ class Formatting:
 
     def GetUserChoice(options: List[str], noBack: bool = False) -> int:
         counter = 0
-        if not noBack:
+        if not noBack and not options[len(options) - 1] == "BACK":
             options.append("BACK")
         for option in options:
             identifier = chr(ord("A") + counter)

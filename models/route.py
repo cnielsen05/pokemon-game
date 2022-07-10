@@ -1,4 +1,5 @@
 import json
+import os
 from common.enums import ItemType
 
 
@@ -99,9 +100,9 @@ class Route:
         }
 
         if id is not None:
-            routeFileName = "data/routes/%s.json" % (id)
+            routeFilePath = os.path.join(os.getcwd(), "data", "routes", "%s.json" % (id))
 
-            with open(routeFileName, 'r') as routeFile:
+            with open(routeFilePath, 'r') as routeFile:
                 data = json.load(routeFile)
                 self.Name = data["Name"]
                 self.id = data["id"]
@@ -128,5 +129,6 @@ class Route:
 
 if __name__ == "__main__":
     route = Route()
-    with open("data/routes/%s.json" % (route.id), 'w') as outfile:
+    routeFilePath = os.path.join(os.getcwd(), "data", "routes", "%s.json" % (route.id))
+    with open(routeFilePath, 'w') as outfile:
         outfile.write(route.ExportJson())

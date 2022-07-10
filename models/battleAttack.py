@@ -1,5 +1,6 @@
 from common.enums import BattleType, CombatModifiers, EffectType, Targeting
 import json
+import os
 
 class BattleAttack:
 
@@ -14,9 +15,9 @@ class BattleAttack:
         self.effects = [MoveEffect()]
         
         if attackname:
-            attackFileName = "data/attacks/%s.json" % (attackname.lower())
+            attackFilePath = os.path.join(os.getcwd(), "data", "attacks", "%s.json" % (attackname.lower()))
 
-            with open(attackFileName, 'r') as attackFile:
+            with open(attackFilePath, 'r') as attackFile:
                 data = json.load(attackFile)
                 self.name = data["name"]
                 self.baseDmg = data["baseDmg"]
@@ -69,5 +70,6 @@ class MoveEffect():
 
 if __name__ == "__main__":
     tackle = BattleAttack()
-    with open("data/attacks/tackle.json", 'w') as outfile:
+    attackFilePath = os.path.join(os.getcwd(), "data", "attacks", "tackle.json")
+    with open(attackFilePath, 'w') as outfile:
         outfile.write(tackle.exportJson())

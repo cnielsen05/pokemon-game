@@ -1,10 +1,11 @@
+import json
+import os
+import random
 import time
 from typing import List
 from models.battleAttack import BattleAttack
 from common.engineUtilities import EngineUtilities
 from common.enums import BattleType, CombatModifiers, Status, PokemonStat, Targeting, EffectType
-import json
-import random
 
 class Pokemon:
     def __init__(self, pokemon = None):
@@ -33,9 +34,9 @@ class Pokemon:
         self.battleAttacks = [BattleAttack("peck", 2), BattleAttack("tackle", 1)]
 
         if pokemon:
-            pokemonFileName = "data/pokemon/%s.json" % (pokemon.replace(" ", ""))
+            pokemonFilePath = os.path.join(os.getcwd(), "data", "pokemon", "%s.json" % (pokemon.replace(" ", "")))
 
-            with open(pokemonFileName, 'r') as pokemonFile:
+            with open(pokemonFilePath, 'r') as pokemonFile:
                 data = json.load(pokemonFile)
                 self.name = data["name"]
                 self.attackStat = data["attackStat"]
@@ -374,10 +375,10 @@ class Pokemon:
         time.sleep(2)
         print("...")
         time.sleep(2)
-        pokemonFileName = "data/pokemon/%s.json" % (newPokemon)
+        pokemonFilePath = os.path.join(os.getcwd(), "data", "pokemon", "%s.json" % (newPokemon.lower()))
         oldName = self.name
 
-        with open(pokemonFileName, 'r') as pokemonFile:
+        with open(pokemonFilePath, 'r') as pokemonFile:
             data = json.load(pokemonFile)
             self.name = data["name"]
             self.attackStat = data["attackStat"]
@@ -515,7 +516,7 @@ class Pokemon:
         defenseValue = self.GetStatValue(PokemonStat.DEFENSE) if attack.isPhysical else self.GetStatValue(PokemonStat.SPECIAL_DEFENSE)
         damage = 0
         if attack.baseDmg > 0:
-            damage = 2 + (int) ((attack.baseDmg + random.randint(0,3)) * effectivenessMultiplier * (attackerOffensiveStatValue / (attackerOffensiveStatValue + defenseValue)))
+            damage = 2 + (int) ((attack.baseDmg + random.randint(0,3)) * effectivenessMultiplier * (attackerOffensiveStatValue / (attackerOffensiveStatValue + 2 * defenseValue)))
             crit = random.randint(1,20) > 19
             if crit:
                 damage = (int)(damage * 1.75)
@@ -617,5 +618,6 @@ class Pokemon:
 
 if __name__ == "__main__":
     pokemon = Pokemon()
-    with open("data/pokemon/%s.json" % (pokemon.name.lower()), 'w') as outfile:
+    pokemonFilePath = os.path.join(os.getcwd(), "data", "pokemon", "%s.json" % (pokemon.name.lower()))
+    with open(pokemonFilePath, 'w') as outfile:
         outfile.write(pokemon.ExportJson())

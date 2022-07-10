@@ -1,6 +1,6 @@
 {
     "name": "Ember",
-    "baseDmg": 30,
+    "baseDmg": 25,
     "type": "FIRE",
     "isPhysical": false,
     "maxPP": 20,

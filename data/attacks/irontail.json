@@ -1,6 +1,6 @@
 {
     "name": "Iron Tail",
-    "baseDmg": 60,
+    "baseDmg": 50,
     "type": "STEEL",
     "isPhysical": true,
     "maxPP": 15,

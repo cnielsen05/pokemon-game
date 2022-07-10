@@ -44,7 +44,7 @@ class Game:
 
         if savedProfile:
             self.profile = savedProfile
-            savedFile = "%s/data/savedgames/%s" % (os.getcwd(), savedProfile)
+            savedFile = os.path.join(os.getcwd(), "data", "savedgames", savedProfile)
             with open(savedFile, 'r') as playerProfile:
                 data = json.load(playerProfile)
                 self.player_pokemon = []
@@ -126,9 +126,9 @@ class Game:
         for p in self.rival_pokemon:
             data["rival_pokemon"].append({"name": p.name, "level": p.level})
         
-        directory = os.getcwd() + "/data/savedgames"
+        saveFilePath = os.path.join(os.getcwd(), "data", "savedgames", self.profile.lower())
 
-        with open("%s/%s" % (directory, self.profile.lower()), 'w') as outfile:
+        with open(saveFilePath, 'w') as outfile:
             outfile.write(json.dumps(data))
         
         time.sleep(3)
@@ -254,7 +254,7 @@ class Game:
                             if not Item.UsePotion(30, self.player_pokemon):
                                 continue
                             else:
-                                self.items.pop(index)
+                                self.items.pop(itemIndex)
 
                         case ItemType.POKEBALL:
                             print("*You roll the Pokeball back and forth in your palm, imagining your next throw...*")

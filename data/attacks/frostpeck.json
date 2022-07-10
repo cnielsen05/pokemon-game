@@ -1,10 +1,10 @@
 {
     "name": "Frost Peck",
-    "baseDmg": 30,
+    "baseDmg": 35,
     "type": "ICE",
     "isPhysical": true,
     "maxPP": 15,
-    "accuracy": 93,
+    "accuracy": 95,
     "effects": [
         {
             "target": "OPPONENT",

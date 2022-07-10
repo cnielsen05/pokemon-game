@@ -1,6 +1,6 @@
 {
     "name": "Poison Ivy",
-    "baseDmg": 5,
+    "baseDmg": 10,
     "type": "GRASS",
     "isPhysical": false,
     "maxPP": 30,
