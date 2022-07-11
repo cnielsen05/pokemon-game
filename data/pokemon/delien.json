@@ -1,0 +1,20 @@
+{
+    "name": "Delien",
+    "attackStat": 44,
+    "defenseStat": 23,
+    "spAttackStat": 18,
+    "spDefenseStat": 49,
+    "speedStat": 38,
+    "HPStat": 28,
+    "battleType1": "FIRE",
+    "battleType2": "DARK",
+    "catchFactor": 0.45,
+    "evolveLevel": 20,
+    "evolutionName": "Devlein",
+    "battleAttacks": [
+        {"Move": "Telekinesis", "UnlockLevel": 1},
+        {"Move": "Ember", "UnlockLevel": 2},
+        {"Move": "Psychic", "UnlockLevel": 4}
+      
+    ]
+}

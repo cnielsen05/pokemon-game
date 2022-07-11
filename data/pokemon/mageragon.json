@@ -1,0 +1,26 @@
+{
+    "name": "Mageragon",
+    "attackStat": 29,
+    "defenseStat": 27,
+    "spAttackStat": 44,
+    "spDefenseStat": 27,
+    "speedStat": 40,
+    "HPStat": 42,
+    "battleType1": "FIRE",
+    "battleType2": "NONE",
+    "catchFactor": 0.01,
+    "evolveLevel": 0,
+    "evolutionName": "",
+    "battleAttacks": [
+        {"Move": "Tackle", "UnlockLevel": 7},
+        {"Move": "Ember", "UnlockLevel": 7},
+        {"Move": "BurningVenom", "UnlockLevel": 7},
+        {"Move": "Bite", "UnlockLevel": 7},
+        {"Move": "Flamethrower", "UnlockLevel": 7},
+        {"Move": "Firepool", "UnlockLevel": 10},
+        {"Move": "Pyrokanisis", "UnlockLevel": 10},
+        {"Move": "Fiftyflamestabs", "UnlockLevel": 10},
+        {"Move": "Threehundredsixtydegreeflamestab", "UnlockLevel": 10},
+        {"Move": "Fireblast", "UnlockLevel": 20}
+    ]
+}

@@ -1,0 +1,14 @@
+{
+    "name": "360 Degree Fire Spin Stab",
+    "baseDmg": 40,
+    "type": "FIRE",
+    "isPhysical": true,
+    "maxPP": 15,
+    "accuracy": 100,
+    "effects": [    {
+        "target": "SELF",
+        "effectType": "ADD_COMBAT_MODIFIER",
+        "effectDetail": "DEF_UP",
+        "chance": 100
+    }]
+}

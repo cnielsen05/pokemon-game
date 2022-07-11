@@ -1,0 +1,14 @@
+{
+    "name": "50 Flame Stabs",
+    "baseDmg": 84,
+    "type": "FIRE",
+    "isPhysical": true,
+    "maxPP": 15 ,
+    "accuracy": 90,
+    "effects": [    {
+        "target": "OPPONENT",
+        "effectType": "ADD_STATUS_EFFECT",
+        "effectDetail": "BURNED",
+        "chance": 100
+    }]
+}
