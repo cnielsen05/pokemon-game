@@ -80,11 +80,17 @@ class Game:
             print("Which profile would you like to continue on?")
             profileOptions = []
             directory = os.getcwd() + "/data/savedgames"
+            os.makedirs(directory, exist_ok=True)
             for root, dirs, files in os.walk(directory):
                 for f in files:
                     profileOptions.append(f)
 
             profile_choice_index = Formatting.GetUserChoice(profileOptions)
+            if profile_choice_index == -2:
+                print("Sorry, no saved game files were found!")
+                Formatting.PressEnterToContinue()
+                Game.StartGame()
+                
             profile = profileOptions[profile_choice_index]
 
             continue_game = Game(profile)
@@ -127,6 +133,7 @@ class Game:
             data["rival_pokemon"].append({"name": p.name, "level": p.level})
         
         saveFilePath = os.path.join(os.getcwd(), "data", "savedgames", self.profile.lower())
+        os.makedirs(saveFilePath, exist_ok=True)
 
         with open(saveFilePath, 'w') as outfile:
             outfile.write(json.dumps(data))

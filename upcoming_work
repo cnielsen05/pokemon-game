@@ -1,2 +1,1 @@
 - Refactor code to be more organized and commented
-- Make sure savedgames folder exists before attempting to read/write to/from it

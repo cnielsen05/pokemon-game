@@ -19,6 +19,9 @@ class Formatting:
 
 
     def GetUserChoice(options: List[str], noBack: bool = False) -> int:
+        if len(options) == 0:
+            return -2
+            
         counter = 0
         if not noBack and not options[len(options) - 1] == "BACK":
             options.append("BACK")
